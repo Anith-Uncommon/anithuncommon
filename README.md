@@ -1,11 +1,32 @@
+# 🌐 AnithUncommon Website
 
-  # Anith Uncommon
+This branch contains the full source code and optimized architecture for the **AnithUncommon website**, migrated from the Figma Make export.
 
-  This is a code bundle for Anith Uncommon. The original project is available at https://www.figma.com/design/1AV9Iiwnhlm1Cz8F9dQF0y/Anith-Uncommon.
+---
 
-  ## Running the code
+## 🛠 Tech Stack
 
-  Run `npm i` to install the dependencies.
+- **Framework:** React 18 (Vite)  
+- **Styling:** Tailwind CSS v4  
+- **Components:** Radix UI Primitives  
+- **Icons:** Lucide React  
 
-  Run `npm run dev` to start the development server.
-  
+---
+
+## 💻 Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start development server:
+```bash
+npm run dev
+```
+
+Start development server:
+```bash
+npm run build
+```
