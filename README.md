@@ -1,7 +1,7 @@
 
-  # Plataforma Educativa Estudiantil
+  # Anith Uncommon
 
-  This is a code bundle for Plataforma Educativa Estudiantil. The original project is available at https://www.figma.com/design/1AV9Iiwnhlm1Cz8F9dQF0y/Plataforma-Educativa-Estudiantil.
+  This is a code bundle for Anith Uncommon. The original project is available at https://www.figma.com/design/1AV9Iiwnhlm1Cz8F9dQF0y/Anith-Uncommon.
 
   ## Running the code
 

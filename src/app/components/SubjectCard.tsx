@@ -9,11 +9,12 @@ interface SubjectCardProps {
   image: string;
   topics: string[];
   color: string;
-  mentors?: string[]; // Add mentors prop
+  mentors?: string[];
   onExplore: () => void;
+  onMentorClick?: (mentorName: string) => void;
 }
 
-export function SubjectCard({ title, description, image, topics, color, mentors, onExplore }: SubjectCardProps) {
+export function SubjectCard({ title, description, image, topics, color, mentors, onExplore, onMentorClick }: SubjectCardProps) {
   return (
     <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 group relative">
       {/* Decorative geometric element */}
@@ -38,19 +39,31 @@ export function SubjectCard({ title, description, image, topics, color, mentors,
         
         {/* Mentors Section */}
         {mentors && mentors.length > 0 && (
-          <div className="mb-4 p-3 rounded-lg" style={{ backgroundColor: '#F9F9F7' }}>
+          <div className="mb-4 p-4 rounded-lg border-2 hover:border-[#0A1926] transition-colors" style={{ backgroundColor: '#F9F9F7', borderColor: '#D9D7CC' }}>
             <div className="flex items-center gap-2 mb-2">
               <Users className="w-4 h-4" style={{ color: '#0A1926' }} />
-              <span className="text-sm font-medium" style={{ color: '#0A1926' }}>Mentors:</span>
+              <span className="text-sm font-semibold" style={{ color: '#0A1926' }}>Your Mentors</span>
             </div>
+            <p className="text-xs mb-3 italic" style={{ color: '#626E73' }}>
+              Click on mentor names to view their profiles, resources & curriculum
+            </p>
             <div className="flex flex-wrap gap-2">
               {mentors.map((mentor, index) => (
-                <span 
-                  key={index} 
-                  className="text-xs px-2 py-1 rounded-full"
+                <span
+                  key={index}
+                  className="text-xs px-3 py-1.5 rounded-full cursor-pointer hover:shadow-md transition-all hover:scale-105 flex items-center gap-1"
                   style={{ backgroundColor: '#D9D7CC', color: '#0A1926' }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMentorClick && onMentorClick(mentor);
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0A1926'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#D9D7CC'}
+                  onMouseOver={(e) => e.currentTarget.style.color = '#D9D7CC'}
+                  onMouseOut={(e) => e.currentTarget.style.color = '#0A1926'}
                 >
                   {mentor}
+                  <ArrowRight className="w-3 h-3 ml-0.5" />
                 </span>
               ))}
             </div>

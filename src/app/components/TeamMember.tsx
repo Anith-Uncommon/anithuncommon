@@ -1,17 +1,20 @@
 import { Card } from "@/app/components/ui/card";
-import { Mail, Linkedin, Globe } from "lucide-react";
+import { Mail, Linkedin, Instagram } from "lucide-react";
+import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 
 interface TeamMemberProps {
   name: string;
   role: string;
-  image: string;
-  bio: string;
-  email?: string;
+  image?: string;
+  bio?: string;
+  country?: string;
   linkedin?: string;
+  instagram?: string;
+  email?: string;
   colorAccent: string;
 }
 
-export function TeamMember({ name, role, image, bio, email, linkedin, colorAccent }: TeamMemberProps) {
+export function TeamMember({ name, role, image, bio, country, linkedin, instagram, email, colorAccent }: TeamMemberProps) {
   return (
     <div className="relative group">
       {/* Decorative geometric shapes */}
@@ -24,35 +27,33 @@ export function TeamMember({ name, role, image, bio, email, linkedin, colorAccen
              style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }} />
         
         <div className="p-6">
-          <div className="relative mb-4">
-            {/* Image container with geometric frame */}
-            <div className="relative w-32 h-32 mx-auto">
-              <div className={`absolute inset-0 ${colorAccent} opacity-20 rounded-2xl rotate-6 group-hover:rotate-12 transition-transform`} />
-              <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-lg">
-                <img 
-                  src={image} 
-                  alt={name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+          {image && (
+            <div className="relative mb-4">
+              {/* Image container with geometric frame */}
+              <div className="relative w-32 h-32 mx-auto">
+                <div className={`absolute inset-0 ${colorAccent} opacity-20 rounded-2xl rotate-6 group-hover:rotate-12 transition-transform`} />
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-lg">
+                  <ImageWithFallback 
+                    src={image} 
+                    alt={name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div className="text-center">
             <h3 className="text-xl font-bold mb-1" style={{ color: '#0A1926' }}>{name}</h3>
-            <p className="text-sm mb-3" style={{ color: '#626E73' }}>{role}</p>
-            <p className="text-sm mb-4 leading-relaxed" style={{ color: '#626E73' }}>{bio}</p>
+            <p className="text-sm mb-1" style={{ color: '#626E73' }}>{role}</p>
+            {country && (
+              <p className="text-xs mb-3" style={{ color: '#A1A6A5' }}>{country}</p>
+            )}
+            {bio && (
+              <p className="text-sm mb-4 leading-relaxed" style={{ color: '#626E73' }}>{bio}</p>
+            )}
 
             <div className="flex justify-center gap-3">
-              {email && (
-                <a 
-                  href={`mailto:${email}`}
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ backgroundColor: '#D9D7CC' }}
-                >
-                  <Mail className="w-4 h-4" style={{ color: '#0A1926' }} />
-                </a>
-              )}
               {linkedin && (
                 <a 
                   href={linkedin}
@@ -62,6 +63,26 @@ export function TeamMember({ name, role, image, bio, email, linkedin, colorAccen
                   style={{ backgroundColor: '#D9D7CC' }}
                 >
                   <Linkedin className="w-4 h-4" style={{ color: '#0A1926' }} />
+                </a>
+              )}
+              {instagram && (
+                <a 
+                  href={instagram.startsWith('http') ? instagram : `https://instagram.com/${instagram.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                  style={{ backgroundColor: '#D9D7CC' }}
+                >
+                  <Instagram className="w-4 h-4" style={{ color: '#0A1926' }} />
+                </a>
+              )}
+              {email && (
+                <a 
+                  href={`mailto:${email}`}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
+                  style={{ backgroundColor: '#D9D7CC' }}
+                >
+                  <Mail className="w-4 h-4" style={{ color: '#0A1926' }} />
                 </a>
               )}
             </div>
