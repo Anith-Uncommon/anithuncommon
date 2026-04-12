@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=Manrope:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.font-editorial-serif {
+	font-family: 'Instrument Serif', serif;
+}
+
+.font-editorial-sans {
+	font-family: 'Manrope', sans-serif;
+}
+
+.font-fredoka {
+	font-family: 'Fredoka', sans-serif;
+}
+
+.font-manrope {
+	font-family: 'Manrope', sans-serif;
+}
+
+.font-space-grotesk {
+	font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-instrument-serif {
+	font-family: 'Instrument Serif', serif;
+}

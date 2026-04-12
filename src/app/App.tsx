@@ -1,4 +1,10 @@
-import { useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
+} from "react";
 import { SubjectCard } from "@/app/components/SubjectCard";
 import { TopicDetail } from "@/app/components/TopicDetail";
 import { MeetOurTeam } from "@/app/components/MeetOurTeam";
@@ -23,6 +29,8 @@ import {
   X,
   ChevronDown,
   Lock,
+  Eye,
+  Award,
 } from "lucide-react";
 import {
   getMentorByName,
@@ -80,6 +88,45 @@ type Page =
   | "mentor"
   | "faq"
   | "progress";
+
+const LANDING_STATS = [
+  {
+    icon: Eye,
+    target: 90,
+    suffix: "K+",
+    label: "Impressions",
+    bgColor: "#E3DFCE",
+    chipColor: "#4C050C",
+    chipText: "#E3DFCE",
+  },
+  {
+    icon: Globe,
+    target: 20,
+    suffix: "+",
+    label: "Countries",
+    bgColor: "#94B1C8",
+    chipColor: "#1A0905",
+    chipText: "#E3DFCE",
+  },
+  {
+    icon: Users,
+    target: 35,
+    suffix: "+",
+    label: "Members",
+    bgColor: "#E3DFCE",
+    chipColor: "#1A0905",
+    chipText: "#E3DFCE",
+  },
+  {
+    icon: Award,
+    target: 10,
+    suffix: "+",
+    label: "Students",
+    bgColor: "#94B1C8",
+    chipColor: "#4C050C",
+    chipText: "#E3DFCE",
+  },
+] as const;
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("home");
@@ -407,6 +454,145 @@ export default function App() {
     },
   ];
 
+  const heroSpotlightImage =
+    subjects.find((subject) => subject.id === "history")?.image ??
+    subjects[0]?.image;
+
+  const homeTheme: CSSProperties = {
+    "--background": "44 32% 88%",
+    "--foreground": "15 49% 7%",
+    "--muted-foreground": "206 8% 41%",
+    "--primary": "355 88% 16%",
+    "--primary-foreground": "44 32% 88%",
+    "--secondary": "206 35% 69%",
+    "--muted": "44 20% 84%",
+    "--accent": "206 35% 69%",
+    "--border": "15 49% 7%",
+    "--input": "15 49% 7%",
+    "--font-display": "'Instrument Serif', serif",
+    "--font-body": "'Space Grotesk', sans-serif",
+    backgroundColor: "hsl(var(--background))",
+    fontFamily: "var(--font-body)",
+  };
+
+  const featuredMentors = Array.from(
+    new Set(subjects.flatMap((subject) => subject.mentors)),
+  )
+    .slice(0, 8)
+    .map((mentorName) => ({
+      mentorName,
+      mentorData: getMentorByName(mentorName),
+    }));
+
+  const testimonials = [
+    {
+      quote:
+        "I finally found subjects I actually enjoy. Classes feel exciting now, not just required.",
+      name: "Alya R.",
+      role: "Grade 10 Student",
+      tag: "From Indonesia",
+    },
+    {
+      quote:
+        "The mentors explain things like friends who care. I became way more confident asking questions.",
+      name: "Noah K.",
+      role: "IGCSE Learner",
+      tag: "Joined 4 courses",
+    },
+    {
+      quote:
+        "I used to think humanities were impossible for me. Now I am genuinely curious every week.",
+      name: "Sana M.",
+      role: "High School Student",
+      tag: "History + Philosophy",
+    },
+    {
+      quote:
+        "Being in a global student community made learning feel real and connected to the world.",
+      name: "Ethan P.",
+      role: "Student Volunteer",
+      tag: "Global Community",
+    },
+    {
+      quote:
+        "The sessions are practical, warm, and never boring. It feels built for students like us.",
+      name: "Mira T.",
+      role: "Secondary Student",
+      tag: "Weekly Attendee",
+    },
+    {
+      quote:
+        "I improved my confidence and communication skills just by joining discussions regularly.",
+      name: "David L.",
+      role: "Student Member",
+      tag: "Public Speaking Growth",
+    },
+  ];
+
+  const [animatedStats, setAnimatedStats] = useState<number[]>(
+    LANDING_STATS.map(() => 0),
+  );
+  const statsSectionRef = useRef<HTMLElement | null>(null);
+  const statsAnimatedOnceRef = useRef(false);
+
+  useEffect(() => {
+    const section = statsSectionRef.current;
+    if (!section) return;
+
+    const rafIds: number[] = [];
+    const timeoutIds: number[] = [];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry?.isIntersecting || statsAnimatedOnceRef.current) {
+          return;
+        }
+
+        statsAnimatedOnceRef.current = true;
+
+        LANDING_STATS.forEach((stat, index) => {
+          const timeoutId = window.setTimeout(() => {
+            const start = performance.now();
+            const duration = 900;
+
+            const tick = (now: number) => {
+              const progress = Math.min((now - start) / duration, 1);
+              const eased =
+                1 - Math.pow(1 - progress, 3);
+              const value = Math.round(stat.target * eased);
+
+              setAnimatedStats((prev) => {
+                const next = [...prev];
+                next[index] = value;
+                return next;
+              });
+
+              if (progress < 1) {
+                const id = requestAnimationFrame(tick);
+                rafIds.push(id);
+              }
+            };
+
+            const id = requestAnimationFrame(tick);
+            rafIds.push(id);
+          }, index * 140);
+
+          timeoutIds.push(timeoutId);
+        });
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      timeoutIds.forEach((id) => window.clearTimeout(id));
+      rafIds.forEach((id) => cancelAnimationFrame(id));
+    };
+  }, []);
+
   const handleExploreSubject = (subject: Subject) => {
     setSelectedSubject(subject);
     setCurrentPage("subject");
@@ -444,6 +630,23 @@ export default function App() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const [heroPointer, setHeroPointer] = useState({
+    x: 0,
+    y: 0,
+    isActive: false,
+  });
+
+  const handleHeroMouseMove = (
+    event: ReactMouseEvent<HTMLElement>,
+  ) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setHeroPointer({
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+      isActive: true,
+    });
   };
 
   if (currentPage === "team") {
@@ -1032,126 +1235,77 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Decorative background elements */}
-      <div className="fixed top-0 right-0 w-96 h-96 bg-[#D9D7CC] opacity-20 rounded-full blur-3xl pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-[600px] h-[600px] bg-[#0B1F26] opacity-5 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Header */}
-      <header
-        className="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50"
-        style={{
-          borderBottom: "1px solid rgba(98, 110, 115, 0.2)",
-        }}
+    <div className="min-h-screen text-[#1A0905] transition-colors duration-[1200ms]" style={homeTheme}>
+      <section
+        className="relative min-h-screen overflow-hidden"
+        onMouseMove={handleHeroMouseMove}
+        onMouseLeave={() =>
+          setHeroPointer((prev) => ({
+            ...prev,
+            isActive: false,
+          }))
+        }
+        style={
+          {
+            "--mouse-x": `${heroPointer.x}px`,
+            "--mouse-y": `${heroPointer.y}px`,
+            backgroundColor: "#E3DFCE",
+          } as CSSProperties & Record<string, string>
+        }
       >
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <GraduationCap
-                className="w-8 h-8"
-                style={{ color: "#0A1926" }}
-              />
-              <span
-                className="text-xl font-bold"
-                style={{ color: "#0A1926" }}
-              >
-                AnithUncommon
-              </span>
-            </div>
+        <div className="hero-dots-base absolute inset-0 z-0 pointer-events-none" />
+        <div
+          className={`hero-dots-reveal absolute inset-0 z-[1] pointer-events-none ${heroPointer.isActive ? "hero-dots-reveal-active" : ""}`}
+        />
 
-            <nav className="hidden md:flex items-center gap-6">
-              <button
-                onClick={() => scrollToSection("about")}
-                className="transition-colors"
-                style={{ color: "#626E73" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#0A1926")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#626E73")
-                }
-              >
+        {/* Header */}
+        <header className="absolute top-0 inset-x-0 z-20">
+          <div
+            className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center md:grid md:grid-cols-[1fr_auto_1fr]"
+          >
+            <button
+              onClick={handleBackToHome}
+              className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+              aria-label="Go to homepage"
+              style={{
+                color: "#1A0905",
+                fontFamily: "'Instrument Serif', serif",
+              }}
+            >
+              AnithUncommon
+            </button>
+
+            <nav className="hidden md:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
+              <button onClick={() => scrollToSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 About Us
               </button>
-              <button
-                onClick={() => scrollToSection("subjects")}
-                className="transition-colors"
-                style={{ color: "#626E73" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#0A1926")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#626E73")
-                }
-              >
+              <button onClick={() => scrollToSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Subjects
               </button>
-              <button
-                onClick={handleGoToTeam}
-                className="transition-colors"
-                style={{ color: "#626E73" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#0A1926")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#626E73")
-                }
-              >
+              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Our Team
               </button>
-              <button
-                onClick={() => setCurrentPage("faq")}
-                className="transition-colors"
-                style={{ color: "#626E73" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#0A1926")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#626E73")
-                }
-              >
+              <button onClick={() => setCurrentPage("faq")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 FAQ
               </button>
-              <button
-                onClick={() => setCurrentPage("progress")}
-                className="transition-colors"
-                style={{ color: "#626E73" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#0A1926")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#626E73")
-                }
-              >
+              <button onClick={() => setCurrentPage("progress")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Student Progress
               </button>
-              <button
-                onClick={() => scrollToSection("collaborate")}
-                className="transition-colors"
-                style={{ color: "#626E73" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#0A1926")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#626E73")
-                }
-              >
+              <button onClick={() => scrollToSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Collaborate
               </button>
+            </nav>
+
+            <div className="hidden md:flex items-center justify-self-end gap-3 md:mr-1">
               {isLoggedIn ? (
                 <Button
                   size="sm"
                   onClick={() => {
                     setIsLoggedIn(false);
-                    localStorage.removeItem(
-                      "anithuncommon_user",
-                    );
+                    localStorage.removeItem("anithuncommon_user");
                   }}
-                  variant="outline"
-                  style={{
-                    borderColor: "#0A1926",
-                    color: "#0A1926",
-                  }}
+                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#1A0905] shadow-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
                 >
                   Sign Out
                 </Button>
@@ -1159,32 +1313,29 @@ export default function App() {
                 <Button
                   size="sm"
                   onClick={() => setShowLoginModal(true)}
-                  variant="outline"
-                  style={{
-                    borderColor: "#0A1926",
-                    color: "#0A1926",
-                  }}
+                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#1A0905] shadow-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
                 >
                   Sign In
                 </Button>
               )}
+
               <Button
                 size="sm"
                 onClick={handleGoToJoinUs}
-                style={{
-                  backgroundColor: "#0A1926",
-                  color: "#D9D7CC",
-                }}
+                className="rounded-full px-6 py-2.5 text-sm border-2 border-[#1A0905] shadow-none"
+                style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
               >
                 Join Us
               </Button>
-            </nav>
+            </div>
 
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden"
+              className="md:hidden liquid-glass rounded-full"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{ color: "#1A0905" }}
             >
               {mobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -1195,26 +1346,14 @@ export default function App() {
           </div>
 
           {mobileMenuOpen && (
-            <nav className="md:hidden mt-4 pb-4 flex flex-col gap-3">
-              <button
-                onClick={() => scrollToSection("about")}
-                className="text-left"
-                style={{ color: "#626E73" }}
-              >
+            <nav className="md:hidden mx-6 mt-1 rounded-3xl p-5 flex flex-col gap-3 liquid-glass">
+              <button onClick={() => scrollToSection("about")} className="text-left" style={{ color: "#1A0905" }}>
                 About Us
               </button>
-              <button
-                onClick={() => scrollToSection("subjects")}
-                className="text-left"
-                style={{ color: "#626E73" }}
-              >
+              <button onClick={() => scrollToSection("subjects")} className="text-left" style={{ color: "#1A0905" }}>
                 Subjects
               </button>
-              <button
-                onClick={handleGoToTeam}
-                className="text-left"
-                style={{ color: "#626E73" }}
-              >
+              <button onClick={handleGoToTeam} className="text-left" style={{ color: "#1A0905" }}>
                 Our Team
               </button>
               <button
@@ -1223,7 +1362,7 @@ export default function App() {
                   setMobileMenuOpen(false);
                 }}
                 className="text-left"
-                style={{ color: "#626E73" }}
+                style={{ color: "#1A0905" }}
               >
                 FAQ
               </button>
@@ -1233,32 +1372,23 @@ export default function App() {
                   setMobileMenuOpen(false);
                 }}
                 className="text-left"
-                style={{ color: "#626E73" }}
+                style={{ color: "#1A0905" }}
               >
                 Student Progress
               </button>
-              <button
-                onClick={() => scrollToSection("collaborate")}
-                className="text-left"
-                style={{ color: "#626E73" }}
-              >
+              <button onClick={() => scrollToSection("collaborate")} className="text-left" style={{ color: "#1A0905" }}>
                 Collaborate
               </button>
+
               {isLoggedIn ? (
                 <Button
                   size="sm"
                   onClick={() => {
                     setIsLoggedIn(false);
-                    localStorage.removeItem(
-                      "anithuncommon_user",
-                    );
+                    localStorage.removeItem("anithuncommon_user");
                   }}
-                  variant="outline"
-                  className="w-full"
-                  style={{
-                    borderColor: "#0A1926",
-                    color: "#0A1926",
-                  }}
+                  className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
                 >
                   Sign Out
                 </Button>
@@ -1266,160 +1396,200 @@ export default function App() {
                 <Button
                   size="sm"
                   onClick={() => setShowLoginModal(true)}
-                  variant="outline"
-                  className="w-full"
-                  style={{
-                    borderColor: "#0A1926",
-                    color: "#0A1926",
-                  }}
+                  className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
                 >
                   Sign In
                 </Button>
               )}
+
               <Button
                 size="sm"
                 onClick={handleGoToJoinUs}
-                className="w-full"
-                style={{
-                  backgroundColor: "#0A1926",
-                  color: "#D9D7CC",
-                }}
+                className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
+                style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
               >
                 Join Us
               </Button>
             </nav>
           )}
+        </header>
+
+        {/* Hero Section */}
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-28 min-h-screen">
+          <h1
+            className="hero-prism-text text-5xl sm:text-7xl md:text-8xl leading-[1.02] pb-2 tracking-[-2.46px] max-w-6xl font-normal"
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+            }}
+          >
+            Learning Beyond Classrooms,<br />
+            Led by Students.
+          </h1>
+
+          <p
+            className="text-base sm:text-lg max-w-2xl mt-8 leading-relaxed"
+            style={{
+              color: "#1A0905",
+            }}
+          >
+            We are a non-profit youth community opening uncommon
+            subjects to everyone. Study what sparks your curiosity,
+            with global peers and mentors who get it.
+          </p>
+
+          <div className="w-full flex flex-row flex-wrap items-center justify-center gap-4 mt-12">
+            <Button
+              size="lg"
+              className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#1A0905]"
+              style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+              onClick={() => scrollToSection("subjects")}
+            >
+              Explore Subjects
+            </Button>
+            <Button
+              size="lg"
+              className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#1A0905]"
+              style={{ backgroundColor: "#94B1C8", color: "#1A0905" }}
+              onClick={handleGoToTeam}
+            >
+              Meet The Team
+            </Button>
+          </div>
         </div>
-      </header>
 
-      {/* Hero Section */}
+        {/* Marquee Banner */}
+        <section className="-mt-8 border-y-2 border-[#1A0905] bg-[#94B1C8] overflow-hidden relative z-10">
+          <marquee
+            behavior="scroll"
+            direction="left"
+            scrollAmount={8}
+            className="py-3 text-sm font-semibold tracking-[0.12em]"
+            style={{ color: "#1A0905" }}
+          >
+            STUDENT-LED • GLOBAL • NON-PROFIT • STUDENT-LED • GLOBAL •
+            NON-PROFIT • STUDENT-LED • GLOBAL • NON-PROFIT
+          </marquee>
+        </section>
+      </section>
+
+      {/* Impact Stats Section */}
       <section
-        className="relative py-24 overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, #0A1926 0%, #0B1F26 100%)",
-        }}
+        ref={statsSectionRef}
+        className="py-20 border-b-2 border-[#1A0905] relative overflow-hidden"
+        style={{ backgroundColor: "#ede9da" }}
       >
-        {/* Decorative circles */}
         <div
-          className="absolute top-10 right-20 w-32 h-32 border-2 rounded-full opacity-20"
-          style={{ borderColor: "#D9D7CC" }}
+          className="absolute inset-0 pointer-events-none opacity-30"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.16) 1px, transparent 0)",
+            backgroundSize: "18px 18px",
+          }}
         />
-        <div
-          className="absolute bottom-20 left-10 w-48 h-48 border-2 rounded-full opacity-10"
-          style={{ borderColor: "#A1A6A5" }}
-        />
-        <div className="absolute top-1/2 right-1/3 w-24 h-24 bg-[#626E73] opacity-10 rounded-full blur-xl" />
-
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Small decorative line */}
+          <div className="text-center mb-12">
             <div
-              className="w-16 h-1 mx-auto mb-6"
-              style={{ backgroundColor: "#D9D7CC" }}
-            />
-
-            <h1
-              className="text-4xl md:text-6xl font-bold mb-6"
-              style={{ color: "#D9D7CC" }}
+              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]"
+              style={{ backgroundColor: "#94B1C8" }}
             >
-              Empowering Students Beyond the Classroom
-            </h1>
+              <span
+                className="text-xs tracking-[0.22em] font-semibold"
+                style={{ color: "#1A0905" }}
+              >
+                OUR IMPACT
+              </span>
+            </div>
             <p
-              className="text-xl mb-8"
-              style={{ color: "#A1A6A5" }}
+              className="text-lg max-w-2xl mx-auto"
+              style={{ color: "#1A0905" }}
             >
-              Student-run. Non-profit. Global. We believe
-              education should not be limited by school systems,
-              geography, or access.
+              A quick look at the community growth students
+              have built together.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="text-lg"
-                style={{
-                  backgroundColor: "#D9D7CC",
-                  color: "#0A1926",
-                }}
-                onClick={() => scrollToSection("subjects")}
-              >
-                <BookOpen className="w-5 h-5 mr-2" />
-                Explore Subjects
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-lg border-2"
-                style={{
-                  borderColor: "#D9D7CC",
-                  color: "#D9D7CC",
-                  backgroundColor: "transparent",
-                }}
-                onClick={handleGoToJoinUs}
-              >
-                <Users className="w-5 h-5 mr-2" />
-                Join Community
-              </Button>
-            </div>
+          </div>
 
-            {/* Decorative geometric shapes */}
-            <div className="mt-12 flex justify-center gap-6">
-              <div
-                className="w-8 h-8 rotate-45"
-                style={{
-                  backgroundColor: "#D9D7CC",
-                  opacity: 0.3,
-                }}
-              />
-              <div
-                className="w-8 h-8 rounded-full border-2"
-                style={{ borderColor: "#A1A6A5", opacity: 0.4 }}
-              />
-              <div
-                className="w-8 h-8"
-                style={{
-                  backgroundColor: "#626E73",
-                  opacity: 0.3,
-                  clipPath:
-                    "polygon(50% 0%, 100% 100%, 0% 100%)",
-                }}
-              />
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {LANDING_STATS.map((stat, index) => {
+              const Icon = stat.icon;
+
+              return (
+                <Card
+                  key={stat.label}
+                  className={`group p-6 border-2 border-[#1A0905] rounded-[24px] shadow-[7px_7px_0px_rgba(26,9,5,0.72)] transition-all duration-500 hover:-translate-y-1 ${
+                    index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"
+                  }`}
+                  style={{ backgroundColor: stat.bgColor }}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-5">
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center border-2 border-[#1A0905]"
+                      style={{ backgroundColor: stat.chipColor }}
+                    >
+                      <Icon
+                        className="w-5 h-5"
+                        style={{ color: stat.chipText }}
+                      />
+                    </div>
+                    <span
+                      className="text-[10px] font-semibold tracking-[0.15em] border-2 border-[#1A0905] px-2 py-1 rounded-full"
+                      style={{ color: "#1A0905" }}
+                    >
+                      LIVE
+                    </span>
+                  </div>
+
+                  <div
+                    className="text-4xl font-bold leading-none mb-2"
+                    style={{ color: "#1A0905" }}
+                  >
+                    {animatedStats[index]}
+                    {stat.suffix}
+                  </div>
+                  <p
+                    className="text-sm font-semibold tracking-[0.08em] uppercase mb-4"
+                    style={{ color: "#1A0905" }}
+                  >
+                    {stat.label}
+                  </p>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* About Us Section */}
-      <section id="about" className="py-20 relative">
-        <div className="absolute top-20 left-0 w-64 h-64 bg-[#0A1926] opacity-5 rounded-full blur-3xl" />
+      <section
+        id="about"
+        className="py-20 relative transition-colors duration-[1200ms] border-b-2 border-[#1A0905]"
+      >
+        <div className="absolute top-20 left-0 w-64 h-64 bg-[#94B1C8]/25 rounded-full blur-3xl" />
+        <div className="absolute bottom-8 right-6 rounded-full border-2 border-[#1A0905] bg-[#E3DFCE] px-4 py-2 text-xs font-semibold tracking-[0.1em] rotate-[-6deg]">
+          ORIGIN STORY
+        </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <div
-                className="inline-block px-4 py-2 rounded-full mb-4"
-                style={{ backgroundColor: "#D9D7CC" }}
-              >
+              <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905] shadow-[3px_3px_0px_rgba(26,9,5,0.28)]" style={{ backgroundColor: "#94B1C8" }}>
                 <span
-                  className="text-sm font-semibold"
-                  style={{ color: "#0A1926" }}
+                  className="text-xs tracking-[0.22em] font-semibold"
+                  style={{ color: "#1A0905" }}
                 >
                   ABOUT US
                 </span>
               </div>
               <h2
-                className="text-4xl md:text-5xl font-bold mb-6"
-                style={{ color: "#0A1926" }}
+                className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6"
+                style={{ color: "#1A0905" }}
               >
                 Our Story
               </h2>
-              <div
-                className="w-20 h-1 mx-auto"
-                style={{ backgroundColor: "#626E73" }}
-              />
+              <div className="w-24 h-px mx-auto" style={{ backgroundColor: "#94B1C8" }} />
             </div>
 
-            <Card className="p-8 md:p-12 shadow-xl relative overflow-hidden mb-8">
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[10px_10px_0px_0px_rgba(26,9,5,0.9)] relative overflow-hidden mb-8">
               {/* Decorative corner element */}
               <div
                 className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-5"
@@ -1430,7 +1600,7 @@ export default function App() {
 
               <p
                 className="text-lg leading-relaxed mb-6"
-                style={{ color: "#626E73" }}
+                style={{ color: "#1A0905" }}
               >
                 AnithUncommon is a youth-led, non-profit
                 community based in Indonesia, founded in May
@@ -1441,7 +1611,7 @@ export default function App() {
               </p>
               <p
                 className="text-lg leading-relaxed mb-6"
-                style={{ color: "#626E73" }}
+                style={{ color: "#1A0905" }}
               >
                 Many students are forced to study subjects they
                 don't enjoy, simply because they have no other
@@ -1449,7 +1619,7 @@ export default function App() {
               </p>
               <p
                 className="text-lg leading-relaxed"
-                style={{ color: "#626E73" }}
+                style={{ color: "#1A0905" }}
               >
                 AnithUncommon exists to reduce educational
                 inequality by giving students access to subjects
@@ -1490,16 +1660,16 @@ export default function App() {
 
             {/* Mission and Vision Cards */}
             <div className="grid md:grid-cols-2 gap-6">
-              <Card className="p-6 hover:shadow-lg transition-shadow">
+              <Card className="p-6 rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.65)] hover:translate-y-[-2px] transition-all duration-500">
                 <h3
-                  className="text-2xl font-bold mb-4"
-                  style={{ color: "#0A1926" }}
+                  className="text-3xl font-editorial-serif font-semibold mb-4"
+                  style={{ color: "#1A0905" }}
                 >
                   Our Mission
                 </h3>
                 <p
                   className="leading-relaxed"
-                  style={{ color: "#626E73" }}
+                  style={{ color: "#1A0905" }}
                 >
                   To empower and support students throughout
                   their individual learning journeys through
@@ -1509,16 +1679,16 @@ export default function App() {
                 </p>
               </Card>
 
-              <Card className="p-6 hover:shadow-lg transition-shadow">
+              <Card className="p-6 rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.65)] hover:translate-y-[-2px] transition-all duration-500">
                 <h3
-                  className="text-2xl font-bold mb-4"
-                  style={{ color: "#0A1926" }}
+                  className="text-3xl font-editorial-serif font-semibold mb-4"
+                  style={{ color: "#1A0905" }}
                 >
                   Our Vision
                 </h3>
                 <p
                   className="leading-relaxed"
-                  style={{ color: "#626E73" }}
+                  style={{ color: "#1A0905" }}
                 >
                   Creating a digital environment where students
                   can explore interests outside the traditional
@@ -1535,31 +1705,36 @@ export default function App() {
       {/* Subjects Section */}
       <section
         id="subjects"
-        className="py-20"
-        style={{ backgroundColor: "#F9F9F7" }}
+        className="py-20 transition-colors duration-[1200ms] border-b-2 border-[#1A0905] relative overflow-hidden"
+        style={{ backgroundColor: "#ede9da" }}
       >
+        <div
+          className="absolute inset-0 pointer-events-none opacity-35"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(148, 177, 200, 0.32) 1px, transparent 1px)",
+            backgroundSize: "44px 100%",
+          }}
+        />
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div
-              className="inline-block px-4 py-2 rounded-full mb-4"
-              style={{ backgroundColor: "#0A1926" }}
-            >
+            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905] shadow-[3px_3px_0px_rgba(26,9,5,0.28)]" style={{ backgroundColor: "#94B1C8" }}>
               <span
-                className="text-sm font-semibold"
-                style={{ color: "#D9D7CC" }}
+                className="text-xs tracking-[0.22em] font-semibold"
+                style={{ color: "#1A0905" }}
               >
                 OUR SUBJECTS
               </span>
             </div>
             <h2
-              className="text-4xl md:text-5xl font-bold mb-4"
-              style={{ color: "#0A1926" }}
+              className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4"
+              style={{ color: "#1A0905" }}
             >
               Our Subjects
             </h2>
             <p
               className="text-xl max-w-2xl mx-auto"
-              style={{ color: "#626E73" }}
+              style={{ color: "#1A0905" }}
             >
               Explore topics that spark your curiosity. All
               taught by students, for students.
@@ -1570,28 +1745,126 @@ export default function App() {
             {subjects.map((subject, index) => (
               <div
                 key={subject.id}
+                className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <SubjectCard
-                  title={subject.title}
-                  description={subject.description}
-                  image={subject.image}
-                  topics={subject.topics}
-                  color={subject.color}
-                  mentors={subject.mentors}
-                  onExplore={() =>
-                    handleExploreSubject(subject)
-                  }
-                  onMentorClick={handleGoToMentor}
-                />
+                <div className={`absolute -top-3 ${index % 2 === 0 ? "left-4 rotate-[-3deg]" : "right-4 rotate-3"} z-10 border-2 border-[#1A0905] bg-[#E3DFCE] p-1`}>
+                  <BookOpen className="w-4 h-4" style={{ color: "#4C050C" }} />
+                </div>
+                <div className="rounded-[30px] border-2 border-[#1A0905] shadow-[8px_8px_0px_rgba(26,9,5,0.78)] overflow-hidden bg-[#f7f4eb]">
+                  <SubjectCard
+                    title={subject.title}
+                    description={subject.description}
+                    image={subject.image}
+                    topics={subject.topics}
+                    color={subject.color}
+                    mentors={subject.mentors}
+                    onExplore={() =>
+                      handleExploreSubject(subject)
+                    }
+                    onMentorClick={handleGoToMentor}
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Mentors Section */}
+      <section className="py-20 transition-colors duration-[1200ms] border-b-2 border-[#1A0905] relative" style={{ backgroundColor: "#94B1C8" }}>
+        <div className="absolute top-10 right-8 rounded-full border-2 border-[#1A0905] bg-[#E3DFCE] px-4 py-2 text-xs font-semibold tracking-[0.1em] rotate-[8deg]">
+          MENTOR WALL
+        </div>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#4C050C" }}>
+              Meet Our Mentors
+            </h2>
+            <p className="text-lg" style={{ color: "#1A0905" }}>
+              Experienced student educators guiding uncommon learning paths.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredMentors.map(({ mentorName, mentorData }, index) => (
+              <Card
+                key={mentorName}
+                className={`relative p-5 border-2 border-[#1A0905] rounded-2xl bg-[#E3DFCE] shadow-[8px_8px_0px_0px_rgba(26,9,5,1)] transition-transform duration-300 hover:-translate-y-1 ${index % 2 === 0 ? "rotate-[-1deg]" : "rotate-1"}`}
+              >
+                <div className="absolute -top-3 -right-2 border-2 border-[#1A0905] bg-[#94B1C8] p-1 rotate-3">
+                  <Users className="w-4 h-4" style={{ color: "#1A0905" }} />
+                </div>
+                <h3 className="text-xl font-editorial-serif font-semibold mb-2" style={{ color: "#1A0905" }}>
+                  {mentorName}
+                </h3>
+                <p className="text-sm mb-4" style={{ color: "#1A0905" }}>
+                  {mentorData?.title ?? "Mentor"}
+                </p>
+                <Button
+                  size="sm"
+                  className="w-full border-2 border-[#1A0905] rounded-full"
+                  style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                  onClick={() => handleGoToMentor(mentorName)}
+                >
+                  View Profile
+                </Button>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 border-b-2 border-[#1A0905] relative overflow-x-hidden" style={{ backgroundColor: "#ede9da" }}>
+        <div className="absolute top-6 left-8 rounded-full border-2 border-[#1A0905] bg-[#E3DFCE] px-4 py-2 text-xs font-semibold tracking-[0.1em] rotate-[-6deg]">
+          STUDENT VOICES
+        </div>
+
+        <div className="container mx-auto px-4 mb-12">
+          <div className="text-center max-w-3xl mx-auto">
+            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#1A0905" }}>
+              What Students Are Saying
+            </h2>
+            <p className="text-lg" style={{ color: "#1A0905" }}>
+              Real feedback from learners in our community.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative w-full overflow-x-hidden overflow-y-visible py-2">
+          <div className="testimonial-track flex items-stretch gap-6 px-4 md:px-8 animate-testimonial-scroll">
+            {[...testimonials, ...testimonials].map(
+              (testimonial, index) => (
+                <Card
+                  key={`${testimonial.name}-${index}`}
+                  className={`w-[320px] sm:w-[360px] flex-shrink-0 p-6 border-2 border-[#1A0905] rounded-[24px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.82)] ${
+                    index % 2 === 0 ? "rotate-[-1deg]" : "rotate-[1deg]"
+                  }`}
+                >
+                  <div className="inline-block px-3 py-1 mb-4 border-2 border-[#1A0905] rounded-full bg-[#94B1C8] text-xs font-semibold tracking-[0.08em]" style={{ color: "#1A0905" }}>
+                    {testimonial.tag}
+                  </div>
+                  <p className="text-base leading-relaxed mb-5" style={{ color: "#1A0905" }}>
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="border-t-2 border-[#1A0905] pt-4">
+                    <p className="font-semibold" style={{ color: "#4C050C" }}>
+                      {testimonial.name}
+                    </p>
+                    <p className="text-sm" style={{ color: "#626E73" }}>
+                      {testimonial.role}
+                    </p>
+                  </div>
+                </Card>
+              ),
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Why Join Us Section */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-20 relative overflow-hidden transition-colors duration-[1200ms] border-b-2 border-[#1A0905]" style={{ backgroundColor: "#ede9da" }}>
         {/* Decorative geometric shapes */}
         <div
           className="absolute top-10 right-0 w-40 h-40"
@@ -1606,10 +1879,7 @@ export default function App() {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h2
-              className="text-4xl md:text-5xl font-bold mb-4"
-              style={{ color: "#0A1926" }}
-            >
+            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#1A0905" }}>
               Why Join Us
             </h2>
             <div
@@ -1619,7 +1889,7 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            <Card className="p-6 text-center hover:shadow-xl transition-all relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -1645,7 +1915,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-xl transition-all relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -1670,7 +1940,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-xl transition-all relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -1696,7 +1966,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center hover:shadow-xl transition-all relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -1726,30 +1996,20 @@ export default function App() {
       </section>
 
       {/* Collaborate Section */}
-      <section
-        id="collaborate"
-        className="py-20"
-        style={{
-          background:
-            "linear-gradient(135deg, #0B1F26 0%, #0A1926 100%)",
-        }}
-      >
+      <section id="collaborate" className="py-20 transition-colors duration-[1200ms]" style={{ backgroundColor: "#E3DFCE" }}>
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2
-                className="text-4xl md:text-5xl font-bold mb-6"
-                style={{ color: "#D9D7CC" }}
-              >
+              <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6" style={{ color: "#1A0905" }}>
                 Contact/Collaborate with Us
               </h2>
               <div
                 className="w-20 h-1 mx-auto mb-8"
-                style={{ backgroundColor: "#A1A6A5" }}
+                style={{ backgroundColor: "#94B1C8" }}
               />
               <p
                 className="text-lg mb-6"
-                style={{ color: "#A1A6A5" }}
+                style={{ color: "#1A0905" }}
               >
                 At AnithUncommon, we believe impact grows
                 through collaboration. Whether you're an
@@ -1761,7 +2021,7 @@ export default function App() {
             </div>
 
             {/* Contact Form */}
-            <Card className="p-8 md:p-12">
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[10px_10px_0px_rgba(26,9,5,0.78)]">
               <form
                 className="space-y-6"
                 onSubmit={(e) => {
@@ -1793,8 +2053,8 @@ export default function App() {
                       id="firstName"
                       name="firstName"
                       required
-                      className="w-full px-4 py-3 rounded-lg border-2 focus:outline-none focus:border-[#0A1926] transition-colors"
-                      style={{ borderColor: "#D9D7CC" }}
+                      className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors"
+                      style={{ backgroundColor: "#ede9da" }}
                       placeholder="Enter your first name"
                     />
                   </div>
@@ -1811,8 +2071,8 @@ export default function App() {
                       id="lastName"
                       name="lastName"
                       required
-                      className="w-full px-4 py-3 rounded-lg border-2 focus:outline-none focus:border-[#0A1926] transition-colors"
-                      style={{ borderColor: "#D9D7CC" }}
+                      className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors"
+                      style={{ backgroundColor: "#ede9da" }}
                       placeholder="Enter your last name"
                     />
                   </div>
@@ -1831,8 +2091,8 @@ export default function App() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-lg border-2 focus:outline-none focus:border-[#0A1926] transition-colors"
-                    style={{ borderColor: "#D9D7CC" }}
+                    className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors"
+                    style={{ backgroundColor: "#ede9da" }}
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -1850,8 +2110,8 @@ export default function App() {
                     name="message"
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-lg border-2 focus:outline-none focus:border-[#0A1926] transition-colors resize-none"
-                    style={{ borderColor: "#D9D7CC" }}
+                    className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors resize-none"
+                    style={{ backgroundColor: "#ede9da" }}
                     placeholder="Tell us about yourself and your ideas for collaboration..."
                   />
                 </div>
@@ -1859,10 +2119,10 @@ export default function App() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full text-lg"
+                  className="w-full text-lg rounded-full border-2 border-[#1A0905]"
                   style={{
-                    backgroundColor: "#D9D7CC",
-                    color: "#0A1926",
+                    backgroundColor: "#4C050C",
+                    color: "#E3DFCE",
                   }}
                 >
                   <Mail className="w-5 h-5 mr-2" />
@@ -1883,10 +2143,10 @@ export default function App() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button
                     variant="outline"
-                    className="border-2"
+                    className="border-2 border-[#1A0905] rounded-full"
                     style={{
-                      borderColor: "#0A1926",
-                      color: "#0A1926",
+                      backgroundColor: "#94B1C8",
+                      color: "#1A0905",
                     }}
                     onClick={() =>
                       (window.location.href =
@@ -1898,10 +2158,10 @@ export default function App() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="border-2"
+                    className="border-2 border-[#1A0905] rounded-full"
                     style={{
-                      borderColor: "#0A1926",
-                      color: "#0A1926",
+                      backgroundColor: "#94B1C8",
+                      color: "#1A0905",
                     }}
                     onClick={() =>
                       window.open(
@@ -1922,8 +2182,8 @@ export default function App() {
 
       {/* Apply Now Section - Links to Join Us page */}
       <section
-        className="py-20 relative overflow-hidden"
-        style={{ backgroundColor: "#F9F9F7" }}
+        className="py-20 relative overflow-hidden transition-colors duration-[1200ms]"
+        style={{ backgroundColor: "#ede9da" }}
       >
         {/* Decorative shapes */}
         <div className="absolute top-0 left-0 w-40 h-40 bg-[#0A1926] opacity-5 rounded-full" />
@@ -1931,20 +2191,17 @@ export default function App() {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <div
-              className="inline-block px-4 py-2 rounded-full mb-4"
-              style={{ backgroundColor: "#0A1926" }}
-            >
+            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905] shadow-[3px_3px_0px_rgba(26,9,5,0.28)]" style={{ backgroundColor: "#94B1C8" }}>
               <span
-                className="text-sm font-semibold"
-                style={{ color: "#D9D7CC" }}
+                className="text-xs tracking-[0.22em] font-semibold"
+                style={{ color: "#1A0905" }}
               >
                 JOIN OUR COMMUNITY
               </span>
             </div>
             <h2
-              className="text-4xl md:text-5xl font-bold mb-6"
-              style={{ color: "#0A1926" }}
+              className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6"
+              style={{ color: "#1A0905" }}
             >
               Ready to Make a Difference?
             </h2>
@@ -1954,7 +2211,7 @@ export default function App() {
             />
             <p
               className="text-xl max-w-2xl mx-auto mb-8"
-              style={{ color: "#626E73" }}
+              style={{ color: "#1A0905" }}
             >
               Join our global community of student educators and
               help make education accessible to everyone.
@@ -1963,7 +2220,7 @@ export default function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
             <Card
-              className="p-8 hover:shadow-2xl transition-all cursor-pointer group relative overflow-hidden"
+              className="p-8 rounded-[28px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.76)] hover:shadow-[11px_11px_0px_rgba(26,9,5,0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
               onClick={handleGoToJoinUs}
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-0 group-hover:opacity-5 rounded-full transition-opacity" />
@@ -2002,7 +2259,7 @@ export default function App() {
             </Card>
 
             <Card
-              className="p-8 hover:shadow-2xl transition-all cursor-pointer group relative overflow-hidden"
+              className="p-8 rounded-[28px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.76)] hover:shadow-[11px_11px_0px_rgba(26,9,5,0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
               onClick={handleGoToJoinUs}
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#626E73] opacity-0 group-hover:opacity-5 rounded-full transition-opacity" />
@@ -2044,10 +2301,10 @@ export default function App() {
           <div className="text-center">
             <Button
               size="lg"
-              className="text-lg px-8"
+              className="text-lg px-8 rounded-full border-2 border-[#1A0905]"
               style={{
-                backgroundColor: "#0A1926",
-                color: "#D9D7CC",
+                backgroundColor: "#4C050C",
+                color: "#E3DFCE",
               }}
               onClick={handleGoToJoinUs}
             >
@@ -2060,9 +2317,17 @@ export default function App() {
 
       {/* Footer */}
       <footer
-        className="py-12"
-        style={{ backgroundColor: "#0A1926" }}
+        className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
+        style={{ backgroundColor: "#1A0905" }}
       >
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(148, 177, 200, 0.4) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+          }}
+        />
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
@@ -2071,25 +2336,25 @@ export default function App() {
                 style={{ color: "#D9D7CC" }}
               />
               <span
-                className="text-2xl font-bold"
-                style={{ color: "#D9D7CC" }}
+                className="text-3xl font-editorial-serif font-semibold"
+                style={{ color: "#E3DFCE" }}
               >
                 AnithUncommon
               </span>
             </div>
-            <p className="mb-2" style={{ color: "#A1A6A5" }}>
+            <p className="mb-2" style={{ color: "#94B1C8" }}>
               Student-run | Non-profit | Global
             </p>
             <div className="flex items-center justify-center gap-4 mb-6">
               <a
                 href="mailto:anithuncommon@gmail.com"
                 className="flex items-center gap-2 transition-colors"
-                style={{ color: "#A1A6A5" }}
+                style={{ color: "#94B1C8" }}
                 onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#D9D7CC")
+                  (e.currentTarget.style.color = "#E3DFCE")
                 }
                 onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#A1A6A5")
+                  (e.currentTarget.style.color = "#94B1C8")
                 }
               >
                 <Mail className="w-4 h-4" />
@@ -2100,9 +2365,9 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <Globe
                   className="w-4 h-4"
-                  style={{ color: "#A1A6A5" }}
+                  style={{ color: "#94B1C8" }}
                 />
-                <span style={{ color: "#A1A6A5" }}>
+                <span style={{ color: "#94B1C8" }}>
                   Connect with us:
                 </span>
               </div>
@@ -2112,12 +2377,12 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 transition-colors"
-                  style={{ color: "#A1A6A5" }}
+                  style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#D9D7CC")
+                    (e.currentTarget.style.color = "#E3DFCE")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#A1A6A5")
+                    (e.currentTarget.style.color = "#94B1C8")
                   }
                 >
                   <Instagram className="w-4 h-4" />
@@ -2128,12 +2393,12 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 transition-colors"
-                  style={{ color: "#A1A6A5" }}
+                  style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#D9D7CC")
+                    (e.currentTarget.style.color = "#E3DFCE")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#A1A6A5")
+                    (e.currentTarget.style.color = "#94B1C8")
                   }
                 >
                   <Globe className="w-4 h-4" />
@@ -2144,12 +2409,12 @@ export default function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 transition-colors"
-                  style={{ color: "#A1A6A5" }}
+                  style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#D9D7CC")
+                    (e.currentTarget.style.color = "#E3DFCE")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#A1A6A5")
+                    (e.currentTarget.style.color = "#94B1C8")
                   }
                 >
                   <svg
@@ -2169,7 +2434,7 @@ export default function App() {
             className="border-t pt-6 text-center"
             style={{ borderColor: "rgba(161, 166, 165, 0.2)" }}
           >
-            <p style={{ color: "#626E73" }}>
+            <p style={{ color: "#94B1C8" }}>
               © AnithUncommon. Empowering students beyond the
               classroom.
             </p>
