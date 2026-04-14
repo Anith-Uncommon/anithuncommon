@@ -1,5 +1,7 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/app/components/ui/button";
-import { ArrowLeft, FileText, ExternalLink, Linkedin, Mail, Instagram } from "lucide-react";
+import { FileText, ExternalLink, Mail, Instagram, TreePine, Menu, X } from "lucide-react";
 import { TeamMember } from "./TeamMember";
 
 interface MeetOurTeamProps {
@@ -7,6 +9,45 @@ interface MeetOurTeamProps {
 }
 
 export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
+  const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const goToHome = () => {
+    setMobileMenuOpen(false);
+    onBack();
+  };
+
+  const goToHomeSection = (sectionId: string) => {
+    setMobileMenuOpen(false);
+    onBack();
+
+    window.setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (!element) return;
+
+      const headerOffset = 96;
+      const targetTop =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        headerOffset;
+
+      window.scrollTo({
+        top: Math.max(targetTop, 0),
+        behavior: "smooth",
+      });
+    }, 140);
+  };
+
+  const goToFaq = () => {
+    setMobileMenuOpen(false);
+    navigate("/faq");
+  };
+
+  const goToProgress = () => {
+    setMobileMenuOpen(false);
+    navigate("/progress");
+  };
+
   const departments = {
     leadership: {
       title: "Leadership",
@@ -232,27 +273,132 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
   };
 
   return (
-    <div className="min-h-screen pb-20 bg-white">
-      {/* Background Decor */}
-      <div className="fixed top-0 right-0 w-96 h-96 bg-[#D9D7CC] opacity-10 rounded-full blur-3xl -z-10" />
-      <div className="fixed bottom-0 left-0 w-96 h-96 bg-[#0B1F26] opacity-5 rounded-full blur-3xl -z-10" />
+    <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+      <div
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+          backgroundSize: "20px 20px",
+        }}
+      />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-4 py-12">
-        <Button 
-          variant="ghost" 
-          onClick={onBack}
-          className="mb-8 hover:bg-[#D9D7CC] text-[#0A1926]"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
-        </Button>
+      <header
+        className="fixed top-0 inset-x-0 z-30"
+        style={{
+          backgroundColor: "rgba(227, 223, 206, 0.94)",
+          borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
+        }}
+      >
+        <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
+          <button
+            onClick={goToHome}
+            className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+            aria-label="Go to homepage"
+            style={{
+              color: "#1A0905",
+              fontFamily: "'Instrument Serif', serif",
+            }}
+          >
+            AnithUncommon
+          </button>
 
-        <div className="text-center mb-20">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#0A1926]">
-            Meet Our Team
-          </h1>
-          <div className="w-24 h-1 mx-auto mb-6 bg-[#626E73]" />
-          <p className="text-xl max-w-2xl mx-auto text-[#626E73]">
+          <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
+            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              About Us
+            </button>
+            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              Subjects
+            </button>
+            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              Collaborate
+            </button>
+            <button className="transition-colors" style={{ color: "#1A0905" }}>
+              Our Team
+            </button>
+            <button onClick={goToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              Student Progress
+            </button>
+            <button onClick={goToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              FAQ
+            </button>
+          </nav>
+
+          <div className="min-[1440px]:hidden" />
+
+          <Button
+            variant="ghost"
+            size="sm"
+            className="min-[1440px]:hidden liquid-glass rounded-full"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{ color: "#1A0905" }}
+          >
+            {mobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </Button>
+        </div>
+
+        {mobileMenuOpen && (
+          <div
+            className="min-[1440px]:hidden fixed inset-0 z-[120] isolate"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <div className="absolute inset-0 z-[121] bg-black/35" />
+            <nav
+              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-end mb-6">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="rounded-full"
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ color: "#1A0905" }}
+                >
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+
+              <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
+                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                  About Us
+                </button>
+                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                  Subjects
+                </button>
+                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                  Collaborate
+                </button>
+                <button className="text-lg" style={{ color: "#1A0905" }}>
+                  Our Team
+                </button>
+                <button onClick={goToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                  Student Progress
+                </button>
+                <button onClick={goToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                  FAQ
+                </button>
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      <div className="max-w-7xl mx-auto px-4 md:px-6 pt-32 pb-14 relative z-10">
+
+        <div className="text-center mb-16">
+          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]" style={{ backgroundColor: "#94B1C8" }}>
+            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#1A0905" }}>
+              OUR TEAM
+            </span>
+          </div>
+          <p className="text-lg md:text-xl max-w-2xl mx-auto text-[#1A0905]">
             A diverse group of passionate students from around the world working together to make education uncommon.
           </p>
         </div>
@@ -260,8 +406,8 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {Object.values(departments).map((dept, index) => (
           <div key={index} className="mb-20">
             <div className="flex items-center gap-4 mb-10">
-              <h2 className="text-3xl font-bold text-[#0A1926]">{dept.title}</h2>
-              <div className="grow h-px bg-[#D9D7CC]" />
+              <h2 className="text-3xl font-editorial-serif font-semibold text-[#1A0905]">{dept.title}</h2>
+              <div className="grow h-px bg-[#94B1C8]" />
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -276,22 +422,22 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         ))}
 
         {/* Join Us Section */}
-        <div className="relative overflow-hidden rounded-3xl p-12 text-center mb-12 bg-[#0A1926]">
+        <div className="relative overflow-hidden rounded-[30px] p-12 text-center mb-12 border-2 border-[#1A0905] bg-[#4C050C] shadow-[10px_10px_0px_rgba(26,9,5,0.75)]">
           {/* Decorative shapes */}
           <div className="absolute top-0 left-0 w-40 h-40 bg-[#D9D7CC] opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
           <div className="absolute bottom-0 right-0 w-56 h-56 bg-[#626E73] opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
           
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#D9D7CC]">
+            <h2 className="text-3xl md:text-4xl font-editorial-serif font-semibold mb-4 text-[#E3DFCE]">
               Want to Join Our Team?
             </h2>
-            <p className="text-lg mb-8 max-w-2xl mx-auto text-[#A1A6A5]">
+            <p className="text-lg mb-8 max-w-2xl mx-auto text-[#E3DFCE]">
               We're always looking for passionate students who want to make a difference. 
               If you share our vision, we'd love to hear from you.
             </p>
             <Button 
               size="lg" 
-              className="text-lg bg-[#D9D7CC] text-[#0A1926] hover:bg-white transition-colors"
+              className="text-lg bg-[#E3DFCE] text-[#1A0905] hover:bg-white transition-colors border-2 border-[#94B1C8]"
               onClick={() => window.location.href = 'mailto:anithuncommon@gmail.com'}
             >
               Get in Touch
@@ -302,7 +448,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {/* Application Forms Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Member Application */}
-          <div className="relative overflow-hidden rounded-2xl p-8 border-2 border-[#0A1926] bg-[#F9F9F7] transition-all hover:shadow-lg">
+          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(26,9,5,0.6)]">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[#0A1926]">
@@ -315,7 +461,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                 Join our community of student educators and help make education accessible to everyone.
               </p>
               <Button 
-                className="w-full bg-[#0A1926] text-[#D9D7CC] hover:bg-[#0B1F26]"
+                className="w-full bg-[#4C050C] text-[#E3DFCE] hover:bg-[#2f0308] border-2 border-[#1A0905]"
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1', '_blank')}
               >
                 Apply Now
@@ -325,20 +471,20 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           </div>
 
           {/* Speaker/Volunteer Application */}
-          <div className="relative overflow-hidden rounded-2xl p-8 border-2 border-[#626E73] bg-[#F9F9F7] transition-all hover:shadow-lg">
+          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(26,9,5,0.6)]">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#626E73] opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[#626E73]">
                 <FileText className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-[#0A1926]">
+              <h3 className="text-2xl font-bold mb-3 text-[#1A0905]">
                 Speaker/Volunteer Opportunities
               </h3>
               <p className="mb-6 leading-relaxed text-[#626E73]">
                 Share your expertise as a speaker or support our initiatives as a volunteer.
               </p>
               <Button 
-                className="w-full bg-[#626E73] text-white hover:bg-[#4A5458]"
+                className="w-full bg-[#94B1C8] text-[#1A0905] hover:bg-[#7ea3bf] border-2 border-[#1A0905]"
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform', '_blank')}
               >
                 Apply Now
@@ -348,55 +494,167 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           </div>
         </div>
 
-        {/* Links Section */}
-        <div className="rounded-2xl p-8 mb-12 text-center bg-[#F9F9F7]">
-          <h3 className="text-2xl font-bold mb-6 text-[#0A1926]">
-            Connect With Us
-          </h3>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button 
-              variant="outline"
-              className="w-full sm:w-auto border-[#0A1926] text-[#0A1926] hover:bg-[#0A1926] hover:text-white"
-              onClick={() => window.open('https://www.linkedin.com/company/anith-uncommon/', '_blank')}
-            >
-              <Linkedin className="w-5 h-5 mr-2" />
-              LinkedIn
-              <ExternalLink className="w-4 h-4 ml-2" />
-            </Button>
-            <Button 
-              variant="outline"
-              className="w-full sm:w-auto border-[#626E73] text-[#626E73] hover:bg-[#626E73] hover:text-white"
-              onClick={() => window.open('https://linktr.ee/anithuncommon', '_blank')}
-            >
-              <ExternalLink className="w-5 h-5 mr-2" />
-              All Links
-            </Button>
+      </div>
+
+      <footer
+        className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
+        style={{ backgroundColor: "#1A0905" }}
+      >
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(148, 177, 200, 0.4) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
+            <div className="flex items-start justify-start">
+              <span
+                className="text-3xl font-editorial-serif font-semibold"
+                style={{ color: "#E3DFCE" }}
+              >
+                AnithUncommon
+              </span>
+            </div>
+
+            <div className="text-left space-y-4">
+              <h3
+                className="text-xs font-semibold tracking-[0.14em] uppercase"
+                style={{ color: "#E3DFCE" }}
+              >
+                Directory
+              </h3>
+              <div className="flex flex-col gap-2 text-sm">
+                <button onClick={() => goToHomeSection("about")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  About Us
+                </button>
+                <button onClick={() => goToHomeSection("subjects")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  Subjects
+                </button>
+                <button onClick={() => goToHomeSection("collaborate")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  Collaborate
+                </button>
+                <button className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  Our Team
+                </button>
+                <button onClick={goToProgress} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  Student Progress
+                </button>
+                <button onClick={goToFaq} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  FAQ
+                </button>
+              </div>
+            </div>
+
+            <div className="text-left space-y-4">
+              <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                Get In Touch
+              </h3>
+              <p className="text-sm" style={{ color: "#94B1C8" }}>
+                anithuncommon@gmail.com
+              </p>
+              <Button
+                className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
+                style={{
+                  backgroundColor: "#4C050C",
+                  color: "#E3DFCE",
+                }}
+                onClick={() =>
+                  (window.location.href =
+                    "mailto:anithuncommon@gmail.com")
+                }
+              >
+                Contact
+              </Button>
+            </div>
+
+            <div className="text-left space-y-4">
+              <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                Join Our Newsletter
+              </h3>
+              <form
+                className="space-y-3"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  const name = formData.get("newsletterName");
+                  const email = formData.get("newsletterEmail");
+                  const mailtoLink = `mailto:anithuncommon@gmail.com?subject=Newsletter Signup&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}`)}`;
+                  window.location.href = mailtoLink;
+                }}
+              >
+                <input
+                  type="text"
+                  name="newsletterName"
+                  required
+                  placeholder="First Name"
+                  className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                />
+                <input
+                  type="email"
+                  name="newsletterEmail"
+                  required
+                  placeholder="Email"
+                  className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                />
+                <Button
+                  type="submit"
+                  className="w-full rounded-full border-2 border-[#94B1C8]"
+                  style={{
+                    backgroundColor: "#4C050C",
+                    color: "#E3DFCE",
+                  }}
+                >
+                  Submit
+                </Button>
+              </form>
+            </div>
+
+            <div className="text-left space-y-4">
+              <div className="flex items-center justify-start gap-3 mb-5">
+                <a href="https://instagram.com/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a href="https://linktr.ee/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <TreePine className="w-5 h-5" />
+                </a>
+                <a href="https://www.linkedin.com/company/anith-uncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </a>
+              </div>
+
+              <div>
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase mb-2" style={{ color: "#E3DFCE" }}>
+                  Colophon
+                </h3>
+                <p className="text-sm" style={{ color: "#94B1C8" }}>
+                  Designed by
+                </p>
+                <p className="text-sm" style={{ color: "#94B1C8" }}>
+                  Ximena Clímaco
+                </p>
+                <p className="text-sm mb-2" style={{ color: "#94B1C8" }}>
+                  Amr Shaikh
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Contact Footer Section */}
-        <div className="text-center py-8 border-t border-[#626E73]/20">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a 
-              href="mailto:anithuncommon@gmail.com" 
-              className="flex items-center gap-2 transition-colors text-[#626E73] hover:text-[#0A1926]" 
-            >
-              <Mail className="w-5 h-5" />
-              <span className="text-lg">anithuncommon@gmail.com</span>
-            </a>
-            <div className="w-px h-6 hidden sm:block bg-[#626E73] opacity-30" />
-            <a 
-              href="https://instagram.com/anithuncommon" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 transition-colors text-[#626E73] hover:text-[#0A1926]"
-            >
-              <Instagram className="w-5 h-5" />
-              <span className="text-lg">@anithuncommon</span>
-            </a>
+        <div className="border-t" style={{ borderColor: "rgba(161, 166, 165, 0.2)" }}>
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
+            <p className="text-center md:text-left" style={{ color: "#94B1C8" }}>
+              © AnithUncommon. Empowering students beyond the classroom.
+            </p>
           </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }

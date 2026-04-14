@@ -5,6 +5,7 @@ import {
   type CSSProperties,
   type MouseEvent as ReactMouseEvent,
 } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SubjectCard } from "@/app/components/SubjectCard";
 import { TopicDetail } from "@/app/components/TopicDetail";
 import { MeetOurTeam } from "@/app/components/MeetOurTeam";
@@ -17,7 +18,6 @@ import { Card } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 import {
   GraduationCap,
-  BookOpen,
   Users,
   Globe,
   Handshake,
@@ -25,6 +25,7 @@ import {
   Sparkles,
   Instagram,
   Mail,
+  TreePine,
   Menu,
   X,
   ChevronDown,
@@ -129,6 +130,8 @@ const LANDING_STATS = [
 ] as const;
 
 export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentPage, setCurrentPage] = useState<Page>("home");
   const [selectedSubject, setSelectedSubject] =
     useState<Subject | null>(null);
@@ -143,6 +146,21 @@ export default function App() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setHasScrolled(window.scrollY > 8);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const subjects: Subject[] = [
     {
@@ -475,15 +493,6 @@ export default function App() {
     fontFamily: "var(--font-body)",
   };
 
-  const featuredMentors = Array.from(
-    new Set(subjects.flatMap((subject) => subject.mentors)),
-  )
-    .slice(0, 8)
-    .map((mentorName) => ({
-      mentorName,
-      mentorData: getMentorByName(mentorName),
-    }));
-
   const testimonials = [
     {
       quote:
@@ -532,6 +541,7 @@ export default function App() {
   const [animatedStats, setAnimatedStats] = useState<number[]>(
     LANDING_STATS.map(() => 0),
   );
+  const headerRef = useRef<HTMLElement | null>(null);
   const statsSectionRef = useRef<HTMLElement | null>(null);
   const statsAnimatedOnceRef = useRef(false);
 
@@ -604,10 +614,21 @@ export default function App() {
     setSelectedTopic(null);
     setSelectedMentor(null);
     setMobileMenuOpen(false);
+    navigate("/");
   };
 
   const handleGoToTeam = () => {
-    setCurrentPage("team");
+    navigate("/team");
+    setMobileMenuOpen(false);
+  };
+
+  const handleGoToFaq = () => {
+    navigate("/faq");
+    setMobileMenuOpen(false);
+  };
+
+  const handleGoToProgress = () => {
+    navigate("/progress");
     setMobileMenuOpen(false);
   };
 
@@ -628,7 +649,15 @@ export default function App() {
     setMobileMenuOpen(false);
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const headerOffset = (headerRef.current?.offsetHeight ?? 0) + 12;
+      const targetTop =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        headerOffset;
+      window.scrollTo({
+        top: Math.max(targetTop, 0),
+        behavior: "smooth",
+      });
     }
   };
 
@@ -649,7 +678,7 @@ export default function App() {
     });
   };
 
-  if (currentPage === "team") {
+  if (location.pathname === "/team") {
     return <MeetOurTeam onBack={handleBackToHome} />;
   }
 
@@ -657,11 +686,11 @@ export default function App() {
     return <JoinUs onBack={handleBackToHome} />;
   }
 
-  if (currentPage === "faq") {
+  if (location.pathname === "/faq") {
     return <FAQ onBack={handleBackToHome} />;
   }
 
-  if (currentPage === "progress") {
+  if (location.pathname === "/progress") {
     return <StudentProgress onBack={handleBackToHome} />;
   }
 
@@ -1259,9 +1288,18 @@ export default function App() {
         />
 
         {/* Header */}
-        <header className="absolute top-0 inset-x-0 z-20">
+        <header
+          ref={headerRef}
+          className="fixed top-0 inset-x-0 z-30 transition-colors duration-300"
+          style={{
+            backgroundColor: hasScrolled ? "rgba(227, 223, 206, 0.94)" : "transparent",
+            borderBottom: hasScrolled
+              ? "1px solid rgba(26, 9, 5, 0.14)"
+              : "1px solid transparent",
+          }}
+        >
           <div
-            className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center md:grid md:grid-cols-[1fr_auto_1fr]"
+            className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]"
           >
             <button
               onClick={handleBackToHome}
@@ -1275,28 +1313,28 @@ export default function App() {
               AnithUncommon
             </button>
 
-            <nav className="hidden md:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
+            <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
               <button onClick={() => scrollToSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 About Us
               </button>
               <button onClick={() => scrollToSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Subjects
               </button>
-              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
-                Our Team
-              </button>
-              <button onClick={() => setCurrentPage("faq")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
-                FAQ
-              </button>
-              <button onClick={() => setCurrentPage("progress")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
-                Student Progress
-              </button>
               <button onClick={() => scrollToSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Collaborate
               </button>
+              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Our Team
+              </button>
+              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Student Progress
+              </button>
+              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                FAQ
+              </button>
             </nav>
 
-            <div className="hidden md:flex items-center justify-self-end gap-3 md:mr-1">
+            <div className="hidden min-[1440px]:flex items-center justify-self-end gap-3 md:mr-1">
               {isLoggedIn ? (
                 <Button
                   size="sm"
@@ -1333,7 +1371,7 @@ export default function App() {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden liquid-glass rounded-full"
+              className="min-[1440px]:hidden liquid-glass rounded-full"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               style={{ color: "#1A0905" }}
             >
@@ -1346,72 +1384,99 @@ export default function App() {
           </div>
 
           {mobileMenuOpen && (
-            <nav className="md:hidden mx-6 mt-1 rounded-3xl p-5 flex flex-col gap-3 liquid-glass">
-              <button onClick={() => scrollToSection("about")} className="text-left" style={{ color: "#1A0905" }}>
-                About Us
-              </button>
-              <button onClick={() => scrollToSection("subjects")} className="text-left" style={{ color: "#1A0905" }}>
-                Subjects
-              </button>
-              <button onClick={handleGoToTeam} className="text-left" style={{ color: "#1A0905" }}>
-                Our Team
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentPage("faq");
-                  setMobileMenuOpen(false);
-                }}
-                className="text-left"
-                style={{ color: "#1A0905" }}
+            <div
+              className="min-[1440px]:hidden fixed inset-0 z-[120] isolate"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <div className="absolute inset-0 z-[121] bg-black/35" />
+              <nav
+                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+                onClick={(e) => e.stopPropagation()}
               >
-                FAQ
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentPage("progress");
-                  setMobileMenuOpen(false);
-                }}
-                className="text-left"
-                style={{ color: "#1A0905" }}
-              >
-                Student Progress
-              </button>
-              <button onClick={() => scrollToSection("collaborate")} className="text-left" style={{ color: "#1A0905" }}>
-                Collaborate
-              </button>
+                <div className="flex justify-end mb-6">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="rounded-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{ color: "#1A0905" }}
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </div>
 
-              {isLoggedIn ? (
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    setIsLoggedIn(false);
-                    localStorage.removeItem("anithuncommon_user");
-                  }}
-                  className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
-                >
-                  Sign Out
-                </Button>
-              ) : (
-                <Button
-                  size="sm"
-                  onClick={() => setShowLoginModal(true)}
-                  className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
-                >
-                  Sign In
-                </Button>
-              )}
+                <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
+                  <button onClick={() => scrollToSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                    About Us
+                  </button>
+                  <button onClick={() => scrollToSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                    Subjects
+                  </button>
+                  <button onClick={() => scrollToSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                    Collaborate
+                  </button>
+                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                    Our Team
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleGoToProgress();
+                    }}
+                    className="text-lg"
+                    style={{ color: "#1A0905" }}
+                  >
+                    Student Progress
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleGoToFaq();
+                    }}
+                    className="text-lg"
+                    style={{ color: "#1A0905" }}
+                  >
+                    FAQ
+                  </button>
+                </div>
 
-              <Button
-                size="sm"
-                onClick={handleGoToJoinUs}
-                className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
-                style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
-              >
-                Join Us
-              </Button>
-            </nav>
+                <div className="space-y-3 pt-6">
+                  {isLoggedIn ? (
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        setIsLoggedIn(false);
+                        localStorage.removeItem("anithuncommon_user");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
+                      style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                    >
+                      Sign Out
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        setShowLoginModal(true);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
+                      style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                    >
+                      Sign In
+                    </Button>
+                  )}
+
+                  <Button
+                    size="sm"
+                    onClick={handleGoToJoinUs}
+                    className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
+                    style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                  >
+                    Join Us
+                  </Button>
+                </div>
+              </nav>
+            </div>
           )}
         </header>
 
@@ -1521,7 +1586,7 @@ export default function App() {
                   }`}
                   style={{ backgroundColor: stat.bgColor }}
                 >
-                  <div className="flex items-start justify-between gap-3 mb-5">
+                  <div className="flex items-start gap-3 mb-5">
                     <div
                       className="w-12 h-12 rounded-full flex items-center justify-center border-2 border-[#1A0905]"
                       style={{ backgroundColor: stat.chipColor }}
@@ -1531,12 +1596,6 @@ export default function App() {
                         style={{ color: stat.chipText }}
                       />
                     </div>
-                    <span
-                      className="text-[10px] font-semibold tracking-[0.15em] border-2 border-[#1A0905] px-2 py-1 rounded-full"
-                      style={{ color: "#1A0905" }}
-                    >
-                      LIVE
-                    </span>
                   </div>
 
                   <div
@@ -1565,9 +1624,6 @@ export default function App() {
         className="py-20 relative transition-colors duration-[1200ms] border-b-2 border-[#1A0905]"
       >
         <div className="absolute top-20 left-0 w-64 h-64 bg-[#94B1C8]/25 rounded-full blur-3xl" />
-        <div className="absolute bottom-8 right-6 rounded-full border-2 border-[#1A0905] bg-[#E3DFCE] px-4 py-2 text-xs font-semibold tracking-[0.1em] rotate-[-6deg]">
-          ORIGIN STORY
-        </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
@@ -1580,13 +1636,7 @@ export default function App() {
                   ABOUT US
                 </span>
               </div>
-              <h2
-                className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6"
-                style={{ color: "#1A0905" }}
-              >
-                Our Story
-              </h2>
-              <div className="w-24 h-px mx-auto" style={{ backgroundColor: "#94B1C8" }} />
+
             </div>
 
             <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[10px_10px_0px_0px_rgba(26,9,5,0.9)] relative overflow-hidden mb-8">
@@ -1630,32 +1680,6 @@ export default function App() {
                 students.
               </p>
 
-              {/* Decorative geometric accents */}
-              <div className="mt-8 flex justify-center gap-4">
-                <div
-                  className="w-12 h-12 rounded-full"
-                  style={{
-                    backgroundColor: "#0A1926",
-                    opacity: 0.1,
-                  }}
-                />
-                <div
-                  className="w-12 h-12 rotate-45"
-                  style={{
-                    backgroundColor: "#626E73",
-                    opacity: 0.1,
-                  }}
-                />
-                <div
-                  className="w-12 h-12"
-                  style={{
-                    backgroundColor: "#D9D7CC",
-                    opacity: 0.2,
-                    clipPath:
-                      "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-                  }}
-                />
-              </div>
             </Card>
 
             {/* Mission and Vision Cards */}
@@ -1726,12 +1750,6 @@ export default function App() {
                 OUR SUBJECTS
               </span>
             </div>
-            <h2
-              className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4"
-              style={{ color: "#1A0905" }}
-            >
-              Our Subjects
-            </h2>
             <p
               className="text-xl max-w-2xl mx-auto"
               style={{ color: "#1A0905" }}
@@ -1748,9 +1766,6 @@ export default function App() {
                 className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className={`absolute -top-3 ${index % 2 === 0 ? "left-4 rotate-[-3deg]" : "right-4 rotate-3"} z-10 border-2 border-[#1A0905] bg-[#E3DFCE] p-1`}>
-                  <BookOpen className="w-4 h-4" style={{ color: "#4C050C" }} />
-                </div>
                 <div className="rounded-[30px] border-2 border-[#1A0905] shadow-[8px_8px_0px_rgba(26,9,5,0.78)] overflow-hidden bg-[#f7f4eb]">
                   <SubjectCard
                     title={subject.title}
@@ -1771,56 +1786,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* Mentors Section */}
-      <section className="py-20 transition-colors duration-[1200ms] border-b-2 border-[#1A0905] relative" style={{ backgroundColor: "#94B1C8" }}>
-        <div className="absolute top-10 right-8 rounded-full border-2 border-[#1A0905] bg-[#E3DFCE] px-4 py-2 text-xs font-semibold tracking-[0.1em] rotate-[8deg]">
-          MENTOR WALL
-        </div>
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#4C050C" }}>
-              Meet Our Mentors
-            </h2>
-            <p className="text-lg" style={{ color: "#1A0905" }}>
-              Experienced student educators guiding uncommon learning paths.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredMentors.map(({ mentorName, mentorData }, index) => (
-              <Card
-                key={mentorName}
-                className={`relative p-5 border-2 border-[#1A0905] rounded-2xl bg-[#E3DFCE] shadow-[8px_8px_0px_0px_rgba(26,9,5,1)] transition-transform duration-300 hover:-translate-y-1 ${index % 2 === 0 ? "rotate-[-1deg]" : "rotate-1"}`}
-              >
-                <div className="absolute -top-3 -right-2 border-2 border-[#1A0905] bg-[#94B1C8] p-1 rotate-3">
-                  <Users className="w-4 h-4" style={{ color: "#1A0905" }} />
-                </div>
-                <h3 className="text-xl font-editorial-serif font-semibold mb-2" style={{ color: "#1A0905" }}>
-                  {mentorName}
-                </h3>
-                <p className="text-sm mb-4" style={{ color: "#1A0905" }}>
-                  {mentorData?.title ?? "Mentor"}
-                </p>
-                <Button
-                  size="sm"
-                  className="w-full border-2 border-[#1A0905] rounded-full"
-                  style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
-                  onClick={() => handleGoToMentor(mentorName)}
-                >
-                  View Profile
-                </Button>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials Section */}
       <section className="py-20 border-b-2 border-[#1A0905] relative overflow-x-hidden" style={{ backgroundColor: "#ede9da" }}>
-        <div className="absolute top-6 left-8 rounded-full border-2 border-[#1A0905] bg-[#E3DFCE] px-4 py-2 text-xs font-semibold tracking-[0.1em] rotate-[-6deg]">
-          STUDENT VOICES
-        </div>
-
         <div className="container mx-auto px-4 mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#1A0905" }}>
@@ -1882,10 +1849,6 @@ export default function App() {
             <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#1A0905" }}>
               Why Join Us
             </h2>
-            <div
-              className="w-20 h-1 mx-auto"
-              style={{ backgroundColor: "#626E73" }}
-            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
@@ -2003,10 +1966,6 @@ export default function App() {
               <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6" style={{ color: "#1A0905" }}>
                 Contact/Collaborate with Us
               </h2>
-              <div
-                className="w-20 h-1 mx-auto mb-8"
-                style={{ backgroundColor: "#94B1C8" }}
-              />
               <p
                 className="text-lg mb-6"
                 style={{ color: "#1A0905" }}
@@ -2199,16 +2158,6 @@ export default function App() {
                 JOIN OUR COMMUNITY
               </span>
             </div>
-            <h2
-              className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6"
-              style={{ color: "#1A0905" }}
-            >
-              Ready to Make a Difference?
-            </h2>
-            <div
-              className="w-20 h-1 mx-auto mb-6"
-              style={{ backgroundColor: "#626E73" }}
-            />
             <p
               className="text-xl max-w-2xl mx-auto mb-8"
               style={{ color: "#1A0905" }}
@@ -2328,13 +2277,9 @@ export default function App() {
             backgroundSize: "20px 20px",
           }}
         />
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <GraduationCap
-                className="w-8 h-8"
-                style={{ color: "#D9D7CC" }}
-              />
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
+            <div className="flex items-start justify-start">
               <span
                 className="text-3xl font-editorial-serif font-semibold"
                 style={{ color: "#E3DFCE" }}
@@ -2342,41 +2287,18 @@ export default function App() {
                 AnithUncommon
               </span>
             </div>
-            <p className="mb-2" style={{ color: "#94B1C8" }}>
-              Student-run | Non-profit | Global
-            </p>
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <a
-                href="mailto:anithuncommon@gmail.com"
-                className="flex items-center gap-2 transition-colors"
-                style={{ color: "#94B1C8" }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.color = "#E3DFCE")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "#94B1C8")
-                }
+
+            <div className="text-left space-y-4">
+              <h3
+                className="text-xs font-semibold tracking-[0.14em] uppercase"
+                style={{ color: "#E3DFCE" }}
               >
-                <Mail className="w-4 h-4" />
-                <span>anithuncommon@gmail.com</span>
-              </a>
-            </div>
-            <div className="flex flex-col items-center gap-3 mb-6">
-              <div className="flex items-center gap-2">
-                <Globe
-                  className="w-4 h-4"
-                  style={{ color: "#94B1C8" }}
-                />
-                <span style={{ color: "#94B1C8" }}>
-                  Connect with us:
-                </span>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <a
-                  href="https://instagram.com/anithuncommon"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 transition-colors"
+                Directory
+              </h3>
+              <div className="flex flex-col gap-2 text-sm">
+                <button
+                  onClick={() => scrollToSection("about")}
+                  className="transition-colors text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = "#E3DFCE")
@@ -2385,14 +2307,170 @@ export default function App() {
                     (e.currentTarget.style.color = "#94B1C8")
                   }
                 >
-                  <Instagram className="w-4 h-4" />
-                  <span>@anithuncommon</span>
+                  About Us
+                </button>
+                <button
+                  onClick={() => scrollToSection("subjects")}
+                  className="transition-colors text-left sm:text-left text-center"
+                  style={{ color: "#94B1C8" }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#E3DFCE")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#94B1C8")
+                  }
+                >
+                  Subjects
+                </button>
+                <button
+                  onClick={() => scrollToSection("collaborate")}
+                  className="transition-colors text-left sm:text-left text-center"
+                  style={{ color: "#94B1C8" }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#E3DFCE")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#94B1C8")
+                  }
+                >
+                  Collaborate
+                </button>
+                <button
+                  onClick={handleGoToTeam}
+                  className="transition-colors text-left sm:text-left text-center"
+                  style={{ color: "#94B1C8" }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#E3DFCE")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#94B1C8")
+                  }
+                >
+                  Our Team
+                </button>
+                <button
+                  onClick={handleGoToProgress}
+                  className="transition-colors text-left sm:text-left text-center"
+                  style={{ color: "#94B1C8" }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#E3DFCE")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#94B1C8")
+                  }
+                >
+                  Student Progress
+                </button>
+                <button
+                  onClick={handleGoToFaq}
+                  className="transition-colors text-left sm:text-left text-center"
+                  style={{ color: "#94B1C8" }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#E3DFCE")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#94B1C8")
+                  }
+                >
+                  FAQ
+                </button>
+              </div>
+            </div>
+
+            <div className="text-left space-y-4">
+              <h3
+                className="text-xs font-semibold tracking-[0.14em] uppercase"
+                style={{ color: "#E3DFCE" }}
+              >
+                Get In Touch
+              </h3>
+              <p className="text-sm" style={{ color: "#94B1C8" }}>
+                anithuncommon@gmail.com
+              </p>
+              <Button
+                className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
+                style={{
+                  backgroundColor: "#4C050C",
+                  color: "#E3DFCE",
+                }}
+                onClick={() =>
+                  (window.location.href =
+                    "mailto:anithuncommon@gmail.com")
+                }
+              >
+                Contact
+              </Button>
+            </div>
+
+            <div className="text-left space-y-4">
+              <h3
+                className="text-xs font-semibold tracking-[0.14em] uppercase"
+                style={{ color: "#E3DFCE" }}
+              >
+                Join Our Newsletter
+              </h3>
+              <form
+                className="space-y-3"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  const name = formData.get("newsletterName");
+                  const email = formData.get("newsletterEmail");
+                  const mailtoLink = `mailto:anithuncommon@gmail.com?subject=Newsletter Signup&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}`)}`;
+                  window.location.href = mailtoLink;
+                }}
+              >
+                <input
+                  type="text"
+                  name="newsletterName"
+                  required
+                  placeholder="First Name"
+                  className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                />
+                <input
+                  type="email"
+                  name="newsletterEmail"
+                  required
+                  placeholder="Email"
+                  className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
+                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                />
+                <Button
+                  type="submit"
+                  className="w-full rounded-full border-2 border-[#94B1C8]"
+                  style={{
+                    backgroundColor: "#4C050C",
+                    color: "#E3DFCE",
+                  }}
+                >
+                  Submit
+                </Button>
+              </form>
+            </div>
+
+            <div className="text-left space-y-4">
+              <div className="flex items-center justify-start gap-3 mb-5">
+                <a
+                  href="https://instagram.com/anithuncommon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors"
+                  style={{ color: "#94B1C8" }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#E3DFCE")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#94B1C8")
+                  }
+                >
+                  <Instagram className="w-5 h-5" />
                 </a>
                 <a
                   href="https://linktr.ee/anithuncommon"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 transition-colors"
+                  className="transition-colors"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = "#E3DFCE")
@@ -2401,14 +2479,13 @@ export default function App() {
                     (e.currentTarget.style.color = "#94B1C8")
                   }
                 >
-                  <Globe className="w-4 h-4" />
-                  <span>Linktree</span>
+                  <TreePine className="w-5 h-5" />
                 </a>
                 <a
                   href="https://www.linkedin.com/company/anith-uncommon"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 transition-colors"
+                  className="transition-colors"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = "#E3DFCE")
@@ -2418,23 +2495,42 @@ export default function App() {
                   }
                 >
                   <svg
-                    className="w-4 h-4"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
-                  <span>LinkedIn</span>
                 </a>
+              </div>
+
+              <div>
+                <h3
+                  className="text-xs font-semibold tracking-[0.14em] uppercase mb-2"
+                  style={{ color: "#E3DFCE" }}
+                >
+                  Colophon
+                </h3>
+                <p className="text-sm" style={{ color: "#94B1C8" }}>
+                  Designed by
+                </p>
+                <p className="text-sm" style={{ color: "#94B1C8" }}>
+                  Ximena Clímaco
+                </p>
+                <p className="text-sm mb-2" style={{ color: "#94B1C8" }}>
+                  Amr Shaikh
+                </p>
               </div>
             </div>
           </div>
+        </div>
 
-          <div
-            className="border-t pt-6 text-center"
-            style={{ borderColor: "rgba(161, 166, 165, 0.2)" }}
-          >
-            <p style={{ color: "#94B1C8" }}>
+        <div
+          className="border-t"
+          style={{ borderColor: "rgba(161, 166, 165, 0.2)" }}
+        >
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
+            <p className="text-center md:text-left" style={{ color: "#94B1C8" }}>
               © AnithUncommon. Empowering students beyond the
               classroom.
             </p>
