@@ -14,55 +14,54 @@ interface TeamMemberProps {
   colorAccent: string;
 }
 
-export function TeamMember({ name, role, image, bio, country, linkedin, instagram, email, colorAccent }: TeamMemberProps) {
+export function TeamMember({ name, role, image, bio, country, linkedin, instagram, email, colorAccent: _colorAccent }: TeamMemberProps) {
+
   return (
-    <div className="relative group">
-      {/* Decorative geometric shapes */}
-      <div className={`absolute -top-4 -right-4 w-24 h-24 ${colorAccent} opacity-20 rounded-full blur-2xl group-hover:opacity-30 transition-opacity`} />
-      <div className={`absolute -bottom-4 -left-4 w-32 h-32 ${colorAccent} opacity-10 blur-3xl group-hover:opacity-20 transition-opacity`} />
-      
-      <Card className="relative overflow-hidden hover:shadow-xl transition-all duration-300 group-hover:-translate-y-2">
-        {/* Decorative corner */}
-        <div className={`absolute top-0 right-0 w-20 h-20 ${colorAccent} opacity-10`} 
-             style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }} />
-        
-        <div className="p-6">
+    <div className="group h-full">
+      <Card className="relative h-full overflow-hidden rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)] transition-all duration-500 hover:-translate-y-1">
+        <div className="p-6 h-full flex flex-col">
           {image && (
-            <div className="relative mb-4">
-              {/* Image container with geometric frame */}
+            <div className="mb-5">
               <div className="relative w-32 h-32 mx-auto">
-                <div className={`absolute inset-0 ${colorAccent} opacity-20 rounded-2xl rotate-6 group-hover:rotate-12 transition-transform`} />
-                <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white shadow-lg">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#1A0905] shadow-[4px_4px_0px_rgba(26,9,5,0.45)]">
                   <ImageWithFallback 
                     src={image} 
                     alt={name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
               </div>
             </div>
           )}
 
-          <div className="text-center">
-            <h3 className="text-xl font-bold mb-1" style={{ color: '#0A1926' }}>{name}</h3>
-            <p className="text-sm mb-1" style={{ color: '#626E73' }}>{role}</p>
+          <div className="text-center flex-1 flex flex-col">
+            <h3 className="text-2xl font-editorial-serif font-semibold mb-1" style={{ color: "#1A0905" }}>
+              {name}
+            </h3>
+            <p className="text-sm mb-1" style={{ color: "#2F3A40" }}>
+              {role}
+            </p>
             {country && (
-              <p className="text-xs mb-3" style={{ color: '#A1A6A5' }}>{country}</p>
+              <p className="text-xs mb-3 tracking-wide uppercase" style={{ color: "#626E73" }}>
+                {country}
+              </p>
             )}
             {bio && (
-              <p className="text-sm mb-4 leading-relaxed" style={{ color: '#626E73' }}>{bio}</p>
+              <p className="text-sm mb-5 leading-relaxed flex-1" style={{ color: "#2F3A40" }}>
+                {bio}
+              </p>
             )}
 
-            <div className="flex justify-center gap-3">
+            <div className="flex justify-center gap-3 mt-auto pt-1">
               {linkedin && (
                 <a 
                   href={linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ backgroundColor: '#D9D7CC' }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
+                  style={{ backgroundColor: "#E3DFCE", border: "2px solid #1A0905" }}
                 >
-                  <Linkedin className="w-4 h-4" style={{ color: '#0A1926' }} />
+                  <Linkedin className="w-4 h-4" style={{ color: "#1A0905" }} />
                 </a>
               )}
               {instagram && (
@@ -70,27 +69,24 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
                   href={instagram.startsWith('http') ? instagram : `https://instagram.com/${instagram.replace('@', '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ backgroundColor: '#D9D7CC' }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
+                  style={{ backgroundColor: "#E3DFCE", border: "2px solid #1A0905" }}
                 >
-                  <Instagram className="w-4 h-4" style={{ color: '#0A1926' }} />
+                  <Instagram className="w-4 h-4" style={{ color: "#1A0905" }} />
                 </a>
               )}
               {email && (
                 <a 
                   href={`mailto:${email}`}
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ backgroundColor: '#D9D7CC' }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
+                  style={{ backgroundColor: "#E3DFCE", border: "2px solid #1A0905" }}
                 >
-                  <Mail className="w-4 h-4" style={{ color: '#0A1926' }} />
+                  <Mail className="w-4 h-4" style={{ color: "#1A0905" }} />
                 </a>
               )}
             </div>
           </div>
         </div>
-
-        {/* Bottom decorative line */}
-        <div className={`h-1 ${colorAccent} opacity-30`} />
       </Card>
     </div>
   );

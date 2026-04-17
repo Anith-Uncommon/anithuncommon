@@ -34,6 +34,7 @@ import {
   Award,
 } from "lucide-react";
 import {
+  getMentorById,
   getMentorByName,
   type MentorData,
 } from "@/app/data/mentors";
@@ -105,9 +106,9 @@ const LANDING_STATS = [
     target: 20,
     suffix: "+",
     label: "Countries",
-    bgColor: "#94B1C8",
-    chipColor: "#1A0905",
-    chipText: "#E3DFCE",
+    bgColor: "#0a1b2b",
+    chipColor: "#E3DFCE",
+    chipText: "#0a1b2b",
   },
   {
     icon: Users,
@@ -115,7 +116,7 @@ const LANDING_STATS = [
     suffix: "+",
     label: "Members",
     bgColor: "#E3DFCE",
-    chipColor: "#1A0905",
+    chipColor: "#4C050C",
     chipText: "#E3DFCE",
   },
   {
@@ -123,9 +124,9 @@ const LANDING_STATS = [
     target: 10,
     suffix: "+",
     label: "Students",
-    bgColor: "#94B1C8",
-    chipColor: "#4C050C",
-    chipText: "#E3DFCE",
+    bgColor: "#0a1b2b",
+    chipColor: "#E3DFCE",
+    chipText: "#0a1b2b",
   },
 ] as const;
 
@@ -496,47 +497,86 @@ export default function App() {
   const testimonials = [
     {
       quote:
-        "I finally found subjects I actually enjoy. Classes feel exciting now, not just required.",
-      name: "Alya R.",
-      role: "Grade 10 Student",
-      tag: "From Indonesia",
+        "Working in AnithUncommon as a Curriculum Mentor has been an extremely fulfilling experience. Every team member is motivated, and committed to the goal of making education accessible regardless of background. Through my lessons with my students, I have been able to apply the teaching content to real-life scenarios from their diverse backgrounds. This student-led organisation has immense potential to create tangible change in today’s global education landscape, and its members are already heading towards that goal.",
+      name: "Megan",
+      role: "Curriculum Mentor",
     },
     {
       quote:
-        "The mentors explain things like friends who care. I became way more confident asking questions.",
-      name: "Noah K.",
-      role: "IGCSE Learner",
-      tag: "Joined 4 courses",
+        "AnithUncommon has been a great experience so far. We get access to mentors for free in different subjects and are always supported and heard. Not only that, but we are growing together, which is what matters the  most.",
+      name: "Alina",
+      role: "Student",
     },
     {
       quote:
-        "I used to think humanities were impossible for me. Now I am genuinely curious every week.",
-      name: "Sana M.",
-      role: "High School Student",
-      tag: "History + Philosophy",
+        "Tutoring with AnithUncommon has really changed how I see learning. I’ve worked with students from all over the world, all with different backgrounds and ways of thinking, which has pushed me to explain things in new and clearer ways. It’s awesome to see something finally click for someone, and it’s helped me grow both in my understanding and how I communicate. Seeing a student go from confused to confident is one of the most rewarding parts of the experience. Joining AnithUncommon has allowed me to help students while improving myself at the same time.",
+      name: "Vihaan",
+      role: "STEM Mentor",
     },
     {
       quote:
-        "Being in a global student community made learning feel real and connected to the world.",
-      name: "Ethan P.",
-      role: "Student Volunteer",
-      tag: "Global Community",
+        "Being student at AnithUncommon really change my mind about STEM. It makes me see that STEM is not just  about complicated formula, but solving real world problem. This is  because the mentors at AnithUncommon break down the lessons so clearly and easy to understand. Even if we still don't understand we can ask the mentor to repeat the lesson again",
+      name: "Mahansa",
+      role: "Student",
     },
     {
       quote:
-        "The sessions are practical, warm, and never boring. It feels built for students like us.",
-      name: "Mira T.",
-      role: "Secondary Student",
-      tag: "Weekly Attendee",
-    },
-    {
-      quote:
-        "I improved my confidence and communication skills just by joining discussions regularly.",
-      name: "David L.",
-      role: "Student Member",
-      tag: "Public Speaking Growth",
+        "Mentoring with AnithUncommon has been such an eye-opening and beautiful journey–both at the same time. I've now come to realise the starking contrast between the words \"tutoring\" and \"mentoring\". I now have come to know that mentoring is about making a personal bond and relationship with your students. It's two people coming together, gaining equal benefits. The student learning something new, and the mentor getting an 'interlocutor' to discuss dilemmas with in their subject. I love being part of this tight-knit, warm community which is increasingly becoming a space where all can grow–whether mentor or student.",
+      name: "Akshiti",
+      role: "Humanities Subject Mentor",
     },
   ];
+
+  const ORBITAL_ITEMS = [
+    {
+      title: "Academic\nPerformance",
+      description: "",
+    },
+    {
+      title: "Confidence &\nSelf-Belief",
+      description: "",
+    },
+    {
+      title: "Career\nDirection",
+      description: "",
+    },
+    {
+      title: "Personal\nIdentity",
+      description: "",
+    },
+    {
+      title: "Motivation\nto Learn",
+      description: "",
+    },
+  ] as const;
+  const ORBITAL_ANGLES = ORBITAL_ITEMS.map((_, index) =>
+    -90 + index * (360 / ORBITAL_ITEMS.length),
+  );
+
+  const getOrbitalLayout = (viewportWidth: number) => {
+    if (viewportWidth < 420) {
+      return { radius: 105, nodeSize: 74, centerMultiplier: 0.96 };
+    }
+    if (viewportWidth < 640) {
+      return { radius: 122, nodeSize: 82, centerMultiplier: 0.92 };
+    }
+    if (viewportWidth < 768) {
+      return { radius: 145, nodeSize: 104, centerMultiplier: 0.8 };
+    }
+    if (viewportWidth < 1024) {
+      return { radius: 175, nodeSize: 118, centerMultiplier: 0.76 };
+    }
+    if (viewportWidth < 1280) {
+      return { radius: 200, nodeSize: 128, centerMultiplier: 0.75 };
+    }
+    return { radius: 224, nodeSize: 140, centerMultiplier: 0.74 };
+  };
+
+  const [orbitalLayout, setOrbitalLayout] = useState(() =>
+    getOrbitalLayout(
+      typeof window === "undefined" ? 1440 : window.innerWidth,
+    ),
+  );
 
   const [animatedStats, setAnimatedStats] = useState<number[]>(
     LANDING_STATS.map(() => 0),
@@ -603,9 +643,23 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const updateOrbitalLayout = () => {
+      setOrbitalLayout(getOrbitalLayout(window.innerWidth));
+    };
+
+    updateOrbitalLayout();
+    window.addEventListener("resize", updateOrbitalLayout);
+
+    return () => {
+      window.removeEventListener("resize", updateOrbitalLayout);
+    };
+  }, []);
+
   const handleExploreSubject = (subject: Subject) => {
     setSelectedSubject(subject);
     setCurrentPage("subject");
+    navigate(`/subject/${encodeURIComponent(subject.id)}`);
   };
 
   const handleBackToHome = () => {
@@ -633,7 +687,7 @@ export default function App() {
   };
 
   const handleGoToJoinUs = () => {
-    setCurrentPage("joinus");
+    navigate("/joinus");
     setMobileMenuOpen(false);
   };
 
@@ -642,6 +696,7 @@ export default function App() {
     if (mentor) {
       setSelectedMentor(mentor);
       setCurrentPage("mentor");
+      navigate(`/mentor/${encodeURIComponent(mentor.id)}`);
     }
   };
 
@@ -661,6 +716,27 @@ export default function App() {
     }
   };
 
+  const goToHomeSection = (sectionId: string) => {
+    setMobileMenuOpen(false);
+    navigate("/");
+
+    window.setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (!element) return;
+
+      const headerOffset = 96;
+      const targetTop =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        headerOffset;
+
+      window.scrollTo({
+        top: Math.max(targetTop, 0),
+        behavior: "smooth",
+      });
+    }, 140);
+  };
+
   const [heroPointer, setHeroPointer] = useState({
     x: 0,
     y: 0,
@@ -678,11 +754,19 @@ export default function App() {
     });
   };
 
+  const routeSubjectId = location.pathname.startsWith("/subject/")
+    ? decodeURIComponent(location.pathname.replace("/subject/", ""))
+    : null;
+  const activeSubject = routeSubjectId
+    ? subjects.find((subject) => subject.id === routeSubjectId) ??
+      selectedSubject
+    : null;
+
   if (location.pathname === "/team") {
     return <MeetOurTeam onBack={handleBackToHome} />;
   }
 
-  if (currentPage === "joinus") {
+  if (location.pathname === "/joinus") {
     return <JoinUs onBack={handleBackToHome} />;
   }
 
@@ -694,48 +778,143 @@ export default function App() {
     return <StudentProgress onBack={handleBackToHome} />;
   }
 
-  if (selectedMentor && currentPage === "mentor") {
-    return (
-      <MentorProfile
-        mentor={selectedMentor}
-        onBack={() => {
-          setSelectedMentor(null);
-          setCurrentPage("home");
-        }}
-      />
+  if (location.pathname.startsWith("/mentor/")) {
+    const mentorId = decodeURIComponent(
+      location.pathname.replace("/mentor/", ""),
     );
+    const mentor = getMentorById(mentorId);
+
+    if (mentor) {
+      return <MentorProfile mentor={mentor} onBack={handleBackToHome} />;
+    }
   }
 
-  if (selectedTopic && selectedSubject) {
+  if (
+    selectedTopic &&
+    activeSubject &&
+    location.pathname.startsWith("/subject/")
+  ) {
     return (
-      <div className="min-h-screen bg-white">
-        <header
-          className="bg-white shadow-sm sticky top-0 z-50"
+      <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
           style={{
-            borderBottom: "1px solid rgba(98, 110, 115, 0.2)",
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+
+        <header
+          className="fixed top-0 inset-x-0 z-30"
+          style={{
+            backgroundColor: "rgba(227, 223, 206, 0.94)",
+            borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
           }}
         >
-          <div className="container mx-auto px-4 py-4">
-            <div
-              className="flex items-center gap-2 cursor-pointer"
+          <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
+            <button
               onClick={handleBackToHome}
+              className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+              aria-label="Go to homepage"
+              style={{
+                color: "#1A0905",
+                fontFamily: "'Instrument Serif', serif",
+              }}
             >
-              <GraduationCap
-                className="w-8 h-8"
-                style={{ color: "#0A1926" }}
-              />
-              <span
-                className="text-xl font-bold"
-                style={{ color: "#0A1926" }}
-              >
-                AnithUncommon
-              </span>
-            </div>
+              AnithUncommon
+            </button>
+
+            <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
+              <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                About Us
+              </button>
+              <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#1A0905" }}>
+                Subjects
+              </button>
+              <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Collaborate
+              </button>
+              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Our Team
+              </button>
+              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Student Progress
+              </button>
+              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                FAQ
+              </button>
+            </nav>
+
+            <div className="min-[1440px]:hidden" />
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="min-[1440px]:hidden liquid-glass rounded-full"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{ color: "#1A0905" }}
+            >
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </Button>
           </div>
+
+          {mobileMenuOpen && (
+            <div
+              className="min-[1440px]:hidden fixed inset-0 z-[120] isolate"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <div className="absolute inset-0 z-[121] bg-black/35" />
+              <nav
+                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex justify-end mb-6">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="rounded-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{ color: "#1A0905" }}
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </div>
+
+                <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
+                  <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                    About Us
+                  </button>
+                  <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                    Subjects
+                  </button>
+                  <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                    Collaborate
+                  </button>
+                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                    Our Team
+                  </button>
+                  <button onClick={handleGoToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                    Student Progress
+                  </button>
+                  <button onClick={handleGoToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                    FAQ
+                  </button>
+                </div>
+              </nav>
+            </div>
+          )}
         </header>
-        <main className="container mx-auto px-4 py-8">
+
+        <main className="container mx-auto px-4 pt-36 pb-10 relative z-10">
           <TopicDetail
-            subject={selectedSubject.title}
+            subject={activeSubject.title}
             topic={selectedTopic}
             onBack={() => setSelectedTopic(null)}
           />
@@ -744,7 +923,7 @@ export default function App() {
     );
   }
 
-  if (selectedSubject && currentPage === "subject") {
+  if (activeSubject && location.pathname.startsWith("/subject/")) {
     const toggleChapter = (chapterId: string) => {
       setExpandedChapters((prev) => ({
         ...prev,
@@ -781,74 +960,144 @@ export default function App() {
     };
 
     return (
-      <div className="min-h-screen bg-white">
-        <header
-          className="bg-white shadow-sm sticky top-0 z-50"
+      <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+        <div
+          className="absolute inset-0 pointer-events-none opacity-20"
           style={{
-            borderBottom: "1px solid rgba(98, 110, 115, 0.2)",
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+
+        <header
+          className="fixed top-0 inset-x-0 z-30"
+          style={{
+            backgroundColor: "rgba(227, 223, 206, 0.94)",
+            borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
           }}
         >
-          <div className="container mx-auto px-4 py-4">
-            <div
-              className="flex items-center gap-2 cursor-pointer"
+          <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
+            <button
               onClick={handleBackToHome}
+              className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+              aria-label="Go to homepage"
+              style={{
+                color: "#1A0905",
+                fontFamily: "'Instrument Serif', serif",
+              }}
             >
-              <GraduationCap
-                className="w-8 h-8"
-                style={{ color: "#0A1926" }}
-              />
-              <span
-                className="text-xl font-bold"
-                style={{ color: "#0A1926" }}
-              >
-                AnithUncommon
-              </span>
-            </div>
-          </div>
-        </header>
-        <main className="container mx-auto px-4 py-8">
-          <Button
-            variant="ghost"
-            onClick={handleBackToHome}
-            className="mb-6"
-          >
-            <svg
-              className="w-4 h-4 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Back to Subjects
-          </Button>
+              AnithUncommon
+            </button>
 
+            <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
+              <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                About Us
+              </button>
+              <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#1A0905" }}>
+                Subjects
+              </button>
+              <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Collaborate
+              </button>
+              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Our Team
+              </button>
+              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                Student Progress
+              </button>
+              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+                FAQ
+              </button>
+            </nav>
+
+            <div className="min-[1440px]:hidden" />
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="min-[1440px]:hidden liquid-glass rounded-full"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{ color: "#1A0905" }}
+            >
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </Button>
+          </div>
+
+          {mobileMenuOpen && (
+            <div
+              className="min-[1440px]:hidden fixed inset-0 z-[120] isolate"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <div className="absolute inset-0 z-[121] bg-black/35" />
+              <nav
+                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex justify-end mb-6">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="rounded-full"
+                    onClick={() => setMobileMenuOpen(false)}
+                    style={{ color: "#1A0905" }}
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </div>
+
+                <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
+                  <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                    About Us
+                  </button>
+                  <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                    Subjects
+                  </button>
+                  <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                    Collaborate
+                  </button>
+                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                    Our Team
+                  </button>
+                  <button onClick={handleGoToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                    Student Progress
+                  </button>
+                  <button onClick={handleGoToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                    FAQ
+                  </button>
+                </div>
+              </nav>
+            </div>
+          )}
+        </header>
+        <main className="container mx-auto px-4 pt-36 pb-10 relative z-10">
           <div className="mb-8">
             <h1
-              className="text-4xl font-bold mb-4"
-              style={{ color: "#0A1926" }}
+              className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4"
+              style={{ color: "#1A0905" }}
             >
-              {selectedSubject.title}
+              {activeSubject.title}
             </h1>
-            <p className="text-xl" style={{ color: "#626E73" }}>
-              {selectedSubject.description}
+            <p className="text-xl" style={{ color: "#1A0905" }}>
+              {activeSubject.description}
             </p>
           </div>
 
-          {selectedSubject.chapters &&
-          selectedSubject.chapters.length > 0 ? (
+          {activeSubject.chapters &&
+          activeSubject.chapters.length > 0 ? (
             <div className="space-y-6 max-w-3xl">
               {/* Group chapters by mentor */}
               {(() => {
                 const mentorGroups: {
                   [key: string]: Chapter[];
                 } = {};
-                selectedSubject.chapters.forEach((chapter) => {
+                activeSubject.chapters.forEach((chapter) => {
                   const mentorKey = chapter.mentor || "General";
                   if (!mentorGroups[mentorKey]) {
                     mentorGroups[mentorKey] = [];
@@ -877,7 +1126,7 @@ export default function App() {
                         {chapters.map((chapter) => (
                           <Card
                             key={chapter.id}
-                            className="overflow-hidden"
+                            className="overflow-hidden rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)]"
                           >
                             <div
                               className="p-6 cursor-pointer hover:bg-[#F9F9F7] transition-colors"
@@ -1040,7 +1289,7 @@ export default function App() {
 
               {/* Resources Section */}
               {subjectResources.length > 0 && (
-                <Card className="mt-8 p-6">
+                <Card className="mt-8 p-6 rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)]">
                   <div className="flex items-center gap-2 mb-4">
                     <FileText
                       className="w-5 h-5"
@@ -1160,10 +1409,10 @@ export default function App() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {selectedSubject.topics.map((topic) => (
+              {activeSubject.topics.map((topic) => (
                 <Card
                   key={topic}
-                  className="p-6 hover:shadow-lg transition-shadow cursor-pointer group"
+                  className="p-6 rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)] transition-all duration-500 hover:-translate-y-1 cursor-pointer group"
                 >
                   <h3
                     className="text-xl font-semibold mb-2 group-hover:text-[#626E73] transition-colors"
@@ -1189,6 +1438,127 @@ export default function App() {
             </div>
           )}
         </main>
+
+        <footer
+          className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
+          style={{ backgroundColor: "#1A0905" }}
+        >
+          <div
+            className="absolute inset-0 pointer-events-none opacity-20"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, rgba(148, 177, 200, 0.4) 1px, transparent 0)",
+              backgroundSize: "20px 20px",
+            }}
+          />
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
+              <div className="text-left space-y-4">
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                  Directory
+                </h3>
+                <div className="flex flex-col gap-2 text-sm">
+                  <button onClick={() => goToHomeSection("about")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    About Us
+                  </button>
+                  <button onClick={() => goToHomeSection("subjects")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    Subjects
+                  </button>
+                  <button onClick={() => goToHomeSection("collaborate")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    Collaborate
+                  </button>
+                  <button onClick={handleGoToTeam} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    Our Team
+                  </button>
+                  <button onClick={handleGoToProgress} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    Student Progress
+                  </button>
+                  <button onClick={handleGoToFaq} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    FAQ
+                  </button>
+                </div>
+              </div>
+
+              <div className="text-left space-y-4">
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                  Get In Touch
+                </h3>
+                <p className="text-sm" style={{ color: "#94B1C8" }}>
+                  anithuncommon@gmail.com
+                </p>
+                <Button
+                  className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
+                  style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                  onClick={() => (window.location.href = "mailto:anithuncommon@gmail.com")}
+                >
+                  Contact
+                </Button>
+              </div>
+
+              <div className="text-left space-y-4">
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                  Join Our Newsletter
+                </h3>
+                <form
+                  className="space-y-3"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.currentTarget);
+                    const name = formData.get("newsletterName");
+                    const email = formData.get("newsletterEmail");
+                    const mailtoLink = `mailto:anithuncommon@gmail.com?subject=Newsletter Signup&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}`)}`;
+                    window.location.href = mailtoLink;
+                  }}
+                >
+                  <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
+                  <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
+                  <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}>
+                    Submit
+                  </Button>
+                </form>
+              </div>
+
+              <div className="text-left lg:text-right space-y-4 lg:justify-self-end">
+                <div className="flex items-center justify-start lg:justify-end gap-3 mb-5">
+                  <a href="https://instagram.com/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                  <a href="https://linktr.ee/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    <TreePine className="w-5 h-5" />
+                  </a>
+                  <a href="https://www.linkedin.com/company/anith-uncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                  </a>
+                </div>
+
+                <div>
+                  <h3 className="text-xs font-semibold tracking-[0.14em] uppercase mb-2" style={{ color: "#E3DFCE" }}>
+                    Colophon
+                  </h3>
+                  <p className="text-sm" style={{ color: "#94B1C8" }}>
+                    Designed by
+                  </p>
+                  <p className="text-sm" style={{ color: "#94B1C8" }}>
+                    Ximena Clímaco
+                  </p>
+                  <p className="text-sm mb-2" style={{ color: "#94B1C8" }}>
+                    Amr Shaikh
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t" style={{ borderColor: "rgba(161, 166, 165, 0.2)" }}>
+            <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
+              <p className="text-center md:text-left" style={{ color: "#94B1C8" }}>
+                © AnithUncommon. Empowering students beyond the classroom.
+              </p>
+            </div>
+          </div>
+        </footer>
 
         {/* Signup Modal */}
         {showSignupModal && (
@@ -1516,9 +1886,9 @@ export default function App() {
               size="lg"
               className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#1A0905]"
               style={{ backgroundColor: "#94B1C8", color: "#1A0905" }}
-              onClick={handleGoToTeam}
+              onClick={handleGoToJoinUs}
             >
-              Meet The Team
+              Join Community
             </Button>
           </div>
         </div>
@@ -1600,14 +1970,14 @@ export default function App() {
 
                   <div
                     className="text-4xl font-bold leading-none mb-2"
-                    style={{ color: "#1A0905" }}
+                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#1A0905" }}
                   >
                     {animatedStats[index]}
                     {stat.suffix}
                   </div>
                   <p
                     className="text-sm font-semibold tracking-[0.08em] uppercase mb-4"
-                    style={{ color: "#1A0905" }}
+                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#1A0905" }}
                   >
                     {stat.label}
                   </p>
@@ -1726,6 +2096,213 @@ export default function App() {
         </div>
       </section>
 
+      {/* Orbital Concept Section */}
+      <section
+        className="py-20 border-b-2 border-[#1A0905] relative overflow-hidden"
+        style={{ backgroundColor: "#ede9da" }}
+      >
+        <style>{`
+          @keyframes orbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+
+          @keyframes orbit-reverse {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+          }
+        `}</style>
+
+        <div
+          className="absolute inset-0 pointer-events-none opacity-30"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.16) 1px, transparent 0)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center xl:items-start">
+            <div className="w-full flex justify-center xl:justify-start">
+              <div
+                className="relative aspect-square"
+                style={{
+                  width: Math.min(
+                    orbitalLayout.radius * 2 + orbitalLayout.nodeSize + 20,
+                    560,
+                  ),
+                }}
+              >
+                <div className="absolute inset-0 z-10">
+                  <svg
+                    viewBox={`-10 -10 ${
+                      orbitalLayout.radius * 2 + orbitalLayout.nodeSize + 20
+                    } ${orbitalLayout.radius * 2 + orbitalLayout.nodeSize + 20}`}
+                    className="absolute inset-0 w-full h-full"
+                    style={{ overflow: "visible" }}
+                  >
+                    {ORBITAL_ITEMS.map((item, index) => {
+                      const angle = ORBITAL_ANGLES[index] ?? 0;
+                      const rad = (angle * Math.PI) / 180;
+                      const offset = orbitalLayout.nodeSize / 2;
+                      const center = orbitalLayout.radius + offset;
+                      const x =
+                        center + orbitalLayout.radius * Math.cos(rad);
+                      const y =
+                        center + orbitalLayout.radius * Math.sin(rad);
+                      const [lineOne = "", lineTwo = ""] =
+                        item.description.split("\n");
+
+                      return (
+                        <g
+                          key={item.title}
+                          style={{
+                            transformOrigin: `${center}px ${center}px`,
+                            animation: "orbit 50s linear infinite",
+                          }}
+                        >
+                          <line
+                            x1={center}
+                            y1={center}
+                            x2={x}
+                            y2={y}
+                            stroke="rgba(26, 9, 5, 0.12)"
+                            strokeWidth="1.5"
+                          />
+                          <g transform={`translate(${x}, ${y})`}>
+                            <circle
+                              cx="0"
+                              cy="0"
+                              r={orbitalLayout.nodeSize / 2}
+                              fill="#f7f4eb"
+                              stroke="#1A0905"
+                              strokeWidth="2"
+                              style={{
+                                filter:
+                                  "drop-shadow(4px 4px 0 rgba(26, 9, 5, 0.26))",
+                              }}
+                            />
+                            <g
+                              transform={`rotate(${-angle}, 0, 0)`}
+                              style={{
+                                transformOrigin: "0px 0px",
+                                animation:
+                                  "orbit-reverse 50s linear infinite",
+                              }}
+                            >
+                              <text
+                                x="0"
+                                y="0"
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                style={{
+                                  fill: "#1A0905",
+                                  fontSize:
+                                    orbitalLayout.nodeSize >= 120
+                                      ? "11px"
+                                      : orbitalLayout.nodeSize >= 100
+                                      ? "10px"
+                                      : "9px",
+                                  fontWeight: 600,
+                                  letterSpacing: "0.06em",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                {item.title.split("\n").map((line, idx) => (
+                                  <tspan key={idx} x="0" dy={idx === 0 ? "-6" : "12"}>
+                                    {line}
+                                  </tspan>
+                                ))}
+                              </text>
+                              <text
+                                x="0"
+                                y="0"
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                style={{
+                                  fill: "#626E73",
+                                  fontSize:
+                                    orbitalLayout.nodeSize >= 120
+                                      ? "9px"
+                                      : orbitalLayout.nodeSize >= 100
+                                      ? "8px"
+                                      : "7.5px",
+                                  lineHeight: "1.2",
+                                }}
+                              >
+                                <tspan x="0" dy="8">
+                                  {lineOne}
+                                </tspan>
+                                <tspan x="0" dy="10">
+                                  {lineTwo}
+                                </tspan>
+                              </text>
+                            </g>
+                          </g>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+
+                <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                  <div
+                    className="rounded-full border-2 border-[#1A0905] shadow-[10px_10px_0px_rgba(26,9,5,0.58)] flex flex-col items-center justify-center text-center px-5"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 30% 24%, #8D5B4A 0%, #6A372B 42%, #4C050C 100%)",
+                      boxShadow:
+                        "inset 0 12px 20px rgba(227, 223, 206, 0.12), inset 0 -12px 20px rgba(26, 9, 5, 0.3), 0 0 0 1px rgba(26, 9, 5, 0.12), 0 18px 34px rgba(26, 9, 5, 0.24)",
+                      width: orbitalLayout.radius * (orbitalLayout.centerMultiplier ?? 0.74),
+                      height: orbitalLayout.radius * (orbitalLayout.centerMultiplier ?? 0.74),
+                    }}
+                  >
+                    <p
+                      className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold"
+                      style={{ color: "#E3DFCE" }}
+                    >
+                      Subject Accessibility
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="max-w-2xl mx-auto xl:mx-0 text-center xl:text-left">
+              <div
+                className="inline-block px-4 py-2 rounded-full mb-5 border-2 border-[#1A0905] mx-auto xl:mx-0"
+                style={{ backgroundColor: "#94B1C8" }}
+              >
+                <span
+                  className="text-xs tracking-[0.22em] font-semibold"
+                  style={{ color: "#1A0905" }}
+                >
+                  THE ACCESS GAP
+                </span>
+              </div>
+
+              <h2
+                className="text-4xl md:text-5xl font-editorial-serif font-semibold leading-[1.06] mb-6"
+                style={{ color: "#1A0905" }}
+              >
+                What Students Can Learn Shapes Who They Become
+              </h2>
+
+              <p className="text-lg leading-relaxed mb-4" style={{ color: "#1A0905" }}>
+                In many schools, students are limited by what subjects are offered to them. While STEM is often prioritized, many humanities and interest-based areas remain out of reach.
+              </p>
+              <p className="text-lg leading-relaxed mb-4" style={{ color: "#1A0905" }}>
+                But subject access does not just affect what students study - it shapes how they perform, how confident they feel, and the paths they believe are possible for them.
+              </p>
+              <p className="text-lg leading-relaxed" style={{ color: "#1A0905" }}>
+                That's why AnithUncommon exists - to expand access through free, student-led learning, giving students the freedom to explore what truly matters to them.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Subjects Section */}
       <section
         id="subjects"
@@ -1790,38 +2367,48 @@ export default function App() {
       <section className="py-20 border-b-2 border-[#1A0905] relative overflow-x-hidden" style={{ backgroundColor: "#ede9da" }}>
         <div className="container mx-auto px-4 mb-12">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#1A0905" }}>
-              What Students Are Saying
-            </h2>
+            <div
+              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]"
+              style={{ backgroundColor: "#94B1C8" }}
+            >
+              <span
+                className="text-xs tracking-[0.22em] font-semibold"
+                style={{ color: "#1A0905" }}
+              >
+                TESTIMONIALS
+              </span>
+            </div>
             <p className="text-lg" style={{ color: "#1A0905" }}>
-              Real feedback from learners in our community.
+              Real feedback from mentors and learners in our community.
             </p>
           </div>
         </div>
 
-        <div className="relative w-full overflow-x-hidden overflow-y-visible py-2">
+        <div className="relative w-full overflow-x-hidden overflow-y-visible pt-2 pb-5">
           <div className="testimonial-track flex items-stretch gap-6 px-4 md:px-8 animate-testimonial-scroll">
             {[...testimonials, ...testimonials].map(
               (testimonial, index) => (
                 <Card
                   key={`${testimonial.name}-${index}`}
-                  className={`w-[320px] sm:w-[360px] flex-shrink-0 p-6 border-2 border-[#1A0905] rounded-[24px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.82)] ${
-                    index % 2 === 0 ? "rotate-[-1deg]" : "rotate-[1deg]"
-                  }`}
+                  className="w-[320px] sm:w-[360px] h-full flex flex-col flex-shrink-0 p-6 border-2 border-[#1A0905] rounded-[24px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.82)] transition-all duration-500 hover:-translate-y-1"
                 >
-                  <div className="inline-block px-3 py-1 mb-4 border-2 border-[#1A0905] rounded-full bg-[#94B1C8] text-xs font-semibold tracking-[0.08em]" style={{ color: "#1A0905" }}>
-                    {testimonial.tag}
-                  </div>
-                  <p className="text-base leading-relaxed mb-5" style={{ color: "#1A0905" }}>
+                  <p className="text-base leading-relaxed mb-5 flex-1" style={{ color: "#1A0905" }}>
                     "{testimonial.quote}"
                   </p>
-                  <div className="border-t-2 border-[#1A0905] pt-4">
-                    <p className="font-semibold" style={{ color: "#4C050C" }}>
-                      {testimonial.name}
-                    </p>
-                    <p className="text-sm" style={{ color: "#626E73" }}>
-                      {testimonial.role}
-                    </p>
+                  <div className="flex items-center gap-3 mt-auto">
+                    <img
+                      src={`/feedback-images/${encodeURIComponent(testimonial.name)}.jpg`}
+                      alt={`${testimonial.name} feedback`}
+                      className="w-12 h-12 rounded-full border-2 border-[#1A0905] object-cover bg-[#D9D7CC]"
+                    />
+                    <div>
+                      <p className="font-semibold" style={{ color: "#4C050C" }}>
+                        {testimonial.name}
+                      </p>
+                      <p className="text-sm" style={{ color: "#626E73" }}>
+                        {testimonial.role}
+                      </p>
+                    </div>
                   </div>
                 </Card>
               ),
@@ -2170,7 +2757,12 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
             <Card
               className="p-8 rounded-[28px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.76)] hover:shadow-[11px_11px_0px_rgba(26,9,5,0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
-              onClick={handleGoToJoinUs}
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1",
+                  "_blank",
+                )
+              }
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-0 group-hover:opacity-5 rounded-full transition-opacity" />
               <div className="relative z-10">
@@ -2209,7 +2801,12 @@ export default function App() {
 
             <Card
               className="p-8 rounded-[28px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.76)] hover:shadow-[11px_11px_0px_rgba(26,9,5,0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
-              onClick={handleGoToJoinUs}
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform",
+                  "_blank",
+                )
+              }
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#626E73] opacity-0 group-hover:opacity-5 rounded-full transition-opacity" />
               <div className="relative z-10">
@@ -2278,15 +2875,7 @@ export default function App() {
           }}
         />
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
-            <div className="flex items-start justify-start">
-              <span
-                className="text-3xl font-editorial-serif font-semibold"
-                style={{ color: "#E3DFCE" }}
-              >
-                AnithUncommon
-              </span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
 
             <div className="text-left space-y-4">
               <h3
@@ -2449,8 +3038,8 @@ export default function App() {
               </form>
             </div>
 
-            <div className="text-left space-y-4">
-              <div className="flex items-center justify-start gap-3 mb-5">
+            <div className="text-left lg:text-right space-y-4 lg:justify-self-end">
+              <div className="flex items-center justify-start lg:justify-end gap-3 mb-5">
                 <a
                   href="https://instagram.com/anithuncommon"
                   target="_blank"

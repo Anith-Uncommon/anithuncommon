@@ -13,6 +13,7 @@ export interface MentorData {
   name: string;
   email: string;
   role: string;
+  country?: string;
   subjects: string[];
   bio?: string;
   resources: MentorResource[];
@@ -44,7 +45,29 @@ export const mentorsData: MentorData[] = [
     role: "STEM Mentor (Biology)",
     subjects: ["Biology"],
     bio: "A connoisseur of the abstract. Be sure to enjoy whatever it is you're doing.",
-    resources: []
+    resources: [
+      {
+        title: "Carbohydrates",
+        type: "pdf",
+        description: "Comprehensive guide to carbohydrates, their structures, types, and biological functions.",
+        file: "/resources/kenneth-carbohydrates-1.1.pdf",
+        relatedTopics: ["Biology"]
+      },
+      {
+        title: "DNA and RNA",
+        type: "pdf",
+        description: "Detailed exploration of DNA and RNA structures, replication, and protein synthesis.",
+        file: "/resources/kenneth-dna-and-rna-2.1.pdf",
+        relatedTopics: ["Biology"]
+      },
+      {
+        title: "Transport in Molecules",
+        type: "pdf",
+        description: "In-depth study of molecular transport mechanisms and membrane transport processes.",
+        file: "/resources/kenneth-transport-in-molecules-3.1.pdf",
+        relatedTopics: ["Biology"]
+      }
+    ]
   },
   {
     id: "trista",
@@ -98,7 +121,15 @@ export const mentorsData: MentorData[] = [
     role: "Humanities Mentor (History)",
     subjects: ["History", "World History", "Criminology", "Physiology"],
     bio: `"If not us, then who, and if not now, then when" — John F. Kennedy`,
-    resources: []
+    resources: [
+      {
+        title: "Introduction to Political Theory",
+        type: "pdf",
+        description: "Foundation course on political theory fundamentals, key concepts, and major thinkers.",
+        file: "/resources/akshiti-introduction-to-political-theory-1.pdf",
+        relatedTopics: ["Political Theory"]
+      }
+    ]
   },
   {
     id: "yassmin-mahmoud",
@@ -107,7 +138,29 @@ export const mentorsData: MentorData[] = [
     role: "STEM Mentor",
     subjects: ["Biology", "Physics", "Chemistry"],
     bio: "",
-    resources: []
+    resources: [
+      {
+        title: "Characteristics and Classification of Living Organisms",
+        type: "pdf",
+        description: "Study of the characteristics and classification systems used to organize living organisms.",
+        file: "/resources/yassmin-characteristics-classification-1.pdf",
+        relatedTopics: ["Biology"]
+      },
+      {
+        title: "Cell",
+        type: "pdf",
+        description: "Comprehensive exploration of cell structure, function, and types.",
+        file: "/resources/yassmin-cell-2.pdf",
+        relatedTopics: ["Biology"]
+      },
+      {
+        title: "Movement into and out of the Cell",
+        type: "pdf",
+        description: "Detailed study of cell transport mechanisms, diffusion, osmosis, and active transport.",
+        file: "/resources/yassmin-cell-transport-3.pdf",
+        relatedTopics: ["Biology"]
+      }
+    ]
   },
   {
     id: "avighnaa-ramesh",
@@ -143,6 +196,15 @@ from mortality to immortality."
     subjects: ["Biology"],
     bio: "New STEM mentor specializing in Biology.",
     resources: []
+  },
+  {
+    id: "savera-sidhu",
+    name: "Savera Sidhu",
+    email: "",
+    role: "Humanities Mentor",
+    subjects: ["Political Theory"],
+    bio: "Humanities mentor supporting students in political theory.",
+    resources: []
   }
 ];
 
@@ -152,7 +214,15 @@ export function getMentorById(id: string): MentorData | undefined {
 }
 
 export function getMentorByName(name: string): MentorData | undefined {
-  return mentorsData.find(mentor => mentor.name === name);
+  const normalizeName = (value: string): string =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+
+  const target = normalizeName(name);
+  return mentorsData.find((mentor) => normalizeName(mentor.name) === target);
 }
 
 export function getMentorsBySubject(subject: string): MentorData[] {

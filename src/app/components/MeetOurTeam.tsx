@@ -253,6 +253,13 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           bio: "I wish to be a bird",
           instagram: "ihsrqa",
           colorAccent: "bg-[#0B1F26]"
+        },
+        {
+          name: "Savera Sidhu",
+          role: "Humanities Mentor",
+          image: "savera.jpeg",
+          bio: "",
+          colorAccent: "bg-[#0A1926]"
         }
       ]
     },
@@ -509,15 +516,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           }}
         />
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
-            <div className="flex items-start justify-start">
-              <span
-                className="text-3xl font-editorial-serif font-semibold"
-                style={{ color: "#E3DFCE" }}
-              >
-                AnithUncommon
-              </span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
 
             <div className="text-left space-y-4">
               <h3
@@ -614,8 +613,8 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
               </form>
             </div>
 
-            <div className="text-left space-y-4">
-              <div className="flex items-center justify-start gap-3 mb-5">
+            <div className="text-left lg:text-right space-y-4 lg:justify-self-end">
+              <div className="flex items-center justify-start lg:justify-end gap-3 mb-5">
                 <a href="https://instagram.com/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   <Instagram className="w-5 h-5" />
                 </a>
