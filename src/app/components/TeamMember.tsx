@@ -15,6 +15,20 @@ interface TeamMemberProps {
 }
 
 export function TeamMember({ name, role, image, bio, country, linkedin, instagram, email, colorAccent: _colorAccent }: TeamMemberProps) {
+  const resolveImagePath = (imagePath: string): string => {
+    if (/^https?:\/\//i.test(imagePath)) {
+      return imagePath;
+    }
+
+    const normalizedBase = import.meta.env.BASE_URL.endsWith("/")
+      ? import.meta.env.BASE_URL
+      : `${import.meta.env.BASE_URL}/`;
+    const normalizedImagePath = imagePath.startsWith("/")
+      ? imagePath.slice(1)
+      : imagePath;
+
+    return `${normalizedBase}${normalizedImagePath}`;
+  };
 
   return (
     <div className="group h-full">
@@ -25,7 +39,7 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
               <div className="relative w-32 h-32 mx-auto">
                 <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#1A0905] shadow-[4px_4px_0px_rgba(26,9,5,0.45)]">
                   <ImageWithFallback 
-                    src={image} 
+                    src={resolveImagePath(image)} 
                     alt={name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

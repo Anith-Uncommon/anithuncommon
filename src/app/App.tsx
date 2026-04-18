@@ -2397,7 +2397,7 @@ export default function App() {
                   </p>
                   <div className="flex items-center gap-3 mt-auto">
                     <img
-                      src={`/feedback-images/${encodeURIComponent(testimonial.name)}.jpg`}
+                      src={`${import.meta.env.BASE_URL}feedback-images/${encodeURIComponent(testimonial.name)}.jpg`}
                       alt={`${testimonial.name} feedback`}
                       className="w-12 h-12 rounded-full border-2 border-[#1A0905] object-cover bg-[#D9D7CC]"
                     />

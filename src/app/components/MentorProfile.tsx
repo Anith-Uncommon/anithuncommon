@@ -23,6 +23,21 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const resolvePublicAssetPath = (assetPath: string): string => {
+    if (/^https?:\/\//i.test(assetPath)) {
+      return assetPath;
+    }
+
+    const normalizedBase = import.meta.env.BASE_URL.endsWith("/")
+      ? import.meta.env.BASE_URL
+      : `${import.meta.env.BASE_URL}/`;
+    const normalizedAssetPath = assetPath.startsWith("/")
+      ? assetPath.slice(1)
+      : assetPath;
+
+    return `${normalizedBase}${normalizedAssetPath}`;
+  };
+
   const goToHome = () => {
     setMobileMenuOpen(false);
     onBack();
@@ -251,7 +266,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
                   {mentor.resources.map((resource, index) => (
                     <a
                       key={`${resource.title}-${index}`}
-                      href={resource.file.startsWith("/") ? resource.file : `/${resource.file}`}
+                      href={resolvePublicAssetPath(resource.file)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block rounded-2xl border-2 border-[#1A0905] p-4 transition-all duration-300 hover:bg-[#E3DFCE]"
