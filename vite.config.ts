@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  // Use relative paths for assets so the site works on any domain or subfolder
-  base: './', 
+  // GitHub Pages project site base path
+  base: '/anithuncommon/',
   plugins: [
     react(),
     tailwindcss(),
