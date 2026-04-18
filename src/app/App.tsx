@@ -368,7 +368,7 @@ export default function App() {
       mentors: [
         "Martina Marques",
         "Yognya Gunti",
-        "Savera Sidhu",
+        "Akshiti Bhardwaj",
       ],
       topicsData: {},
       chapters: [],

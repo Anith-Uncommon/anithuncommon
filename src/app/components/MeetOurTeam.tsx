@@ -162,9 +162,9 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           colorAccent: "bg-[#626E73]"
         },
         {
-          name: "MJ",
+          name: "Joanna",
           role: "Designer and Curriculum creator",
-          image: "mj.jpeg",
+          image: "joanna.jpeg",
           bio: "No need to chase the moon! We already hold the stars in our hands",
           instagram: "https://www.instagram.com/miche_llejhope8?igsh=MWVrcHA4bXMydG0=",
           colorAccent: "bg-[#626E73]" 
@@ -253,13 +253,6 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           bio: "I wish to be a bird",
           instagram: "ihsrqa",
           colorAccent: "bg-[#0B1F26]"
-        },
-        {
-          name: "Savera Sidhu",
-          role: "Humanities Mentor",
-          image: "savera.jpeg",
-          bio: "",
-          colorAccent: "bg-[#0A1926]"
         }
       ]
     },
