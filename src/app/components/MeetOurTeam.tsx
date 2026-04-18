@@ -249,7 +249,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {
           name: "Ishraq",
           role: "Humanities mentor for Literature",
-          image: "ishraq.jpeg",
+          image: "Ishraq.jpeg",
           bio: "I wish to be a bird",
           instagram: "ihsrqa",
           colorAccent: "bg-[#0B1F26]"
