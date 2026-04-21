@@ -53,23 +53,23 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+    <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
       <div
         className="absolute inset-0 pointer-events-none opacity-20"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.2) 1px, transparent 0)",
           backgroundSize: "20px 20px",
         }}
       />
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0a1b2b] opacity-10 rounded-full blur-3xl" />
 
       <header
         className="fixed top-0 inset-x-0 z-30"
         style={{
-          backgroundColor: "rgba(227, 223, 206, 0.94)",
-          borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
+          backgroundColor: "rgba(255, 249, 251, 0.94)",
+          borderBottom: "1px solid rgba(10, 27, 43, 0.14)",
         }}
       >
         <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
@@ -78,7 +78,7 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
             className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
             aria-label="Go to homepage"
             style={{
-              color: "#1A0905",
+              color: "#0a1b2b",
               fontFamily: "'Instrument Serif', serif",
             }}
           >
@@ -86,22 +86,22 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
           </button>
 
           <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               About Us
             </button>
-            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Subjects
             </button>
-            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Collaborate
             </button>
-            <button onClick={goToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Our Team
             </button>
-            <button className="transition-colors" style={{ color: "#1A0905" }}>
+            <button className="transition-colors" style={{ color: "#0a1b2b" }}>
               Student Progress
             </button>
-            <button onClick={goToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               FAQ
             </button>
           </nav>
@@ -113,7 +113,7 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
             size="sm"
             className="min-[1440px]:hidden liquid-glass rounded-full"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: "#1A0905" }}
+            style={{ color: "#0a1b2b" }}
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -130,7 +130,7 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
           >
             <div className="absolute inset-0 z-[121] bg-black/35" />
             <nav
-              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#FFF9FB] border-l-2 border-[#0a1b2b] shadow-[-10px_0_0_rgba(10, 27, 43, 0.4)] p-6 flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-end mb-6">
@@ -139,29 +139,29 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
                   size="sm"
                   className="rounded-full"
                   onClick={() => setMobileMenuOpen(false)}
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   About Us
                 </button>
-                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Subjects
                 </button>
-                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Collaborate
                 </button>
-                <button onClick={goToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToTeam} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Our Team
                 </button>
-                <button className="text-lg" style={{ color: "#1A0905" }}>
+                <button className="text-lg" style={{ color: "#0a1b2b" }}>
                   Student Progress
                 </button>
-                <button onClick={goToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToFaq} className="text-lg" style={{ color: "#0a1b2b" }}>
                   FAQ
                 </button>
               </div>
@@ -173,12 +173,12 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-32 pb-14 relative z-10">
 
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]" style={{ backgroundColor: "#94B1C8" }}>
-            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#1A0905" }}>
+          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]" style={{ backgroundColor: "#94B1C8" }}>
+            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#0a1b2b" }}>
               STUDENT PROGRESS
             </span>
           </div>
-          <p className="text-xl max-w-2xl mx-auto text-[#1A0905]">
+          <p className="text-xl max-w-2xl mx-auto text-[#0a1b2b]">
             Track student achievements and explore our community moments
           </p>
         </div>
@@ -186,8 +186,8 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
         {/* Meeting Photos Section */}
         <div className="mb-16">
           <div className="flex items-center gap-4 mb-8">
-            <Camera className="w-6 h-6 text-[#1A0905]" />
-            <h2 className="text-3xl font-editorial-serif font-semibold text-[#1A0905]">Meeting Photos</h2>
+            <Camera className="w-6 h-6 text-[#0a1b2b]" />
+            <h2 className="text-3xl font-editorial-serif font-semibold text-[#0a1b2b]">Meeting Photos</h2>
             <div className="grow h-px bg-[#94B1C8]" />
           </div>
 
@@ -205,14 +205,14 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
             </div>
           ) : (
             // Empty State for Photos
-            <Card className="p-12 text-center border-2 border-dashed border-[#1A0905] rounded-[26px] bg-[#f7f4eb]">
+            <Card className="p-12 text-center border-2 border-dashed border-[#0a1b2b] rounded-[26px] bg-[#f7f4eb]">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#F9F9F7] mb-6">
-                <Camera className="w-10 h-10 text-[#1A0905]" />
+                <Camera className="w-10 h-10 text-[#0a1b2b]" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-[#0A1926]">
                 Meeting Photos Coming Soon
               </h3>
-              <p className="text-lg text-[#1A0905] max-w-md mx-auto">
+              <p className="text-lg text-[#0a1b2b] max-w-md mx-auto">
                 We'll be sharing photos from our community meetings and events here soon.
               </p>
             </Card>
@@ -222,65 +222,65 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
         {/* Student Progress Tabs Section */}
         <div>
           <div className="flex items-center gap-4 mb-8">
-            <Users className="w-6 h-6 text-[#1A0905]" />
-            <h2 className="text-3xl font-editorial-serif font-semibold text-[#1A0905]">Student Progress Tracking</h2>
+            <Users className="w-6 h-6 text-[#0a1b2b]" />
+            <h2 className="text-3xl font-editorial-serif font-semibold text-[#0a1b2b]">Student Progress Tracking</h2>
             <div className="grow h-px bg-[#94B1C8]" />
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex gap-2 mb-6 border-b border-[#1A0905] overflow-x-auto">
+          <div className="flex gap-2 mb-6 border-b border-[#0a1b2b] overflow-x-auto">
             <button
               onClick={() => setActiveTab("overview")}
               className={`px-6 py-3 font-semibold transition-colors relative whitespace-nowrap ${
                 activeTab === "overview"
-                  ? "text-[#1A0905]"
-                  : "text-[#4e5e68] hover:text-[#1A0905]"
+                  ? "text-[#0a1b2b]"
+                  : "text-[#4e5e68] hover:text-[#0a1b2b]"
               }`}
             >
               Overview
               {activeTab === "overview" && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4C050C]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0a1b2b]" />
               )}
             </button>
             <button
               onClick={() => setActiveTab("individual")}
               className={`px-6 py-3 font-semibold transition-colors relative whitespace-nowrap ${
                 activeTab === "individual"
-                  ? "text-[#1A0905]"
-                  : "text-[#4e5e68] hover:text-[#1A0905]"
+                  ? "text-[#0a1b2b]"
+                  : "text-[#4e5e68] hover:text-[#0a1b2b]"
               }`}
             >
               Individual Progress
               {activeTab === "individual" && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4C050C]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0a1b2b]" />
               )}
             </button>
             <button
               onClick={() => setActiveTab("achievements")}
               className={`px-6 py-3 font-semibold transition-colors relative whitespace-nowrap ${
                 activeTab === "achievements"
-                  ? "text-[#1A0905]"
-                  : "text-[#4e5e68] hover:text-[#1A0905]"
+                  ? "text-[#0a1b2b]"
+                  : "text-[#4e5e68] hover:text-[#0a1b2b]"
               }`}
             >
               Achievements
               {activeTab === "achievements" && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#4C050C]" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0a1b2b]" />
               )}
             </button>
           </div>
 
           {/* Tab Content - Empty State with Stats */}
-          <Card className="p-12 text-center border-2 border-dashed border-[#1A0905] rounded-[26px] bg-[#f7f4eb]">
+          <Card className="p-12 text-center border-2 border-dashed border-[#0a1b2b] rounded-[26px] bg-[#f7f4eb]">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#F9F9F7] mb-6">
-              <FileText className="w-10 h-10 text-[#1A0905]" />
+              <FileText className="w-10 h-10 text-[#0a1b2b]" />
             </div>
             <h3 className="text-2xl font-bold mb-4 text-[#0A1926]">
               {activeTab === "overview" && "Progress Overview Coming Soon"}
               {activeTab === "individual" && "Individual Tracking Coming Soon"}
               {activeTab === "achievements" && "Achievement System Coming Soon"}
             </h3>
-            <p className="text-lg text-[#1A0905] max-w-md mx-auto mb-8">
+            <p className="text-lg text-[#0a1b2b] max-w-md mx-auto mb-8">
               {activeTab === "overview" && "We're building a comprehensive dashboard to track overall student progress and engagement."}
               {activeTab === "individual" && "Individual student progress tracking will allow you to see detailed learning journeys for each student."}
               {activeTab === "achievements" && "Celebrate student milestones with our upcoming achievement and badge system."}
@@ -291,7 +291,7 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
 
       <footer
         className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
-        style={{ backgroundColor: "#1A0905" }}
+        style={{ backgroundColor: "#0a1b2b" }}
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
@@ -339,7 +339,7 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
               </p>
               <Button
                 className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
-                style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
                 onClick={() => (window.location.href = "mailto:anithuncommon@gmail.com")}
               >
                 Contact
@@ -361,9 +361,9 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
                   window.location.href = mailtoLink;
                 }}
               >
-                <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}>
+                <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}>
                   Submit
                 </Button>
               </form>
@@ -413,3 +413,5 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
     </div>
   );
 }
+
+

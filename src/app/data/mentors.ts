@@ -94,7 +94,29 @@ export const mentorsData: MentorData[] = [
     role: "STEM Mentor (Math and Chemistry)",
     subjects: ["Math", "Chemistry"],
     bio: "High school student passionate about engineering, math, and science.",
-    resources: []
+    resources: [
+      {
+        title: "IGCSE Math Extended 0580 - Unit 1: Numbers",
+        type: "pdf",
+        description: "Foundational Unit 1 sample covering numbers and core number operations.",
+        file: "/resources/vihaan-numbers-1.pdf",
+        relatedTopics: ["Math"]
+      },
+      {
+        title: "IGCSE Math Extended 0580 - Unit 2: Algebra and Graphs",
+        type: "pdf",
+        description: "Unit 2 sample introducing algebraic techniques and graph interpretation.",
+        file: "/resources/vihaan-algebra-and-graphs-2.pdf",
+        relatedTopics: ["Math"]
+      },
+      {
+        title: "IGCSE Math Extended 0580 - Unit 3: Algebra and Graphs",
+        type: "pdf",
+        description: "Unit 3 sample with additional algebra and graph practice material.",
+        file: "/resources/vihaan-algebra-and-graphs-3.pdf",
+        relatedTopics: ["Math"]
+      }
+    ]
   },
   {
     id: "lakshya-shree",
@@ -123,10 +145,17 @@ export const mentorsData: MentorData[] = [
     bio: `"If not us, then who, and if not now, then when" — John F. Kennedy`,
     resources: [
       {
-        title: "Introduction to Political Theory",
+        title: "Political Theory Lesson 1 (Introduction to Political Theory)",
         type: "pdf",
         description: "Foundation course on political theory fundamentals, key concepts, and major thinkers.",
         file: "/resources/akshiti-introduction-to-political-theory-1.pdf",
+        relatedTopics: ["Political Theory"]
+      },
+      {
+        title: "Political Theory Lesson 2 (Freedom)",
+        type: "pdf",
+        description: "Political Theory Lesson 2 focused on the concept of freedom and its major interpretations.",
+        file: "/resources/akshiti-freedom-2.pdf",
         relatedTopics: ["Political Theory"]
       }
     ]

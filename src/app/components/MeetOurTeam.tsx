@@ -273,23 +273,23 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+    <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
       <div
         className="absolute inset-0 pointer-events-none opacity-20"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.2) 1px, transparent 0)",
           backgroundSize: "20px 20px",
         }}
       />
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0a1b2b] opacity-10 rounded-full blur-3xl" />
 
       <header
         className="fixed top-0 inset-x-0 z-30"
         style={{
-          backgroundColor: "rgba(227, 223, 206, 0.94)",
-          borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
+          backgroundColor: "rgba(255, 249, 251, 0.94)",
+          borderBottom: "1px solid rgba(10, 27, 43, 0.14)",
         }}
       >
         <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
@@ -298,7 +298,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
             className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
             aria-label="Go to homepage"
             style={{
-              color: "#1A0905",
+              color: "#0a1b2b",
               fontFamily: "'Instrument Serif', serif",
             }}
           >
@@ -306,22 +306,22 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           </button>
 
           <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               About Us
             </button>
-            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Subjects
             </button>
-            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Collaborate
             </button>
-            <button className="transition-colors" style={{ color: "#1A0905" }}>
+            <button className="transition-colors" style={{ color: "#0a1b2b" }}>
               Our Team
             </button>
-            <button onClick={goToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Student Progress
             </button>
-            <button onClick={goToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               FAQ
             </button>
           </nav>
@@ -333,7 +333,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
             size="sm"
             className="min-[1440px]:hidden liquid-glass rounded-full"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: "#1A0905" }}
+            style={{ color: "#0a1b2b" }}
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -350,7 +350,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           >
             <div className="absolute inset-0 z-[121] bg-black/35" />
             <nav
-              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#FFF9FB] border-l-2 border-[#0a1b2b] shadow-[-10px_0_0_rgba(10, 27, 43, 0.4)] p-6 flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-end mb-6">
@@ -359,29 +359,29 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                   size="sm"
                   className="rounded-full"
                   onClick={() => setMobileMenuOpen(false)}
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   About Us
                 </button>
-                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Subjects
                 </button>
-                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Collaborate
                 </button>
-                <button className="text-lg" style={{ color: "#1A0905" }}>
+                <button className="text-lg" style={{ color: "#0a1b2b" }}>
                   Our Team
                 </button>
-                <button onClick={goToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToProgress} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Student Progress
                 </button>
-                <button onClick={goToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToFaq} className="text-lg" style={{ color: "#0a1b2b" }}>
                   FAQ
                 </button>
               </div>
@@ -393,12 +393,12 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-32 pb-14 relative z-10">
 
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]" style={{ backgroundColor: "#94B1C8" }}>
-            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#1A0905" }}>
+          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]" style={{ backgroundColor: "#94B1C8" }}>
+            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#0a1b2b" }}>
               OUR TEAM
             </span>
           </div>
-          <p className="text-lg md:text-xl max-w-2xl mx-auto text-[#1A0905]">
+          <p className="text-lg md:text-xl max-w-2xl mx-auto text-[#0a1b2b]">
             A diverse group of passionate students from around the world working together to make education uncommon.
           </p>
         </div>
@@ -406,7 +406,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {Object.values(departments).map((dept, index) => (
           <div key={index} className="mb-20">
             <div className="flex items-center gap-4 mb-10">
-              <h2 className="text-3xl font-editorial-serif font-semibold text-[#1A0905]">{dept.title}</h2>
+              <h2 className="text-3xl font-editorial-serif font-semibold text-[#0a1b2b]">{dept.title}</h2>
               <div className="grow h-px bg-[#94B1C8]" />
             </div>
             
@@ -422,7 +422,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         ))}
 
         {/* Join Us Section */}
-        <div className="relative overflow-hidden rounded-[30px] p-12 text-center mb-12 border-2 border-[#1A0905] bg-[#4C050C] shadow-[10px_10px_0px_rgba(26,9,5,0.75)]">
+        <div className="relative overflow-hidden rounded-[30px] p-12 text-center mb-12 border-2 border-[#0a1b2b] bg-[#0a1b2b] shadow-[10px_10px_0px_rgba(10, 27, 43, 0.75)]">
           {/* Decorative shapes */}
           <div className="absolute top-0 left-0 w-40 h-40 bg-[#D9D7CC] opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
           <div className="absolute bottom-0 right-0 w-56 h-56 bg-[#626E73] opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
@@ -437,7 +437,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
             </p>
             <Button 
               size="lg" 
-              className="text-lg bg-[#E3DFCE] text-[#1A0905] hover:bg-white transition-colors border-2 border-[#94B1C8]"
+              className="text-lg bg-[#FFF9FB] text-[#0a1b2b] hover:bg-white transition-colors border-2 border-[#94B1C8]"
               onClick={() => window.location.href = 'mailto:anithuncommon@gmail.com'}
             >
               Get in Touch
@@ -448,7 +448,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {/* Application Forms Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Member Application */}
-          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(26,9,5,0.6)]">
+          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(10, 27, 43, 0.6)]">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[#0A1926]">
@@ -461,7 +461,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                 Join our community of student educators and help make education accessible to everyone.
               </p>
               <Button 
-                className="w-full bg-[#4C050C] text-[#E3DFCE] hover:bg-[#2f0308] border-2 border-[#1A0905]"
+                className="w-full bg-[#0a1b2b] text-[#E3DFCE] hover:bg-[#14314a] border-2 border-[#0a1b2b]"
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1', '_blank')}
               >
                 Apply Now
@@ -471,20 +471,20 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           </div>
 
           {/* Speaker/Volunteer Application */}
-          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(26,9,5,0.6)]">
+          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(10, 27, 43, 0.6)]">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#626E73] opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[#626E73]">
                 <FileText className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-[#1A0905]">
+              <h3 className="text-2xl font-bold mb-3 text-[#0a1b2b]">
                 Speaker/Volunteer Opportunities
               </h3>
               <p className="mb-6 leading-relaxed text-[#626E73]">
                 Share your expertise as a speaker or support our initiatives as a volunteer.
               </p>
               <Button 
-                className="w-full bg-[#94B1C8] text-[#1A0905] hover:bg-[#7ea3bf] border-2 border-[#1A0905]"
+                className="w-full bg-[#94B1C8] text-[#0a1b2b] hover:bg-[#7ea3bf] border-2 border-[#0a1b2b]"
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform', '_blank')}
               >
                 Apply Now
@@ -498,7 +498,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
 
       <footer
         className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
-        style={{ backgroundColor: "#1A0905" }}
+        style={{ backgroundColor: "#0a1b2b" }}
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
@@ -550,7 +550,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
               <Button
                 className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
                 style={{
-                  backgroundColor: "#4C050C",
+                  backgroundColor: "#0a1b2b",
                   color: "#E3DFCE",
                 }}
                 onClick={() =>
@@ -583,7 +583,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                   required
                   placeholder="First Name"
                   className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                 />
                 <input
                   type="email"
@@ -591,13 +591,13 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                   required
                   placeholder="Email"
                   className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                 />
                 <Button
                   type="submit"
                   className="w-full rounded-full border-2 border-[#94B1C8]"
                   style={{
-                    backgroundColor: "#4C050C",
+                    backgroundColor: "#0a1b2b",
                     color: "#E3DFCE",
                   }}
                 >
@@ -650,3 +650,5 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
     </div>
   );
 }
+
+

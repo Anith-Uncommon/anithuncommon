@@ -16,7 +16,6 @@ import { FAQ } from "@/app/components/FAQ";
 import { StudentProgress } from "@/app/components/StudentProgress";
 import { Card } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
-import { Badge } from "@/app/components/ui/badge";
 import {
   GraduationCap,
   Users,
@@ -100,7 +99,7 @@ const LANDING_STATS = [
     suffix: "K+",
     label: "Impressions",
     bgColor: "#E3DFCE",
-    chipColor: "#4C050C",
+    chipColor: "#0a1b2b",
     chipText: "#E3DFCE",
   },
   {
@@ -118,7 +117,7 @@ const LANDING_STATS = [
     suffix: "+",
     label: "Members",
     bgColor: "#E3DFCE",
-    chipColor: "#4C050C",
+    chipColor: "#0a1b2b",
     chipText: "#E3DFCE",
   },
   {
@@ -143,9 +142,7 @@ export default function App() {
   const [selectedMentor, setSelectedMentor] =
     useState<MentorData | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [expandedChapters, setExpandedChapters] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const [openTopicId, setOpenTopicId] = useState<string | null>(null);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -806,55 +803,62 @@ export default function App() {
     location.pathname.startsWith("/subject/")
   ) {
     return (
-      <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+      <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+              "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.2) 1px, transparent 0)",
             backgroundSize: "20px 20px",
           }}
         />
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0a1b2b] opacity-10 rounded-full blur-3xl" />
 
         <header
           className="fixed top-0 inset-x-0 z-30"
           style={{
-            backgroundColor: "rgba(227, 223, 206, 0.94)",
-            borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
+            backgroundColor: "rgba(255, 249, 251, 0.94)",
+            borderBottom: "1px solid rgba(10, 27, 43, 0.14)",
           }}
         >
           <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
             <button
               onClick={handleBackToHome}
-              className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+              className="flex items-center gap-2 md:gap-2.5 md:justify-self-start md:-ml-1"
               aria-label="Go to homepage"
               style={{
-                color: "#1A0905",
+                color: "#0a1b2b",
                 fontFamily: "'Instrument Serif', serif",
               }}
             >
-              AnithUncommon
+              <img
+                src={`${import.meta.env.BASE_URL}au-logo.png`}
+                alt="AnithUncommon logo"
+                className="h-8 w-8 md:h-9 md:w-9 object-contain shrink-0"
+              />
+              <span className="text-[1.9rem] md:text-[2.1rem] leading-[1] tracking-tight translate-y-[1px] md:translate-y-[2px]">
+                AnithUncommon
+              </span>
             </button>
 
             <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-              <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 About Us
               </button>
-              <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#1A0905" }}>
+              <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#0a1b2b" }}>
                 Subjects
               </button>
-              <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Collaborate
               </button>
-              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Our Team
               </button>
-              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Student Progress
               </button>
-              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 FAQ
               </button>
             </nav>
@@ -866,7 +870,7 @@ export default function App() {
               size="sm"
               className="min-[1440px]:hidden liquid-glass rounded-full"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{ color: "#1A0905" }}
+              style={{ color: "#0a1b2b" }}
             >
               {mobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -883,7 +887,7 @@ export default function App() {
             >
               <div className="absolute inset-0 z-[121] bg-black/35" />
               <nav
-                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#FFF9FB] border-l-2 border-[#0a1b2b] shadow-[-10px_0_0_rgba(10, 27, 43, 0.4)] p-6 flex flex-col"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-end mb-6">
@@ -892,29 +896,29 @@ export default function App() {
                     size="sm"
                     className="rounded-full"
                     onClick={() => setMobileMenuOpen(false)}
-                    style={{ color: "#1A0905" }}
+                    style={{ color: "#0a1b2b" }}
                   >
                     <X className="w-5 h-5" />
                   </Button>
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                  <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     About Us
                   </button>
-                  <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Subjects
                   </button>
-                  <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Collaborate
                   </button>
-                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Our Team
                   </button>
-                  <button onClick={handleGoToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={handleGoToProgress} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Student Progress
                   </button>
-                  <button onClick={handleGoToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={handleGoToFaq} className="text-lg" style={{ color: "#0a1b2b" }}>
                     FAQ
                   </button>
                 </div>
@@ -935,27 +939,34 @@ export default function App() {
   }
 
   if (activeSubject && location.pathname.startsWith("/subject/")) {
-    const toggleChapter = (chapterId: string) => {
-      setExpandedChapters((prev) => ({
-        ...prev,
-        [chapterId]: !prev[chapterId],
-      }));
-    };
-
-    const handleSubchapterClick = (subchapter: Subchapter) => {
-      if (subchapter.locked) {
-        setShowLoginModal(true);
-      }
-    };
-
-    const handleChapterClick = (chapter: Chapter) => {
-      // Chapters 4+ require login
-      if (chapter.chapterNumber > 3 && !isLoggedIn) {
-        setShowLoginModal(true);
-        return;
-      }
-      toggleChapter(chapter.id);
-    };
+    const learningHierarchyData = [
+      {
+        subject: activeSubject.title,
+        topics:
+          activeSubject.chapters && activeSubject.chapters.length > 0
+            ? activeSubject.chapters.map((chapter) => ({
+                id: chapter.id,
+                title: chapter.title,
+                chapters:
+                  chapter.subchapters.length > 0
+                    ? chapter.subchapters.map(
+                        (subchapter, index) =>
+                          `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
+                      )
+                    : [
+                        `${chapter.chapterNumber}.1 ${chapter.title} Overview`,
+                      ],
+              }))
+            : activeSubject.topics.map((topic, index) => ({
+                id: `topic-${index + 1}`,
+                title: topic,
+                chapters: [
+                  `${index + 1}.1 Introduction to ${topic}`,
+                  `${index + 1}.2 Core Concepts in ${topic}`,
+                ],
+              })),
+      },
+    ];
 
     const handleLogin = (email: string, password: string) => {
       // Simple login - store in localStorage
@@ -971,55 +982,62 @@ export default function App() {
     };
 
     return (
-      <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+      <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+              "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.2) 1px, transparent 0)",
             backgroundSize: "20px 20px",
           }}
         />
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0a1b2b] opacity-10 rounded-full blur-3xl" />
 
         <header
           className="fixed top-0 inset-x-0 z-30"
           style={{
-            backgroundColor: "rgba(227, 223, 206, 0.94)",
-            borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
+            backgroundColor: "rgba(255, 249, 251, 0.94)",
+            borderBottom: "1px solid rgba(10, 27, 43, 0.14)",
           }}
         >
           <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
             <button
               onClick={handleBackToHome}
-              className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+              className="flex items-center gap-2 md:gap-2.5 md:justify-self-start md:-ml-1"
               aria-label="Go to homepage"
               style={{
-                color: "#1A0905",
+                color: "#0a1b2b",
                 fontFamily: "'Instrument Serif', serif",
               }}
             >
-              AnithUncommon
+              <img
+                src={`${import.meta.env.BASE_URL}au-logo.png`}
+                alt="AnithUncommon logo"
+                className="h-8 w-8 md:h-9 md:w-9 object-contain shrink-0"
+              />
+              <span className="text-[1.9rem] md:text-[2.1rem] leading-[1] tracking-tight translate-y-[1px] md:translate-y-[2px]">
+                AnithUncommon
+              </span>
             </button>
 
             <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-              <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 About Us
               </button>
-              <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#1A0905" }}>
+              <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#0a1b2b" }}>
                 Subjects
               </button>
-              <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Collaborate
               </button>
-              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Our Team
               </button>
-              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Student Progress
               </button>
-              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 FAQ
               </button>
             </nav>
@@ -1031,7 +1049,7 @@ export default function App() {
               size="sm"
               className="min-[1440px]:hidden liquid-glass rounded-full"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{ color: "#1A0905" }}
+              style={{ color: "#0a1b2b" }}
             >
               {mobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -1048,7 +1066,7 @@ export default function App() {
             >
               <div className="absolute inset-0 z-[121] bg-black/35" />
               <nav
-                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#FFF9FB] border-l-2 border-[#0a1b2b] shadow-[-10px_0_0_rgba(10, 27, 43, 0.4)] p-6 flex flex-col"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-end mb-6">
@@ -1057,29 +1075,29 @@ export default function App() {
                     size="sm"
                     className="rounded-full"
                     onClick={() => setMobileMenuOpen(false)}
-                    style={{ color: "#1A0905" }}
+                    style={{ color: "#0a1b2b" }}
                   >
                     <X className="w-5 h-5" />
                   </Button>
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                  <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     About Us
                   </button>
-                  <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Subjects
                   </button>
-                  <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Collaborate
                   </button>
-                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Our Team
                   </button>
-                  <button onClick={handleGoToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={handleGoToProgress} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Student Progress
                   </button>
-                  <button onClick={handleGoToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={handleGoToFaq} className="text-lg" style={{ color: "#0a1b2b" }}>
                     FAQ
                   </button>
                 </div>
@@ -1091,368 +1109,82 @@ export default function App() {
           <div className="mb-8">
             <h1
               className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4"
-              style={{ color: "#1A0905" }}
+              style={{ color: "#0a1b2b" }}
             >
               {activeSubject.title}
             </h1>
-            <p className="text-xl" style={{ color: "#1A0905" }}>
+            <p className="text-xl" style={{ color: "#0a1b2b" }}>
               {activeSubject.description}
             </p>
           </div>
 
-          {activeSubject.chapters &&
-          activeSubject.chapters.length > 0 ? (
-            <div className="space-y-6 max-w-3xl">
-              {/* Group chapters by mentor */}
-              {(() => {
-                const mentorGroups: {
-                  [key: string]: Chapter[];
-                } = {};
-                activeSubject.chapters.forEach((chapter) => {
-                  const mentorKey = chapter.mentor || "General";
-                  if (!mentorGroups[mentorKey]) {
-                    mentorGroups[mentorKey] = [];
-                  }
-                  mentorGroups[mentorKey].push(chapter);
-                });
-
-                return Object.entries(mentorGroups).map(
-                  ([mentorName, chapters]) => (
-                    <div key={mentorName}>
-                      {mentorName !== "General" && (
-                        <div
-                          className="mb-4 pb-3 border-b-2"
-                          style={{ borderColor: "#D9D7CC" }}
-                        >
-                          <h2
-                            className="text-2xl font-bold flex items-center gap-2"
-                            style={{ color: "#0A1926" }}
-                          >
-                            <Users className="w-6 h-6" />
-                            Taught by {mentorName}
-                          </h2>
-                        </div>
-                      )}
-                      <div className="space-y-4">
-                        {chapters.map((chapter) => (
-                          <Card
-                            key={chapter.id}
-                            className="overflow-hidden rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)]"
-                          >
-                            <div
-                              className="p-6 cursor-pointer hover:bg-[#F9F9F7] transition-colors"
-                              onClick={() =>
-                                handleChapterClick(chapter)
-                              }
-                            >
-                              <div className="flex items-center justify-between gap-4">
-                                <div className="flex-1">
-                                  <div className="flex items-center gap-3 mb-1">
-                                    <h3
-                                      className="text-xl font-semibold"
-                                      style={{
-                                        color: "#0A1926",
-                                      }}
-                                    >
-                                      Chapter{" "}
-                                      {chapter.chapterNumber}:{" "}
-                                      {chapter.title}
-                                    </h3>
-                                    {chapter.chapterNumber >
-                                      3 &&
-                                      !isLoggedIn && (
-                                        <div
-                                          className="px-3 py-1 rounded-full flex items-center gap-1"
-                                          style={{
-                                            backgroundColor:
-                                              "#626E73",
-                                          }}
-                                        >
-                                          <Lock
-                                            className="w-3 h-3"
-                                            style={{
-                                              color: "#ffffff",
-                                            }}
-                                          />
-                                          <span
-                                            className="text-xs font-semibold"
-                                            style={{
-                                              color: "#ffffff",
-                                            }}
-                                          >
-                                            Login Required
-                                          </span>
-                                        </div>
-                                      )}
-                                  </div>
-                                  <p
-                                    className="text-sm"
-                                    style={{ color: "#626E73" }}
-                                  >
-                                    {chapter.subchapters.length}{" "}
-                                    subchapters available
-                                  </p>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                  <ChevronDown
-                                    className={`w-5 h-5 transition-transform ${expandedChapters[chapter.id] ? "rotate-180" : ""}`}
-                                    style={{ color: "#626E73" }}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-
-                            {expandedChapters[chapter.id] && (
-                              <div className="px-6 pb-6 space-y-2">
-                                {chapter.subchapters.map(
-                                  (subchapter, index) => (
-                                    <div
-                                      key={subchapter.id}
-                                      className={`p-4 rounded-lg border-2 transition-all ${
-                                        subchapter.locked
-                                          ? "cursor-pointer hover:border-[#0A1926]"
-                                          : "border-[#D9D7CC] bg-[#F9F9F7]"
-                                      }`}
-                                      style={{
-                                        borderColor:
-                                          subchapter.locked
-                                            ? "#D9D7CC"
-                                            : "#D9D7CC",
-                                      }}
-                                      onClick={() =>
-                                        handleSubchapterClick(
-                                          subchapter,
-                                        )
-                                      }
-                                    >
-                                      <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-3">
-                                          <span
-                                            className="font-medium"
-                                            style={{
-                                              color: "#626E73",
-                                            }}
-                                          >
-                                            {index + 1}
-                                          </span>
-                                          <span
-                                            style={{
-                                              color: "#0A1926",
-                                            }}
-                                          >
-                                            {subchapter.title}
-                                          </span>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                          {subchapter.locked && (
-                                            <div className="flex items-center gap-2">
-                                              <Lock
-                                                className="w-4 h-4"
-                                                style={{
-                                                  color:
-                                                    "#626E73",
-                                                }}
-                                              />
-                                              <span
-                                                className="text-sm"
-                                                style={{
-                                                  color:
-                                                    "#626E73",
-                                                }}
-                                              >
-                                                Locked
-                                              </span>
-                                            </div>
-                                          )}
-                                          {!subchapter.locked && (
-                                              <div
-                                                className="px-3 py-1 rounded-full"
-                                                style={{
-                                                  backgroundColor:
-                                                    "#0A1926",
-                                                }}
-                                              >
-                                                <span
-                                                  className="text-xs"
-                                                  style={{
-                                                    color:
-                                                      "#D9D7CC",
-                                                  }}
-                                                >
-                                                  Available
-                                                </span>
-                                              </div>
-                                            )}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ),
-                                )}
-                              </div>
-                            )}
-                          </Card>
-                        ))}
-                      </div>
-                    </div>
-                  ),
-                );
-              })()}
-
-              {/* Resources Section */}
-              {subjectResources.length > 0 && (
-                <Card className="mt-8 p-6 rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)]">
-                  <div className="flex items-center gap-2 mb-4">
-                    <FileText
-                      className="w-5 h-5"
-                      style={{ color: "#0A1926" }}
-                    />
-                    <h2
-                      className="text-2xl font-bold"
-                      style={{ color: "#0A1926" }}
-                    >
-                      Available Resources
-                    </h2>
-                  </div>
-                  <p
-                    className="mb-6"
-                    style={{ color: "#626E73" }}
+          <div className="w-full space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+              {learningHierarchyData[0].topics.map((topic) => {
+                const isOpen = openTopicId === topic.id;
+                return (
+                  <Card
+                    key={topic.id}
+                    className="rounded-[24px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] overflow-hidden h-fit"
                   >
-                    Study materials and resources provided by
-                    your mentors
-                  </p>
-                  <div className="space-y-4">
-                    {subjectResources.map((resource, index) => (
-                      <div
-                        key={index}
-                        className="border-2 rounded-lg p-4 hover:border-[#0A1926] transition-colors"
-                        style={{ borderColor: "#D9D7CC" }}
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Badge className="bg-[#0A1926] text-[#D9D7CC]">
-                                {resource.type.toUpperCase()}
-                              </Badge>
-                              <span
-                                className="text-sm cursor-pointer hover:underline transition-all"
-                                style={{ color: "#626E73" }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleGoToMentor(
-                                    resource.mentorName,
-                                  );
-                                }}
-                              >
-                                by {resource.mentorName}
-                              </span>
-                            </div>
-                            <h3
-                              className="font-semibold text-lg mb-1"
-                              style={{ color: "#0A1926" }}
-                            >
-                              {resource.title}
-                            </h3>
-                            <p
-                              className="text-sm"
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenTopicId((prev) =>
+                          prev === topic.id ? null : topic.id,
+                        )
+                      }
+                      className="w-full px-5 sm:px-6 py-5 text-left transition-colors hover:bg-[#efe9d8]"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h3
+                            className="text-lg sm:text-xl font-semibold"
+                            style={{ color: "#0a1b2b" }}
+                          >
+                            {topic.title}
+                          </h3>
+                        </div>
+                        <ChevronDown
+                          className={`w-5 h-5 mt-1 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                          style={{ color: "#626E73" }}
+                        />
+                      </div>
+                    </button>
+
+                    <div
+                      className={`grid transition-all duration-300 ease-in-out ${
+                        isOpen
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="px-5 sm:px-6 pb-5 pl-9 sm:pl-11 space-y-2 border-t border-[#d5cebd]">
+                          {topic.chapters.map((chapter, index) => (
+                            <a
+                              key={`${topic.id}-${index}`}
+                              href="#"
+                              onClick={(e) => e.preventDefault()}
+                              className="block text-sm sm:text-[0.95rem] py-1.5 transition-colors hover:text-[#0a1b2b]"
                               style={{ color: "#626E73" }}
                             >
-                              {resource.description}
-                            </p>
-                          </div>
-                          {resource.type === "pdf" && (
-                            <a
-                              href={`/${resource.file}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-4 py-2 rounded-lg transition-colors"
-                              style={{
-                                backgroundColor: "#D9D7CC",
-                                color: "#0A1926",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor =
-                                  "#0A1926";
-                                e.currentTarget.style.color =
-                                  "#D9D7CC";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor =
-                                  "#D9D7CC";
-                                e.currentTarget.style.color =
-                                  "#0A1926";
-                              }}
-                            >
-                              View PDF
+                              {chapter}
                             </a>
-                          )}
-                          {resource.type === "image" && (
-                            <a
-                              href={
-                                resource.file.startsWith(
-                                  "figma:asset",
-                                )
-                                  ? resource.file
-                                  : `/${resource.file}`
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="block"
-                            >
-                              <img
-                                src={
-                                  resource.file.startsWith(
-                                    "figma:asset",
-                                  )
-                                    ? resource.file
-                                    : `/${resource.file}`
-                                }
-                                alt={resource.title}
-                                className="w-24 h-24 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
-                              />
-                            </a>
-                          )}
+                          ))}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </Card>
-              )}
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {activeSubject.topics.map((topic) => (
-                <Card
-                  key={topic}
-                  className="p-6 rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)] transition-all duration-500 hover:-translate-y-1 cursor-pointer group"
-                >
-                  <h3
-                    className="text-xl font-semibold mb-2 group-hover:text-[#626E73] transition-colors"
-                    style={{ color: "#0A1926" }}
-                  >
-                    {topic}
-                  </h3>
-                  <p
-                    className="mb-4"
-                    style={{ color: "#626E73" }}
-                  >
-                    Coming soon - Explore this topic in depth
-                  </p>
-                  <Button
-                    variant="outline"
-                    className="w-full"
-                    disabled
-                  >
-                    Coming Soon
-                  </Button>
-                </Card>
-              ))}
-            </div>
-          )}
+          </div>
         </main>
 
         <footer
           className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
-          style={{ backgroundColor: "#1A0905" }}
+          style={{ backgroundColor: "#0a1b2b" }}
         >
           <div
             className="absolute inset-0 pointer-events-none opacity-20"
@@ -1499,7 +1231,7 @@ export default function App() {
                 </p>
                 <Button
                   className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
-                  style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                  style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
                   onClick={() => (window.location.href = "mailto:anithuncommon@gmail.com")}
                 >
                   Contact
@@ -1521,9 +1253,9 @@ export default function App() {
                     window.location.href = mailtoLink;
                   }}
                 >
-                  <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                  <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                  <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}>
+                  <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                  <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                  <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}>
                     Submit
                   </Button>
                 </form>
@@ -1645,7 +1377,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen text-[#1A0905] transition-colors duration-[1200ms]" style={homeTheme}>
+    <div className="min-h-screen text-[#0a1b2b] transition-colors duration-[1200ms]" style={homeTheme}>
       <section
         className="relative min-h-screen overflow-hidden"
         onMouseMove={handleHeroMouseMove}
@@ -1659,7 +1391,7 @@ export default function App() {
           {
             "--mouse-x": `${heroPointer.x}px`,
             "--mouse-y": `${heroPointer.y}px`,
-            backgroundColor: "#E3DFCE",
+            backgroundColor: "#FFF9FB",
           } as CSSProperties & Record<string, string>
         }
       >
@@ -1673,9 +1405,9 @@ export default function App() {
           ref={headerRef}
           className="fixed top-0 inset-x-0 z-30 transition-colors duration-300"
           style={{
-            backgroundColor: hasScrolled ? "rgba(227, 223, 206, 0.94)" : "transparent",
+            backgroundColor: hasScrolled ? "rgba(255, 249, 251, 0.94)" : "transparent",
             borderBottom: hasScrolled
-              ? "1px solid rgba(26, 9, 5, 0.14)"
+              ? "1px solid rgba(10, 27, 43, 0.14)"
               : "1px solid transparent",
           }}
         >
@@ -1684,33 +1416,40 @@ export default function App() {
           >
             <button
               onClick={handleBackToHome}
-              className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+              className="flex items-center gap-2 md:gap-2.5 md:justify-self-start md:-ml-1"
               aria-label="Go to homepage"
               style={{
-                color: "#1A0905",
+                color: "#0a1b2b",
                 fontFamily: "'Instrument Serif', serif",
               }}
             >
-              AnithUncommon
+              <img
+                src={`${import.meta.env.BASE_URL}au-logo.png`}
+                alt="AnithUncommon logo"
+                className="h-8 w-8 md:h-9 md:w-9 object-contain shrink-0"
+              />
+              <span className="text-[1.9rem] md:text-[2.1rem] leading-[1] tracking-tight translate-y-[1px] md:translate-y-[2px]">
+                AnithUncommon
+              </span>
             </button>
 
             <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-              <button onClick={() => scrollToSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => scrollToSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 About Us
               </button>
-              <button onClick={() => scrollToSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => scrollToSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Subjects
               </button>
-              <button onClick={() => scrollToSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => scrollToSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Collaborate
               </button>
-              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Our Team
               </button>
-              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 Student Progress
               </button>
-              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
                 FAQ
               </button>
             </nav>
@@ -1723,8 +1462,8 @@ export default function App() {
                     setIsLoggedIn(false);
                     localStorage.removeItem("anithuncommon_user");
                   }}
-                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#1A0905] shadow-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#0a1b2b] shadow-none"
+                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                 >
                   Sign Out
                 </Button>
@@ -1732,8 +1471,8 @@ export default function App() {
                 <Button
                   size="sm"
                   onClick={() => setShowLoginModal(true)}
-                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#1A0905] shadow-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#0a1b2b] shadow-none"
+                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                 >
                   Sign In
                 </Button>
@@ -1742,8 +1481,8 @@ export default function App() {
               <Button
                 size="sm"
                 onClick={handleGoToJoinUs}
-                className="rounded-full px-6 py-2.5 text-sm border-2 border-[#1A0905] shadow-none"
-                style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                className="rounded-full px-6 py-2.5 text-sm border-2 border-[#0a1b2b] shadow-none"
+                style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
               >
                 Join Us
               </Button>
@@ -1754,7 +1493,7 @@ export default function App() {
               size="sm"
               className="min-[1440px]:hidden liquid-glass rounded-full"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              style={{ color: "#1A0905" }}
+              style={{ color: "#0a1b2b" }}
             >
               {mobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -1771,7 +1510,7 @@ export default function App() {
             >
               <div className="absolute inset-0 z-[121] bg-black/35" />
               <nav
-                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+                className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#FFF9FB] border-l-2 border-[#0a1b2b] shadow-[-10px_0_0_rgba(10, 27, 43, 0.4)] p-6 flex flex-col"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex justify-end mb-6">
@@ -1780,23 +1519,23 @@ export default function App() {
                     size="sm"
                     className="rounded-full"
                     onClick={() => setMobileMenuOpen(false)}
-                    style={{ color: "#1A0905" }}
+                    style={{ color: "#0a1b2b" }}
                   >
                     <X className="w-5 h-5" />
                   </Button>
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                  <button onClick={() => scrollToSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => scrollToSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     About Us
                   </button>
-                  <button onClick={() => scrollToSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => scrollToSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Subjects
                   </button>
-                  <button onClick={() => scrollToSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={() => scrollToSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Collaborate
                   </button>
-                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#0a1b2b" }}>
                     Our Team
                   </button>
                   <button
@@ -1804,7 +1543,7 @@ export default function App() {
                       handleGoToProgress();
                     }}
                     className="text-lg"
-                    style={{ color: "#1A0905" }}
+                    style={{ color: "#0a1b2b" }}
                   >
                     Student Progress
                   </button>
@@ -1813,7 +1552,7 @@ export default function App() {
                       handleGoToFaq();
                     }}
                     className="text-lg"
-                    style={{ color: "#1A0905" }}
+                    style={{ color: "#0a1b2b" }}
                   >
                     FAQ
                   </button>
@@ -1828,8 +1567,8 @@ export default function App() {
                         localStorage.removeItem("anithuncommon_user");
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
-                      style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                      className="w-full rounded-full border-2 border-[#0a1b2b] shadow-none"
+                      style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                     >
                       Sign Out
                     </Button>
@@ -1840,8 +1579,8 @@ export default function App() {
                         setShowLoginModal(true);
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
-                      style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                      className="w-full rounded-full border-2 border-[#0a1b2b] shadow-none"
+                      style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                     >
                       Sign In
                     </Button>
@@ -1850,8 +1589,8 @@ export default function App() {
                   <Button
                     size="sm"
                     onClick={handleGoToJoinUs}
-                    className="w-full rounded-full border-2 border-[#1A0905] shadow-none"
-                    style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                    className="w-full rounded-full border-2 border-[#0a1b2b] shadow-none"
+                    style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
                   >
                     Join Us
                   </Button>
@@ -1876,7 +1615,7 @@ export default function App() {
           <p
             className="text-base sm:text-lg max-w-2xl mt-8 leading-relaxed"
             style={{
-              color: "#1A0905",
+              color: "#0a1b2b",
             }}
           >
             We are a non-profit youth community opening uncommon
@@ -1887,16 +1626,16 @@ export default function App() {
           <div className="w-full flex flex-row flex-wrap items-center justify-center gap-4 mt-12">
             <Button
               size="lg"
-              className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#1A0905]"
-              style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+              className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#0a1b2b]"
+              style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
               onClick={() => scrollToSection("subjects")}
             >
               Explore Subjects
             </Button>
             <Button
               size="lg"
-              className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#1A0905]"
-              style={{ backgroundColor: "#94B1C8", color: "#1A0905" }}
+              className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#0a1b2b]"
+              style={{ backgroundColor: "#94B1C8", color: "#0a1b2b" }}
               onClick={handleGoToJoinUs}
             >
               Join Community
@@ -1905,10 +1644,10 @@ export default function App() {
         </div>
 
         {/* Marquee Banner */}
-        <section className="-mt-8 border-y-2 border-[#1A0905] bg-[#94B1C8] overflow-hidden relative z-10">
+        <section className="-mt-8 border-y-2 border-[#0a1b2b] bg-[#94B1C8] overflow-hidden relative z-10">
           <div
             className="py-3 text-sm font-semibold tracking-[0.12em] whitespace-nowrap animate-testimonial-scroll"
-            style={{ color: "#1A0905" }}
+            style={{ color: "#0a1b2b" }}
           >
             STUDENT-LED • GLOBAL • NON-PROFIT • STUDENT-LED • GLOBAL •
             NON-PROFIT • STUDENT-LED • GLOBAL • NON-PROFIT
@@ -1919,33 +1658,33 @@ export default function App() {
       {/* Impact Stats Section */}
       <section
         ref={statsSectionRef}
-        className="py-20 border-b-2 border-[#1A0905] relative overflow-hidden"
-        style={{ backgroundColor: "#ede9da" }}
+        className="py-20 border-b-2 border-[#0a1b2b] relative overflow-hidden"
+        style={{ backgroundColor: "#FFF9FB" }}
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-30"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.16) 1px, transparent 0)",
+              "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.16) 1px, transparent 0)",
             backgroundSize: "18px 18px",
           }}
         />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <div
-              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]"
+              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]"
               style={{ backgroundColor: "#94B1C8" }}
             >
               <span
                 className="text-xs tracking-[0.22em] font-semibold"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 OUR IMPACT
               </span>
             </div>
             <p
               className="text-lg max-w-2xl mx-auto"
-              style={{ color: "#1A0905" }}
+              style={{ color: "#0a1b2b" }}
             >
               A quick look at the community growth students
               have built together.
@@ -1959,14 +1698,14 @@ export default function App() {
               return (
                 <Card
                   key={stat.label}
-                  className={`group p-6 border-2 border-[#1A0905] rounded-[24px] shadow-[7px_7px_0px_rgba(26,9,5,0.72)] transition-all duration-500 hover:-translate-y-1 ${
+                  className={`group p-6 border-2 border-[#0a1b2b] rounded-[24px] shadow-[7px_7px_0px_rgba(10, 27, 43, 0.72)] transition-all duration-500 hover:-translate-y-1 ${
                     index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"
                   }`}
                   style={{ backgroundColor: stat.bgColor }}
                 >
                   <div className="flex items-start gap-3 mb-5">
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center border-2 border-[#1A0905]"
+                      className="w-12 h-12 rounded-full flex items-center justify-center border-2 border-[#0a1b2b]"
                       style={{ backgroundColor: stat.chipColor }}
                     >
                       <Icon
@@ -1978,14 +1717,14 @@ export default function App() {
 
                   <div
                     className="text-4xl font-bold leading-none mb-2"
-                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#1A0905" }}
+                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#0a1b2b" }}
                   >
                     {animatedStats[index]}
                     {stat.suffix}
                   </div>
                   <p
                     className="text-sm font-semibold tracking-[0.08em] uppercase mb-4"
-                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#1A0905" }}
+                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#0a1b2b" }}
                   >
                     {stat.label}
                   </p>
@@ -1999,17 +1738,17 @@ export default function App() {
       {/* About Us Section */}
       <section
         id="about"
-        className="py-20 relative transition-colors duration-[1200ms] border-b-2 border-[#1A0905]"
+        className="py-20 relative transition-colors duration-[1200ms] border-b-2 border-[#0a1b2b]"
       >
         <div className="absolute top-20 left-0 w-64 h-64 bg-[#94B1C8]/25 rounded-full blur-3xl" />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905] shadow-[3px_3px_0px_rgba(26,9,5,0.28)]" style={{ backgroundColor: "#94B1C8" }}>
+              <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
                 <span
                   className="text-xs tracking-[0.22em] font-semibold"
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   ABOUT US
                 </span>
@@ -2017,7 +1756,7 @@ export default function App() {
 
             </div>
 
-            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[10px_10px_0px_0px_rgba(26,9,5,0.9)] relative overflow-hidden mb-8">
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[10px_10px_0px_0px_rgba(10, 27, 43, 0.9)] relative overflow-hidden mb-8">
               {/* Decorative corner element */}
               <div
                 className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-5"
@@ -2028,7 +1767,7 @@ export default function App() {
 
               <p
                 className="text-lg leading-relaxed mb-6"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 AnithUncommon is a youth-led, non-profit
                 community based in Indonesia, founded in May
@@ -2039,7 +1778,7 @@ export default function App() {
               </p>
               <p
                 className="text-lg leading-relaxed mb-6"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 Many students are forced to study subjects they
                 don't enjoy, simply because they have no other
@@ -2047,7 +1786,7 @@ export default function App() {
               </p>
               <p
                 className="text-lg leading-relaxed"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 AnithUncommon exists to reduce educational
                 inequality by giving students access to subjects
@@ -2062,16 +1801,16 @@ export default function App() {
 
             {/* Mission and Vision Cards */}
             <div className="grid md:grid-cols-2 gap-6">
-              <Card className="p-6 rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.65)] hover:translate-y-[-2px] transition-all duration-500">
+              <Card className="p-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] hover:translate-y-[-2px] transition-all duration-500">
                 <h3
                   className="text-3xl font-editorial-serif font-semibold mb-4"
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   Our Mission
                 </h3>
                 <p
                   className="leading-relaxed"
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   To empower and support students throughout
                   their individual learning journeys through
@@ -2081,16 +1820,16 @@ export default function App() {
                 </p>
               </Card>
 
-              <Card className="p-6 rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(26,9,5,0.65)] hover:translate-y-[-2px] transition-all duration-500">
+              <Card className="p-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] hover:translate-y-[-2px] transition-all duration-500">
                 <h3
                   className="text-3xl font-editorial-serif font-semibold mb-4"
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   Our Vision
                 </h3>
                 <p
                   className="leading-relaxed"
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   Creating a digital environment where students
                   can explore interests outside the traditional
@@ -2106,8 +1845,8 @@ export default function App() {
 
       {/* Orbital Concept Section */}
       <section
-        className="py-20 border-b-2 border-[#1A0905] relative overflow-hidden"
-        style={{ backgroundColor: "#ede9da" }}
+        className="py-20 border-b-2 border-[#0a1b2b] relative overflow-hidden"
+        style={{ backgroundColor: "#FFF9FB" }}
       >
         <style>{`
           @keyframes orbit {
@@ -2125,7 +1864,7 @@ export default function App() {
           className="absolute inset-0 pointer-events-none opacity-30"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.16) 1px, transparent 0)",
+              "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.16) 1px, transparent 0)",
             backgroundSize: "20px 20px",
           }}
         />
@@ -2175,7 +1914,7 @@ export default function App() {
                             y1={center}
                             x2={x}
                             y2={y}
-                            stroke="rgba(26, 9, 5, 0.12)"
+                            stroke="rgba(10, 27, 43, 0.12)"
                             strokeWidth="1.5"
                           />
                           <g transform={`translate(${x}, ${y})`}>
@@ -2184,11 +1923,11 @@ export default function App() {
                               cy="0"
                               r={orbitalLayout.nodeSize / 2}
                               fill="#f7f4eb"
-                              stroke="#1A0905"
+                              stroke="#0a1b2b"
                               strokeWidth="2"
                               style={{
                                 filter:
-                                  "drop-shadow(4px 4px 0 rgba(26, 9, 5, 0.26))",
+                                  "drop-shadow(4px 4px 0 rgba(10, 27, 43, 0.26))",
                               }}
                             />
                             <g
@@ -2205,7 +1944,7 @@ export default function App() {
                                 textAnchor="middle"
                                 dominantBaseline="middle"
                                 style={{
-                                  fill: "#1A0905",
+                                  fill: "#0a1b2b",
                                   fontSize:
                                     orbitalLayout.nodeSize >= 120
                                       ? "11px"
@@ -2256,12 +1995,12 @@ export default function App() {
 
                 <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
                   <div
-                    className="rounded-full border-2 border-[#1A0905] shadow-[10px_10px_0px_rgba(26,9,5,0.58)] flex flex-col items-center justify-center text-center px-5"
+                    className="rounded-full border-2 border-[#0a1b2b] shadow-[10px_10px_0px_rgba(10, 27, 43, 0.58)] flex flex-col items-center justify-center text-center px-5"
                     style={{
                       background:
-                        "radial-gradient(circle at 30% 24%, #8D5B4A 0%, #6A372B 42%, #4C050C 100%)",
+                        "radial-gradient(circle at 30% 24%, #6f88a1 0%, #35506a 42%, #0a1b2b 100%)",
                       boxShadow:
-                        "inset 0 12px 20px rgba(227, 223, 206, 0.12), inset 0 -12px 20px rgba(26, 9, 5, 0.3), 0 0 0 1px rgba(26, 9, 5, 0.12), 0 18px 34px rgba(26, 9, 5, 0.24)",
+                        "inset 0 12px 20px rgba(227, 223, 206, 0.12), inset 0 -12px 20px rgba(10, 27, 43, 0.3), 0 0 0 1px rgba(10, 27, 43, 0.12), 0 18px 34px rgba(10, 27, 43, 0.24)",
                       width: orbitalLayout.radius * (orbitalLayout.centerMultiplier ?? 0.74),
                       height: orbitalLayout.radius * (orbitalLayout.centerMultiplier ?? 0.74),
                     }}
@@ -2279,12 +2018,12 @@ export default function App() {
 
             <div className="max-w-2xl mx-auto xl:mx-0 text-center xl:text-left">
               <div
-                className="inline-block px-4 py-2 rounded-full mb-5 border-2 border-[#1A0905] mx-auto xl:mx-0"
+                className="inline-block px-4 py-2 rounded-full mb-5 border-2 border-[#0a1b2b] mx-auto xl:mx-0"
                 style={{ backgroundColor: "#94B1C8" }}
               >
                 <span
                   className="text-xs tracking-[0.22em] font-semibold"
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   THE ACCESS GAP
                 </span>
@@ -2292,18 +2031,18 @@ export default function App() {
 
               <h2
                 className="text-4xl md:text-5xl font-editorial-serif font-semibold leading-[1.06] mb-6"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 What Students Can Learn Shapes Who They Become
               </h2>
 
-              <p className="text-lg leading-relaxed mb-4" style={{ color: "#1A0905" }}>
+              <p className="text-lg leading-relaxed mb-4" style={{ color: "#0a1b2b" }}>
                 In many schools, students are limited by what subjects are offered to them. While STEM is often prioritized, many humanities and interest-based areas remain out of reach.
               </p>
-              <p className="text-lg leading-relaxed mb-4" style={{ color: "#1A0905" }}>
+              <p className="text-lg leading-relaxed mb-4" style={{ color: "#0a1b2b" }}>
                 But subject access does not just affect what students study - it shapes how they perform, how confident they feel, and the paths they believe are possible for them.
               </p>
-              <p className="text-lg leading-relaxed" style={{ color: "#1A0905" }}>
+              <p className="text-lg leading-relaxed" style={{ color: "#0a1b2b" }}>
                 That's why AnithUncommon exists - to expand access through free, student-led learning, giving students the freedom to explore what truly matters to them.
               </p>
             </div>
@@ -2314,8 +2053,8 @@ export default function App() {
       {/* Subjects Section */}
       <section
         id="subjects"
-        className="py-20 transition-colors duration-[1200ms] border-b-2 border-[#1A0905] relative overflow-hidden"
-        style={{ backgroundColor: "#ede9da" }}
+        className="py-20 transition-colors duration-[1200ms] border-b-2 border-[#0a1b2b] relative overflow-hidden"
+        style={{ backgroundColor: "#FFF9FB" }}
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-35"
@@ -2327,17 +2066,17 @@ export default function App() {
         />
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905] shadow-[3px_3px_0px_rgba(26,9,5,0.28)]" style={{ backgroundColor: "#94B1C8" }}>
+            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
               <span
                 className="text-xs tracking-[0.22em] font-semibold"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 OUR SUBJECTS
               </span>
             </div>
             <p
               className="text-xl max-w-2xl mx-auto"
-              style={{ color: "#1A0905" }}
+              style={{ color: "#0a1b2b" }}
             >
               Explore topics that spark your curiosity. All
               taught by students, for students.
@@ -2351,7 +2090,7 @@ export default function App() {
                 className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="rounded-[30px] border-2 border-[#1A0905] shadow-[8px_8px_0px_rgba(26,9,5,0.78)] overflow-hidden bg-[#f7f4eb]">
+                <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#f7f4eb]">
                   <SubjectCard
                     title={subject.title}
                     description={subject.description}
@@ -2372,21 +2111,21 @@ export default function App() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 border-b-2 border-[#1A0905] relative overflow-x-hidden" style={{ backgroundColor: "#ede9da" }}>
+      <section className="py-20 border-b-2 border-[#0a1b2b] relative overflow-x-hidden" style={{ backgroundColor: "#FFF9FB" }}>
         <div className="container mx-auto px-4 mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <div
-              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]"
+              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]"
               style={{ backgroundColor: "#94B1C8" }}
             >
               <span
                 className="text-xs tracking-[0.22em] font-semibold"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 TESTIMONIALS
               </span>
             </div>
-            <p className="text-lg" style={{ color: "#1A0905" }}>
+            <p className="text-lg" style={{ color: "#0a1b2b" }}>
               Real feedback from mentors and learners in our community.
             </p>
           </div>
@@ -2398,19 +2137,19 @@ export default function App() {
               (testimonial, index) => (
                 <Card
                   key={`${testimonial.name}-${index}`}
-                  className="w-[320px] sm:w-[360px] h-full flex flex-col flex-shrink-0 p-6 border-2 border-[#1A0905] rounded-[24px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.82)] transition-all duration-500 hover:-translate-y-1"
+                  className="w-[320px] sm:w-[360px] h-full flex flex-col flex-shrink-0 p-6 border-2 border-[#0a1b2b] rounded-[24px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.82)] transition-all duration-500 hover:-translate-y-1"
                 >
-                  <p className="text-base leading-relaxed mb-5 flex-1" style={{ color: "#1A0905" }}>
+                  <p className="text-base leading-relaxed mb-5 flex-1" style={{ color: "#0a1b2b" }}>
                     "{testimonial.quote}"
                   </p>
                   <div className="flex items-center gap-3 mt-auto">
                     <img
                       src={`${import.meta.env.BASE_URL}feedback-images/${encodeURIComponent(testimonial.name)}.jpg`}
                       alt={`${testimonial.name} feedback`}
-                      className="w-12 h-12 rounded-full border-2 border-[#1A0905] object-cover bg-[#D9D7CC]"
+                      className="w-12 h-12 rounded-full border-2 border-[#0a1b2b] object-cover bg-[#D9D7CC]"
                     />
                     <div>
-                      <p className="font-semibold" style={{ color: "#4C050C" }}>
+                      <p className="font-semibold" style={{ color: "#0a1b2b" }}>
                         {testimonial.name}
                       </p>
                       <p className="text-sm" style={{ color: "#626E73" }}>
@@ -2426,7 +2165,7 @@ export default function App() {
       </section>
 
       {/* Why Join Us Section */}
-      <section className="py-20 relative overflow-hidden transition-colors duration-[1200ms] border-b-2 border-[#1A0905]" style={{ backgroundColor: "#ede9da" }}>
+      <section className="py-20 relative overflow-hidden transition-colors duration-[1200ms] border-b-2 border-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
         {/* Decorative geometric shapes */}
         <div
           className="absolute top-10 right-0 w-40 h-40"
@@ -2441,13 +2180,13 @@ export default function App() {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#1A0905" }}>
+            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4" style={{ color: "#0a1b2b" }}>
               Why Join Us
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2473,7 +2212,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2498,7 +2237,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2524,7 +2263,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(26,9,5,0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2554,16 +2293,16 @@ export default function App() {
       </section>
 
       {/* Collaborate Section */}
-      <section id="collaborate" className="py-20 transition-colors duration-[1200ms]" style={{ backgroundColor: "#E3DFCE" }}>
+      <section id="collaborate" className="py-20 transition-colors duration-[1200ms]" style={{ backgroundColor: "#FFF9FB" }}>
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6" style={{ color: "#1A0905" }}>
+              <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-6" style={{ color: "#0a1b2b" }}>
                 Contact/Collaborate with Us
               </h2>
               <p
                 className="text-lg mb-6"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 At AnithUncommon, we believe impact grows
                 through collaboration. Whether you're an
@@ -2575,7 +2314,7 @@ export default function App() {
             </div>
 
             {/* Contact Form */}
-            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[10px_10px_0px_rgba(26,9,5,0.78)]">
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)]">
               <form
                 className="space-y-6"
                 onSubmit={(e) => {
@@ -2607,8 +2346,8 @@ export default function App() {
                       id="firstName"
                       name="firstName"
                       required
-                      className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors"
-                      style={{ backgroundColor: "#ede9da" }}
+                      className="w-full px-4 py-3 rounded-2xl border-2 border-[#0a1b2b] focus:outline-none transition-colors"
+                      style={{ backgroundColor: "#FFF9FB" }}
                       placeholder="Enter your first name"
                     />
                   </div>
@@ -2625,8 +2364,8 @@ export default function App() {
                       id="lastName"
                       name="lastName"
                       required
-                      className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors"
-                      style={{ backgroundColor: "#ede9da" }}
+                      className="w-full px-4 py-3 rounded-2xl border-2 border-[#0a1b2b] focus:outline-none transition-colors"
+                      style={{ backgroundColor: "#FFF9FB" }}
                       placeholder="Enter your last name"
                     />
                   </div>
@@ -2645,8 +2384,8 @@ export default function App() {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors"
-                    style={{ backgroundColor: "#ede9da" }}
+                    className="w-full px-4 py-3 rounded-2xl border-2 border-[#0a1b2b] focus:outline-none transition-colors"
+                    style={{ backgroundColor: "#FFF9FB" }}
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -2664,8 +2403,8 @@ export default function App() {
                     name="message"
                     required
                     rows={6}
-                    className="w-full px-4 py-3 rounded-2xl border-2 border-[#1A0905] focus:outline-none transition-colors resize-none"
-                    style={{ backgroundColor: "#ede9da" }}
+                    className="w-full px-4 py-3 rounded-2xl border-2 border-[#0a1b2b] focus:outline-none transition-colors resize-none"
+                    style={{ backgroundColor: "#FFF9FB" }}
                     placeholder="Tell us about yourself and your ideas for collaboration..."
                   />
                 </div>
@@ -2673,9 +2412,9 @@ export default function App() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full text-lg rounded-full border-2 border-[#1A0905]"
+                  className="w-full text-lg rounded-full border-2 border-[#0a1b2b]"
                   style={{
-                    backgroundColor: "#4C050C",
+                    backgroundColor: "#0a1b2b",
                     color: "#E3DFCE",
                   }}
                 >
@@ -2697,10 +2436,10 @@ export default function App() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button
                     variant="outline"
-                    className="border-2 border-[#1A0905] rounded-full"
+                    className="border-2 border-[#0a1b2b] rounded-full"
                     style={{
                       backgroundColor: "#94B1C8",
-                      color: "#1A0905",
+                      color: "#0a1b2b",
                     }}
                     onClick={() =>
                       (window.location.href =
@@ -2712,10 +2451,10 @@ export default function App() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="border-2 border-[#1A0905] rounded-full"
+                    className="border-2 border-[#0a1b2b] rounded-full"
                     style={{
                       backgroundColor: "#94B1C8",
-                      color: "#1A0905",
+                      color: "#0a1b2b",
                     }}
                     onClick={() =>
                       window.open(
@@ -2737,7 +2476,7 @@ export default function App() {
       {/* Apply Now Section - Links to Join Us page */}
       <section
         className="py-20 relative overflow-hidden transition-colors duration-[1200ms]"
-        style={{ backgroundColor: "#ede9da" }}
+        style={{ backgroundColor: "#FFF9FB" }}
       >
         {/* Decorative shapes */}
         <div className="absolute top-0 left-0 w-40 h-40 bg-[#0A1926] opacity-5 rounded-full" />
@@ -2745,17 +2484,17 @@ export default function App() {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905] shadow-[3px_3px_0px_rgba(26,9,5,0.28)]" style={{ backgroundColor: "#94B1C8" }}>
+            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
               <span
                 className="text-xs tracking-[0.22em] font-semibold"
-                style={{ color: "#1A0905" }}
+                style={{ color: "#0a1b2b" }}
               >
                 JOIN OUR COMMUNITY
               </span>
             </div>
             <p
               className="text-xl max-w-2xl mx-auto mb-8"
-              style={{ color: "#1A0905" }}
+              style={{ color: "#0a1b2b" }}
             >
               Join our global community of student educators and
               help make education accessible to everyone.
@@ -2764,7 +2503,7 @@ export default function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
             <Card
-              className="p-8 rounded-[28px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.76)] hover:shadow-[11px_11px_0px_rgba(26,9,5,0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
+              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
               onClick={() =>
                 window.open(
                   "https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1",
@@ -2808,7 +2547,7 @@ export default function App() {
             </Card>
 
             <Card
-              className="p-8 rounded-[28px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.76)] hover:shadow-[11px_11px_0px_rgba(26,9,5,0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
+              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
               onClick={() =>
                 window.open(
                   "https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform",
@@ -2855,9 +2594,9 @@ export default function App() {
           <div className="text-center">
             <Button
               size="lg"
-              className="text-lg px-8 rounded-full border-2 border-[#1A0905]"
+              className="text-lg px-8 rounded-full border-2 border-[#0a1b2b]"
               style={{
-                backgroundColor: "#4C050C",
+                backgroundColor: "#0a1b2b",
                 color: "#E3DFCE",
               }}
               onClick={handleGoToJoinUs}
@@ -2872,7 +2611,7 @@ export default function App() {
       {/* Footer */}
       <footer
         className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
-        style={{ backgroundColor: "#1A0905" }}
+        style={{ backgroundColor: "#0a1b2b" }}
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
@@ -2987,7 +2726,7 @@ export default function App() {
               <Button
                 className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
                 style={{
-                  backgroundColor: "#4C050C",
+                  backgroundColor: "#0a1b2b",
                   color: "#E3DFCE",
                 }}
                 onClick={() =>
@@ -3023,7 +2762,7 @@ export default function App() {
                   required
                   placeholder="First Name"
                   className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                 />
                 <input
                   type="email"
@@ -3031,13 +2770,13 @@ export default function App() {
                   required
                   placeholder="Email"
                   className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                 />
                 <Button
                   type="submit"
                   className="w-full rounded-full border-2 border-[#94B1C8]"
                   style={{
-                    backgroundColor: "#4C050C",
+                    backgroundColor: "#0a1b2b",
                     color: "#E3DFCE",
                   }}
                 >
@@ -3137,3 +2876,4 @@ export default function App() {
     </div>
   );
 }
+

@@ -32,12 +32,12 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
 
   return (
     <div className="group h-full">
-      <Card className="relative h-full overflow-hidden rounded-[24px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)] transition-all duration-500 hover:-translate-y-1">
+      <Card className="relative h-full overflow-hidden rounded-[24px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] transition-all duration-500 hover:-translate-y-1">
         <div className="p-6 h-full flex flex-col">
           {image && (
             <div className="mb-5">
               <div className="relative w-32 h-32 mx-auto">
-                <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#1A0905] shadow-[4px_4px_0px_rgba(26,9,5,0.45)]">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#0a1b2b] shadow-[4px_4px_0px_rgba(10, 27, 43, 0.45)]">
                   <ImageWithFallback 
                     src={resolveImagePath(image)} 
                     alt={name}
@@ -49,7 +49,7 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
           )}
 
           <div className="text-center flex-1 flex flex-col">
-            <h3 className="text-2xl font-editorial-serif font-semibold mb-1" style={{ color: "#1A0905" }}>
+            <h3 className="text-2xl font-editorial-serif font-semibold mb-1" style={{ color: "#0a1b2b" }}>
               {name}
             </h3>
             <p className="text-sm mb-1" style={{ color: "#2F3A40" }}>
@@ -73,9 +73,9 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
-                  style={{ backgroundColor: "#E3DFCE", border: "2px solid #1A0905" }}
+                  style={{ backgroundColor: "#FFF9FB", border: "2px solid #0a1b2b" }}
                 >
-                  <Linkedin className="w-4 h-4" style={{ color: "#1A0905" }} />
+                  <Linkedin className="w-4 h-4" style={{ color: "#0a1b2b" }} />
                 </a>
               )}
               {instagram && (
@@ -84,18 +84,18 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
-                  style={{ backgroundColor: "#E3DFCE", border: "2px solid #1A0905" }}
+                  style={{ backgroundColor: "#FFF9FB", border: "2px solid #0a1b2b" }}
                 >
-                  <Instagram className="w-4 h-4" style={{ color: "#1A0905" }} />
+                  <Instagram className="w-4 h-4" style={{ color: "#0a1b2b" }} />
                 </a>
               )}
               {email && (
                 <a 
                   href={`mailto:${email}`}
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
-                  style={{ backgroundColor: "#E3DFCE", border: "2px solid #1A0905" }}
+                  style={{ backgroundColor: "#FFF9FB", border: "2px solid #0a1b2b" }}
                 >
-                  <Mail className="w-4 h-4" style={{ color: "#1A0905" }} />
+                  <Mail className="w-4 h-4" style={{ color: "#0a1b2b" }} />
                 </a>
               )}
             </div>

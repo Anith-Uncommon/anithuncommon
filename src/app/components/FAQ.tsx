@@ -89,23 +89,23 @@ export function FAQ({ onBack }: FAQProps) {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+    <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
       <div
         className="absolute inset-0 pointer-events-none opacity-20"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.2) 1px, transparent 0)",
           backgroundSize: "20px 20px",
         }}
       />
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0a1b2b] opacity-10 rounded-full blur-3xl" />
 
       <header
         className="fixed top-0 inset-x-0 z-30"
         style={{
-          backgroundColor: "rgba(227, 223, 206, 0.94)",
-          borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
+          backgroundColor: "rgba(255, 249, 251, 0.94)",
+          borderBottom: "1px solid rgba(10, 27, 43, 0.14)",
         }}
       >
         <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
@@ -114,7 +114,7 @@ export function FAQ({ onBack }: FAQProps) {
             className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
             aria-label="Go to homepage"
             style={{
-              color: "#1A0905",
+              color: "#0a1b2b",
               fontFamily: "'Instrument Serif', serif",
             }}
           >
@@ -122,22 +122,22 @@ export function FAQ({ onBack }: FAQProps) {
           </button>
 
           <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               About Us
             </button>
-            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Subjects
             </button>
-            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Collaborate
             </button>
-            <button onClick={goToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Our Team
             </button>
-            <button onClick={goToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Student Progress
             </button>
-            <button className="transition-colors" style={{ color: "#1A0905" }}>
+            <button className="transition-colors" style={{ color: "#0a1b2b" }}>
               FAQ
             </button>
           </nav>
@@ -149,7 +149,7 @@ export function FAQ({ onBack }: FAQProps) {
             size="sm"
             className="min-[1440px]:hidden liquid-glass rounded-full"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: "#1A0905" }}
+            style={{ color: "#0a1b2b" }}
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -166,7 +166,7 @@ export function FAQ({ onBack }: FAQProps) {
           >
             <div className="absolute inset-0 z-[121] bg-black/35" />
             <nav
-              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#FFF9FB] border-l-2 border-[#0a1b2b] shadow-[-10px_0_0_rgba(10, 27, 43, 0.4)] p-6 flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-end mb-6">
@@ -175,29 +175,29 @@ export function FAQ({ onBack }: FAQProps) {
                   size="sm"
                   className="rounded-full"
                   onClick={() => setMobileMenuOpen(false)}
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   About Us
                 </button>
-                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Subjects
                 </button>
-                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Collaborate
                 </button>
-                <button onClick={goToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToTeam} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Our Team
                 </button>
-                <button onClick={goToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToProgress} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Student Progress
                 </button>
-                <button className="text-lg" style={{ color: "#1A0905" }}>
+                <button className="text-lg" style={{ color: "#0a1b2b" }}>
                   FAQ
                 </button>
               </div>
@@ -209,25 +209,25 @@ export function FAQ({ onBack }: FAQProps) {
       <div className="max-w-5xl mx-auto px-4 md:px-6 pt-32 pb-14 relative z-10">
 
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#1A0905]" style={{ backgroundColor: "#94B1C8" }}>
-            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#1A0905" }}>
+          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]" style={{ backgroundColor: "#94B1C8" }}>
+            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#0a1b2b" }}>
               FAQ
             </span>
           </div>
-          <p className="text-xl max-w-2xl mx-auto text-[#1A0905]">
+          <p className="text-xl max-w-2xl mx-auto text-[#0a1b2b]">
             Get answers to common questions about AnithUncommon
           </p>
         </div>
 
         <div className="max-w-3xl mx-auto mb-12">
-          <Card className="p-8 border-2 border-[#1A0905] rounded-[26px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.65)]">
+          <Card className="p-8 border-2 border-[#0a1b2b] rounded-[26px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.65)]">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`faq-${index}`}>
-                  <AccordionTrigger className="text-left text-lg font-semibold text-[#1A0905] hover:text-[#4C050C]">
+                  <AccordionTrigger className="text-left text-lg font-semibold text-[#0a1b2b] hover:text-[#0a1b2b]">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-[#1A0905] leading-relaxed text-base">
+                  <AccordionContent className="text-[#0a1b2b] leading-relaxed text-base">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -238,16 +238,16 @@ export function FAQ({ onBack }: FAQProps) {
 
         {/* Contact Section */}
         <div className="max-w-3xl mx-auto">
-          <Card className="p-8 text-center bg-[#f7f4eb] border-2 border-[#1A0905] rounded-[26px] shadow-[6px_6px_0px_rgba(26,9,5,0.55)]">
-            <h2 className="text-2xl font-editorial-serif font-semibold mb-4 text-[#1A0905]">
+          <Card className="p-8 text-center bg-[#f7f4eb] border-2 border-[#0a1b2b] rounded-[26px] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.55)]">
+            <h2 className="text-2xl font-editorial-serif font-semibold mb-4 text-[#0a1b2b]">
               Still have questions?
             </h2>
-            <p className="text-lg text-[#1A0905] mb-6">
+            <p className="text-lg text-[#0a1b2b] mb-6">
               We're here to help! Reach out to us through any of these channels:
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                className="bg-[#4C050C] text-[#E3DFCE] hover:bg-[#2f0308] border-2 border-[#1A0905]"
+                className="bg-[#0a1b2b] text-[#E3DFCE] hover:bg-[#14314a] border-2 border-[#0a1b2b]"
                 onClick={() => window.location.href = 'mailto:anithuncommon@gmail.com'}
               >
                 <Mail className="w-4 h-4 mr-2" />
@@ -255,7 +255,7 @@ export function FAQ({ onBack }: FAQProps) {
               </Button>
               <Button 
                 variant="outline"
-                className="border-[#1A0905] text-[#1A0905] hover:bg-[#94B1C8] hover:text-[#1A0905]"
+                className="border-[#0a1b2b] text-[#0a1b2b] hover:bg-[#94B1C8] hover:text-[#0a1b2b]"
                 onClick={() => window.open('https://instagram.com/anithuncommon', '_blank')}
               >
                 <Instagram className="w-4 h-4 mr-2" />
@@ -268,7 +268,7 @@ export function FAQ({ onBack }: FAQProps) {
 
       <footer
         className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
-        style={{ backgroundColor: "#1A0905" }}
+        style={{ backgroundColor: "#0a1b2b" }}
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
@@ -316,7 +316,7 @@ export function FAQ({ onBack }: FAQProps) {
               </p>
               <Button
                 className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
-                style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
                 onClick={() => (window.location.href = "mailto:anithuncommon@gmail.com")}
               >
                 Contact
@@ -338,9 +338,9 @@ export function FAQ({ onBack }: FAQProps) {
                   window.location.href = mailtoLink;
                 }}
               >
-                <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}>
+                <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}>
                   Submit
                 </Button>
               </form>
@@ -390,3 +390,5 @@ export function FAQ({ onBack }: FAQProps) {
     </div>
   );
 }
+
+

@@ -101,3 +101,4 @@ export function TopicDetail({ subject, topic, onBack }: TopicDetailProps) {
     </div>
   );
 }
+

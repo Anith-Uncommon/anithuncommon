@@ -80,23 +80,23 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden text-[#1A0905]" style={{ backgroundColor: "#E3DFCE" }}>
+    <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
       <div
         className="absolute inset-0 pointer-events-none opacity-20"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(26, 9, 5, 0.2) 1px, transparent 0)",
+            "radial-gradient(circle at 1px 1px, rgba(10, 27, 43, 0.2) 1px, transparent 0)",
           backgroundSize: "20px 20px",
         }}
       />
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#94B1C8] opacity-20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#4C050C] opacity-10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#0a1b2b] opacity-10 rounded-full blur-3xl" />
 
       <header
         className="fixed top-0 inset-x-0 z-30"
         style={{
-          backgroundColor: "rgba(227, 223, 206, 0.94)",
-          borderBottom: "1px solid rgba(26, 9, 5, 0.14)",
+          backgroundColor: "rgba(255, 249, 251, 0.94)",
+          borderBottom: "1px solid rgba(10, 27, 43, 0.14)",
         }}
       >
         <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
@@ -105,7 +105,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
             className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
             aria-label="Go to homepage"
             style={{
-              color: "#1A0905",
+              color: "#0a1b2b",
               fontFamily: "'Instrument Serif', serif",
             }}
           >
@@ -113,22 +113,22 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
           </button>
 
           <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               About Us
             </button>
-            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Subjects
             </button>
-            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={() => goToHomeSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Collaborate
             </button>
-            <button onClick={goToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Our Team
             </button>
-            <button onClick={goToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               Student Progress
             </button>
-            <button onClick={goToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#1A0905")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+            <button onClick={goToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
               FAQ
             </button>
           </nav>
@@ -140,7 +140,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
             size="sm"
             className="min-[1440px]:hidden liquid-glass rounded-full"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ color: "#1A0905" }}
+            style={{ color: "#0a1b2b" }}
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -157,7 +157,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
           >
             <div className="absolute inset-0 z-[121] bg-black/35" />
             <nav
-              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#E3DFCE] border-l-2 border-[#1A0905] shadow-[-10px_0_0_rgba(26,9,5,0.4)] p-6 flex flex-col"
+              className="absolute right-0 top-0 z-[122] h-full w-[82%] max-w-sm bg-[#FFF9FB] border-l-2 border-[#0a1b2b] shadow-[-10px_0_0_rgba(10, 27, 43, 0.4)] p-6 flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-end mb-6">
@@ -166,29 +166,29 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
                   size="sm"
                   className="rounded-full"
                   onClick={() => setMobileMenuOpen(false)}
-                  style={{ color: "#1A0905" }}
+                  style={{ color: "#0a1b2b" }}
                 >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   About Us
                 </button>
-                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Subjects
                 </button>
-                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={() => goToHomeSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Collaborate
                 </button>
-                <button onClick={goToTeam} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToTeam} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Our Team
                 </button>
-                <button onClick={goToProgress} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToProgress} className="text-lg" style={{ color: "#0a1b2b" }}>
                   Student Progress
                 </button>
-                <button onClick={goToFaq} className="text-lg" style={{ color: "#1A0905" }}>
+                <button onClick={goToFaq} className="text-lg" style={{ color: "#0a1b2b" }}>
                   FAQ
                 </button>
               </div>
@@ -201,10 +201,10 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-10">
-              <div className="w-28 h-28 rounded-full mx-auto mb-5 border-2 border-[#1A0905] flex items-center justify-center text-4xl font-editorial-serif font-semibold shadow-[8px_8px_0px_rgba(26,9,5,0.52)]" style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}>
+              <div className="w-28 h-28 rounded-full mx-auto mb-5 border-2 border-[#0a1b2b] flex items-center justify-center text-4xl font-editorial-serif font-semibold shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]" style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}>
                 {mentor.name.charAt(0).toUpperCase()}
               </div>
-              <h1 className="text-4xl md:text-5xl font-editorial-serif font-semibold mb-2" style={{ color: "#1A0905" }}>
+              <h1 className="text-4xl md:text-5xl font-editorial-serif font-semibold mb-2" style={{ color: "#0a1b2b" }}>
                 {mentor.name}
               </h1>
               <p className="text-lg" style={{ color: "#626E73" }}>
@@ -212,8 +212,8 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
               </p>
               {mentor.email && (
                 <Button
-                  className="mt-5 rounded-full border-2 border-[#1A0905]"
-                  style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }}
+                  className="mt-5 rounded-full border-2 border-[#0a1b2b]"
+                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
                   onClick={() => (window.location.href = `mailto:${mentor.email}`)}
                 >
                   <Mail className="w-4 h-4 mr-2" />
@@ -222,10 +222,10 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
               )}
             </div>
 
-            <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)]">
+            <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
               <div className="flex items-center gap-2 mb-4">
-                <BookOpen className="w-5 h-5" style={{ color: "#1A0905" }} />
-                <h2 className="text-2xl font-editorial-serif font-semibold" style={{ color: "#1A0905" }}>
+                <BookOpen className="w-5 h-5" style={{ color: "#0a1b2b" }} />
+                <h2 className="text-2xl font-editorial-serif font-semibold" style={{ color: "#0a1b2b" }}>
                   Teaching Subjects
                 </h2>
               </div>
@@ -233,8 +233,8 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
                 {mentor.subjects.map((subject, index) => (
                   <span
                     key={index}
-                    className="px-4 py-2 rounded-full text-sm font-semibold border-2 border-[#1A0905]"
-                    style={{ backgroundColor: "#94B1C8", color: "#1A0905" }}
+                    className="px-4 py-2 rounded-full text-sm font-semibold border-2 border-[#0a1b2b]"
+                    style={{ backgroundColor: "#94B1C8", color: "#0a1b2b" }}
                   >
                     {subject}
                   </span>
@@ -243,8 +243,8 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
             </Card>
 
             {mentor.bio && (
-              <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)]">
-                <h2 className="text-2xl font-editorial-serif font-semibold mb-3" style={{ color: "#1A0905" }}>
+              <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
+                <h2 className="text-2xl font-editorial-serif font-semibold mb-3" style={{ color: "#0a1b2b" }}>
                   About
                 </h2>
                 <p className="leading-relaxed" style={{ color: "#626E73" }}>
@@ -253,10 +253,10 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
               </Card>
             )}
 
-            <Card className="p-7 rounded-[26px] border-2 border-[#1A0905] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(26,9,5,0.52)]">
+            <Card className="p-7 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
               <div className="flex items-center gap-2 mb-4">
-                <FileText className="w-5 h-5" style={{ color: "#1A0905" }} />
-                <h2 className="text-2xl font-editorial-serif font-semibold" style={{ color: "#1A0905" }}>
+                <FileText className="w-5 h-5" style={{ color: "#0a1b2b" }} />
+                <h2 className="text-2xl font-editorial-serif font-semibold" style={{ color: "#0a1b2b" }}>
                   Teaching Resources
                 </h2>
               </div>
@@ -269,25 +269,25 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
                       href={resolvePublicAssetPath(resource.file)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block rounded-2xl border-2 border-[#1A0905] p-4 transition-all duration-300 hover:bg-[#E3DFCE]"
-                      style={{ backgroundColor: "#E3DFCE" }}
+                      className="block rounded-2xl border-2 border-[#0a1b2b] p-4 transition-all duration-300 hover:bg-[#FFF9FB]"
+                      style={{ backgroundColor: "#FFF9FB" }}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="font-semibold" style={{ color: "#1A0905" }}>
+                          <p className="font-semibold" style={{ color: "#0a1b2b" }}>
                             {resource.title}
                           </p>
                           <p className="text-sm mt-1" style={{ color: "#626E73" }}>
                             {resource.description}
                           </p>
                         </div>
-                        <ExternalLink className="w-4 h-4 mt-1" style={{ color: "#1A0905" }} />
+                        <ExternalLink className="w-4 h-4 mt-1" style={{ color: "#0a1b2b" }} />
                       </div>
                     </a>
                   ))}
                 </div>
               ) : (
-                <div className="rounded-2xl border-2 border-dashed border-[#1A0905] p-8 text-center" style={{ backgroundColor: "#E3DFCE" }}>
+                <div className="rounded-2xl border-2 border-dashed border-[#0a1b2b] p-8 text-center" style={{ backgroundColor: "#FFF9FB" }}>
                   <FileText className="w-10 h-10 mx-auto mb-3" style={{ color: "#626E73", opacity: 0.6 }} />
                   <p style={{ color: "#626E73" }}>Teaching resources coming soon!</p>
                 </div>
@@ -299,7 +299,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
 
       <footer
         className="py-12 transition-colors duration-[1200ms] relative overflow-hidden"
-        style={{ backgroundColor: "#1A0905" }}
+        style={{ backgroundColor: "#0a1b2b" }}
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
@@ -346,7 +346,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
               </p>
               <Button
                 className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
-                style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}
+                style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
                 onClick={() => (window.location.href = "mailto:anithuncommon@gmail.com")}
               >
                 Contact
@@ -368,9 +368,9 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
                   window.location.href = mailtoLink;
                 }}
               >
-                <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#E3DFCE", color: "#1A0905" }} />
-                <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#4C050C", color: "#E3DFCE" }}>
+                <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
+                <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}>
                   Submit
                 </Button>
               </form>
@@ -420,3 +420,4 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
     </div>
   );
 }
+

@@ -206,7 +206,7 @@
   .hero-dots-base {
     background-image: radial-gradient(
       circle,
-      rgba(26, 9, 5, 0.14) 1px,
+      rgba(10, 27, 43, 0.14) 1px,
       transparent 1.6px
     );
     background-size: 22px 22px;
@@ -216,7 +216,7 @@
     opacity: 0;
     background-image: radial-gradient(
       circle,
-      rgba(76, 5, 12, 0.84) 1px,
+      rgba(10, 27, 43, 0.84) 1px,
       transparent 1.6px
     );
     background-size: 22px 22px;
@@ -243,11 +243,11 @@
     color: transparent;
     background-image: linear-gradient(
       110deg,
-      #1a0905 5%,
-      #4c050c 30%,
+      #0a1b2b 5%,
+      #0a1b2b 30%,
       #94b1c8 52%,
-      #4c050c 74%,
-      #1a0905 96%
+      #0a1b2b 74%,
+      #0a1b2b 96%
     );
     background-size: 260% 260%;
     background-clip: text;
