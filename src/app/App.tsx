@@ -16,6 +16,7 @@ import { FAQ } from "@/app/components/FAQ";
 import { StudentProgress } from "@/app/components/StudentProgress";
 import { Card } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
+import { Badge } from "@/app/components/ui/badge";
 import {
   GraduationCap,
   Users,
@@ -36,6 +37,7 @@ import {
 import {
   getMentorById,
   getMentorByName,
+  getMentorsBySubject,
   type MentorData,
 } from "@/app/data/mentors";
 
@@ -477,7 +479,7 @@ export default function App() {
     subjects.find((subject) => subject.id === "history")?.image ??
     subjects[0]?.image;
 
-  const homeTheme: CSSProperties = {
+  const homeTheme: CSSProperties & Record<string, string> = {
     "--background": "44 32% 88%",
     "--foreground": "15 49% 7%",
     "--muted-foreground": "206 8% 41%",
@@ -761,6 +763,15 @@ export default function App() {
     ? subjects.find((subject) => subject.id === routeSubjectId) ??
       selectedSubject
     : null;
+
+  const subjectResources = activeSubject
+    ? getMentorsBySubject(activeSubject.title).flatMap((mentor) =>
+        mentor.resources.map((resource) => ({
+          ...resource,
+          mentorName: mentor.name,
+        })),
+      )
+    : [];
 
   if (location.pathname === "/team") {
     return <MeetOurTeam onBack={handleBackToHome} />;
@@ -1895,16 +1906,13 @@ export default function App() {
 
         {/* Marquee Banner */}
         <section className="-mt-8 border-y-2 border-[#1A0905] bg-[#94B1C8] overflow-hidden relative z-10">
-          <marquee
-            behavior="scroll"
-            direction="left"
-            scrollAmount={8}
-            className="py-3 text-sm font-semibold tracking-[0.12em]"
+          <div
+            className="py-3 text-sm font-semibold tracking-[0.12em] whitespace-nowrap animate-testimonial-scroll"
             style={{ color: "#1A0905" }}
           >
             STUDENT-LED • GLOBAL • NON-PROFIT • STUDENT-LED • GLOBAL •
             NON-PROFIT • STUDENT-LED • GLOBAL • NON-PROFIT
-          </marquee>
+          </div>
         </section>
       </section>
 
