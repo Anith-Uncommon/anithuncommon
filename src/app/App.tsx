@@ -32,6 +32,7 @@ import {
   Lock,
   Eye,
   Award,
+  ExternalLink,
 } from "lucide-react";
 import {
   getMentorById,
@@ -98,9 +99,9 @@ const LANDING_STATS = [
     target: 90,
     suffix: "K+",
     label: "Impressions",
-    bgColor: "#E3DFCE",
+    bgColor: "#cedae3",
     chipColor: "#0a1b2b",
-    chipText: "#E3DFCE",
+    chipText: "#cedae3",
   },
   {
     icon: Globe,
@@ -108,7 +109,7 @@ const LANDING_STATS = [
     suffix: "+",
     label: "Countries",
     bgColor: "#0a1b2b",
-    chipColor: "#E3DFCE",
+    chipColor: "#cedae3",
     chipText: "#0a1b2b",
   },
   {
@@ -116,9 +117,9 @@ const LANDING_STATS = [
     target: 35,
     suffix: "+",
     label: "Members",
-    bgColor: "#E3DFCE",
+    bgColor: "#cedae3",
     chipColor: "#0a1b2b",
-    chipText: "#E3DFCE",
+    chipText: "#cedae3",
   },
   {
     icon: Award,
@@ -126,7 +127,7 @@ const LANDING_STATS = [
     suffix: "+",
     label: "Students",
     bgColor: "#0a1b2b",
-    chipColor: "#E3DFCE",
+    chipColor: "#cedae3",
     chipText: "#0a1b2b",
   },
 ] as const;
@@ -206,7 +207,75 @@ export default function App() {
         "Kenneth Viorenzo",
       ],
       topicsData: {},
-      chapters: [],
+      chapters: [
+        {
+          id: "bio-ch-1",
+          title: "Chapter 1: Biological Molecules",
+          chapterNumber: 1,
+          subchapters: [
+            { id: "bio-1-1", title: "Carbohydrates", locked: false },
+            { id: "bio-1-2", title: "Lipids", locked: true },
+            { id: "bio-1-3", title: "Proteins", locked: true },
+            { id: "bio-1-4", title: "Enzymes", locked: true },
+            { id: "bio-1-5", title: "Cells", locked: true },
+          ],
+        },
+        {
+          id: "bio-ch-2",
+          title: "Chapter 2: Genetics",
+          chapterNumber: 2,
+          subchapters: [
+            { id: "bio-2-1", title: "DNA & RNA", locked: false },
+            { id: "bio-2-2", title: "Chromosomes", locked: true },
+            {
+              id: "bio-2-3",
+              title: "DNA Replication & Protein Synthesis",
+              locked: true,
+            },
+            { id: "bio-2-4", title: "Mitosis", locked: true },
+          ],
+        },
+        {
+          id: "bio-ch-3",
+          title: "Chapter 3: Transport in Organisms",
+          chapterNumber: 3,
+          subchapters: [
+            {
+              id: "bio-3-1",
+              title: "Transport of Molecules",
+              locked: false,
+            },
+            {
+              id: "bio-3-2",
+              title: "Transport in Animals",
+              locked: true,
+            },
+            {
+              id: "bio-3-3",
+              title: "Transport in Plants",
+              locked: true,
+            },
+          ],
+        },
+        {
+          id: "bio-ch-4",
+          title: "Chapter 4: Immuninity in the Body",
+          chapterNumber: 4,
+          subchapters: [
+            { id: "bio-4-1", title: "Diseases", locked: true },
+            {
+              id: "bio-4-2",
+              title: "Antibiotics & Vaccines",
+              locked: true,
+            },
+            {
+              id: "bio-4-3",
+              title: "Immune System",
+              locked: true,
+            },
+          ],
+        },
+      ],
     },
     {
       id: "physics",
@@ -475,6 +544,27 @@ export default function App() {
   const heroSpotlightImage =
     subjects.find((subject) => subject.id === "history")?.image ??
     subjects[0]?.image;
+
+  const humanitiesSubjectIds = new Set([
+    "economics",
+    "english",
+    "english-literature",
+    "history",
+    "physical-geology",
+    "political-theory",
+    "world-history",
+    "geology",
+    "art-history",
+    "geography",
+    "philosophy",
+  ]);
+
+  const humanitiesSubjects = subjects.filter((subject) =>
+    humanitiesSubjectIds.has(subject.id),
+  );
+  const stemSubjects = subjects.filter(
+    (subject) => !humanitiesSubjectIds.has(subject.id),
+  );
 
   const homeTheme: CSSProperties & Record<string, string> = {
     "--background": "44 32% 88%",
@@ -770,6 +860,27 @@ export default function App() {
       )
     : [];
 
+  const resolvePublicAssetPath = (assetPath: string): string => {
+    if (/^https?:\/\//i.test(assetPath)) {
+      return assetPath;
+    }
+
+    const normalizedBase = import.meta.env.BASE_URL.endsWith("/")
+      ? import.meta.env.BASE_URL
+      : `${import.meta.env.BASE_URL}/`;
+    const normalizedAssetPath = assetPath.startsWith("/")
+      ? assetPath.slice(1)
+      : assetPath;
+
+    return `${normalizedBase}${normalizedAssetPath}`;
+  };
+
+  const biologyUnitResourceMap: Record<string, string> = {
+    "1.1": "/resources/kenneth-carbohydrates-1.1.pdf",
+    "2.1": "/resources/kenneth-dna-and-rna-2.1.pdf",
+    "3.1": "/resources/kenneth-transport-in-molecules-3.1.pdf",
+  };
+
   if (location.pathname === "/team") {
     return <MeetOurTeam onBack={handleBackToHome} />;
   }
@@ -951,7 +1062,9 @@ export default function App() {
                   chapter.subchapters.length > 0
                     ? chapter.subchapters.map(
                         (subchapter, index) =>
-                          `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
+                          subchapter.locked
+                            ? `${chapter.chapterNumber}.${index + 1} ${subchapter.title} (Locked - Log in to gain access)`
+                            : `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
                       )
                     : [
                         `${chapter.chapterNumber}.1 ${chapter.title} Overview`,
@@ -1162,15 +1275,51 @@ export default function App() {
                       <div className="overflow-hidden">
                         <div className="px-5 sm:px-6 pb-5 pl-9 sm:pl-11 space-y-2 border-t border-[#d5cebd]">
                           {topic.chapters.map((chapter, index) => (
+                            (() => {
+                              const unitCode =
+                                chapter.match(/^(\d+\.\d+)/)?.[1];
+                              const isLockedChapter = chapter.includes(
+                                "(Locked -",
+                              );
+                              const chapterFilePath =
+                                activeSubject.id === "biology" && unitCode
+                                  ? biologyUnitResourceMap[unitCode]
+                                  : undefined;
+                              const chapterHref =
+                                chapterFilePath && !isLockedChapter
+                                  ? resolvePublicAssetPath(chapterFilePath)
+                                  : "#";
+                              const isAvailable = chapterHref !== "#";
+
+                              return (
                             <a
                               key={`${topic.id}-${index}`}
-                              href="#"
-                              onClick={(e) => e.preventDefault()}
-                              className="block text-sm sm:text-[0.95rem] py-1.5 transition-colors hover:text-[#0a1b2b]"
-                              style={{ color: "#626E73" }}
+                              href={chapterHref}
+                              onClick={(e) => {
+                                if (chapterHref === "#") {
+                                  e.preventDefault();
+                                }
+                              }}
+                              target={
+                                chapterHref === "#" ? undefined : "_blank"
+                              }
+                              rel={
+                                chapterHref === "#"
+                                  ? undefined
+                                  : "noopener noreferrer"
+                              }
+                              className="flex items-center justify-between text-sm sm:text-[0.95rem] py-1.5 transition-colors hover:text-[#0a1b2b]"
+                              style={{
+                                color: isAvailable ? "#0a1b2b" : "#626E73",
+                              }}
                             >
-                              {chapter}
+                              <span>{chapter}</span>
+                              {isAvailable && (
+                                <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                              )}
                             </a>
+                              );
+                            })()
                           ))}
                         </div>
                       </div>
@@ -1197,33 +1346,33 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10 items-start lg:[&>*]:w-full pb-10">
               <div className="text-left space-y-4">
-                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#cedae3" }}>
                   Directory
                 </h3>
                 <div className="flex flex-col gap-2 text-sm">
-                  <button onClick={() => goToHomeSection("about")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <button onClick={() => goToHomeSection("about")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     About Us
                   </button>
-                  <button onClick={() => goToHomeSection("subjects")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <button onClick={() => goToHomeSection("subjects")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     Subjects
                   </button>
-                  <button onClick={() => goToHomeSection("collaborate")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <button onClick={() => goToHomeSection("collaborate")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     Collaborate
                   </button>
-                  <button onClick={handleGoToTeam} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <button onClick={handleGoToTeam} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     Our Team
                   </button>
-                  <button onClick={handleGoToProgress} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <button onClick={handleGoToProgress} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     Student Progress
                   </button>
-                  <button onClick={handleGoToFaq} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <button onClick={handleGoToFaq} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     FAQ
                   </button>
                 </div>
               </div>
 
               <div className="text-left space-y-4">
-                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#cedae3" }}>
                   Get In Touch
                 </h3>
                 <p className="text-sm" style={{ color: "#94B1C8" }}>
@@ -1231,7 +1380,7 @@ export default function App() {
                 </p>
                 <Button
                   className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
-                  style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
+                  style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}
                   onClick={() => (window.location.href = "mailto:anithuncommon@gmail.com")}
                 >
                   Contact
@@ -1239,7 +1388,7 @@ export default function App() {
               </div>
 
               <div className="text-left space-y-4">
-                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#cedae3" }}>
                   Join Our Newsletter
                 </h3>
                 <form
@@ -1255,7 +1404,7 @@ export default function App() {
                 >
                   <input type="text" name="newsletterName" required placeholder="First Name" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
                   <input type="email" name="newsletterEmail" required placeholder="Email" className="w-full h-10 rounded-xl border-2 border-[#94B1C8] px-3 text-sm focus:outline-none" style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }} />
-                  <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}>
+                  <Button type="submit" className="w-full rounded-full border-2 border-[#94B1C8]" style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}>
                     Submit
                   </Button>
                 </form>
@@ -1263,13 +1412,13 @@ export default function App() {
 
               <div className="text-left lg:text-right space-y-4 lg:justify-self-end">
                 <div className="flex items-center justify-start lg:justify-end gap-3 mb-5">
-                  <a href="https://instagram.com/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <a href="https://instagram.com/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     <Instagram className="w-5 h-5" />
                   </a>
-                  <a href="https://linktr.ee/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <a href="https://linktr.ee/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     <TreePine className="w-5 h-5" />
                   </a>
-                  <a href="https://www.linkedin.com/company/anith-uncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                  <a href="https://www.linkedin.com/company/anith-uncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
@@ -1277,7 +1426,7 @@ export default function App() {
                 </div>
 
                 <div>
-                  <h3 className="text-xs font-semibold tracking-[0.14em] uppercase mb-2" style={{ color: "#E3DFCE" }}>
+                  <h3 className="text-xs font-semibold tracking-[0.14em] uppercase mb-2" style={{ color: "#cedae3" }}>
                     Colophon
                   </h3>
                   <p className="text-sm" style={{ color: "#94B1C8" }}>
@@ -1482,7 +1631,7 @@ export default function App() {
                 size="sm"
                 onClick={handleGoToJoinUs}
                 className="rounded-full px-6 py-2.5 text-sm border-2 border-[#0a1b2b] shadow-none"
-                style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
+                style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}
               >
                 Join Us
               </Button>
@@ -1590,7 +1739,7 @@ export default function App() {
                     size="sm"
                     onClick={handleGoToJoinUs}
                     className="w-full rounded-full border-2 border-[#0a1b2b] shadow-none"
-                    style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
+                    style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}
                   >
                     Join Us
                   </Button>
@@ -1627,7 +1776,7 @@ export default function App() {
             <Button
               size="lg"
               className="rounded-full px-12 py-5 text-base w-full sm:w-auto border-2 border-[#0a1b2b]"
-              style={{ backgroundColor: "#0a1b2b", color: "#E3DFCE" }}
+              style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}
               onClick={() => scrollToSection("subjects")}
             >
               Explore Subjects
@@ -1717,14 +1866,14 @@ export default function App() {
 
                   <div
                     className="text-4xl font-bold leading-none mb-2"
-                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#0a1b2b" }}
+                    style={{ color: stat.bgColor === "#0a1b2b" ? "#cedae3" : "#0a1b2b" }}
                   >
                     {animatedStats[index]}
                     {stat.suffix}
                   </div>
                   <p
                     className="text-sm font-semibold tracking-[0.08em] uppercase mb-4"
-                    style={{ color: stat.bgColor === "#0a1b2b" ? "#E3DFCE" : "#0a1b2b" }}
+                    style={{ color: stat.bgColor === "#0a1b2b" ? "#cedae3" : "#0a1b2b" }}
                   >
                     {stat.label}
                   </p>
@@ -2007,7 +2156,7 @@ export default function App() {
                   >
                     <p
                       className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold"
-                      style={{ color: "#E3DFCE" }}
+                      style={{ color: "#cedae3" }}
                     >
                       Subject Accessibility
                     </p>
@@ -2083,29 +2232,74 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {subjects.map((subject, index) => (
-              <div
-                key={subject.id}
-                className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#f7f4eb]">
-                  <SubjectCard
-                    title={subject.title}
-                    description={subject.description}
-                    image={subject.image}
-                    topics={subject.topics}
-                    color={subject.color}
-                    mentors={subject.mentors}
-                    onExplore={() =>
-                      handleExploreSubject(subject)
-                    }
-                    onMentorClick={handleGoToMentor}
-                  />
-                </div>
+          <div className="space-y-14">
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-px flex-1 bg-[#0a1b2b]/20" />
+                <h3 className="text-2xl md:text-3xl font-editorial-serif font-semibold" style={{ color: "#0a1b2b" }}>
+                  Humanities
+                </h3>
+                <div className="h-px flex-1 bg-[#0a1b2b]/20" />
               </div>
-            ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {humanitiesSubjects.map((subject, index) => (
+                  <div
+                    key={subject.id}
+                    className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#f7f4eb]">
+                      <SubjectCard
+                        title={subject.title}
+                        description={subject.description}
+                        image={subject.image}
+                        topics={subject.topics}
+                        color={subject.color}
+                        mentors={subject.mentors}
+                        onExplore={() =>
+                          handleExploreSubject(subject)
+                        }
+                        onMentorClick={handleGoToMentor}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-px flex-1 bg-[#0a1b2b]/20" />
+                <h3 className="text-2xl md:text-3xl font-editorial-serif font-semibold" style={{ color: "#0a1b2b" }}>
+                  STEM
+                </h3>
+                <div className="h-px flex-1 bg-[#0a1b2b]/20" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {stemSubjects.map((subject, index) => (
+                  <div
+                    key={subject.id}
+                    className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#f7f4eb]">
+                      <SubjectCard
+                        title={subject.title}
+                        description={subject.description}
+                        image={subject.image}
+                        topics={subject.topics}
+                        color={subject.color}
+                        mentors={subject.mentors}
+                        onExplore={() =>
+                          handleExploreSubject(subject)
+                        }
+                        onMentorClick={handleGoToMentor}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -2415,7 +2609,7 @@ export default function App() {
                   className="w-full text-lg rounded-full border-2 border-[#0a1b2b]"
                   style={{
                     backgroundColor: "#0a1b2b",
-                    color: "#E3DFCE",
+                    color: "#cedae3",
                   }}
                 >
                   <Mail className="w-5 h-5 mr-2" />
@@ -2597,7 +2791,7 @@ export default function App() {
               className="text-lg px-8 rounded-full border-2 border-[#0a1b2b]"
               style={{
                 backgroundColor: "#0a1b2b",
-                color: "#E3DFCE",
+                color: "#cedae3",
               }}
               onClick={handleGoToJoinUs}
             >
@@ -2627,7 +2821,7 @@ export default function App() {
             <div className="text-left space-y-4">
               <h3
                 className="text-xs font-semibold tracking-[0.14em] uppercase"
-                style={{ color: "#E3DFCE" }}
+                style={{ color: "#cedae3" }}
               >
                 Directory
               </h3>
@@ -2637,7 +2831,7 @@ export default function App() {
                   className="transition-colors text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2650,7 +2844,7 @@ export default function App() {
                   className="transition-colors text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2663,7 +2857,7 @@ export default function App() {
                   className="transition-colors text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2676,7 +2870,7 @@ export default function App() {
                   className="transition-colors text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2689,7 +2883,7 @@ export default function App() {
                   className="transition-colors text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2702,7 +2896,7 @@ export default function App() {
                   className="transition-colors text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2716,7 +2910,7 @@ export default function App() {
             <div className="text-left space-y-4">
               <h3
                 className="text-xs font-semibold tracking-[0.14em] uppercase"
-                style={{ color: "#E3DFCE" }}
+                style={{ color: "#cedae3" }}
               >
                 Get In Touch
               </h3>
@@ -2727,7 +2921,7 @@ export default function App() {
                 className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
                 style={{
                   backgroundColor: "#0a1b2b",
-                  color: "#E3DFCE",
+                  color: "#cedae3",
                 }}
                 onClick={() =>
                   (window.location.href =
@@ -2741,7 +2935,7 @@ export default function App() {
             <div className="text-left space-y-4">
               <h3
                 className="text-xs font-semibold tracking-[0.14em] uppercase"
-                style={{ color: "#E3DFCE" }}
+                style={{ color: "#cedae3" }}
               >
                 Join Our Newsletter
               </h3>
@@ -2777,7 +2971,7 @@ export default function App() {
                   className="w-full rounded-full border-2 border-[#94B1C8]"
                   style={{
                     backgroundColor: "#0a1b2b",
-                    color: "#E3DFCE",
+                    color: "#cedae3",
                   }}
                 >
                   Submit
@@ -2794,7 +2988,7 @@ export default function App() {
                   className="transition-colors"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2809,7 +3003,7 @@ export default function App() {
                   className="transition-colors"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2824,7 +3018,7 @@ export default function App() {
                   className="transition-colors"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#E3DFCE")
+                    (e.currentTarget.style.color = "#cedae3")
                   }
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.color = "#94B1C8")
@@ -2843,7 +3037,7 @@ export default function App() {
               <div>
                 <h3
                   className="text-xs font-semibold tracking-[0.14em] uppercase mb-2"
-                  style={{ color: "#E3DFCE" }}
+                  style={{ color: "#cedae3" }}
                 >
                   Colophon
                 </h3>
@@ -2876,4 +3070,5 @@ export default function App() {
     </div>
   );
 }
+
 

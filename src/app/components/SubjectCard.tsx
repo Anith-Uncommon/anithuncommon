@@ -24,7 +24,7 @@ export function SubjectCard({ title, description, image, topics, color, mentors,
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1b2b]/70 via-[#0a1b2b]/20 to-transparent" />
-        <h3 className="absolute bottom-5 left-5 text-[#E3DFCE] text-4xl font-semibold font-editorial-serif tracking-wide">{title}</h3>
+        <h3 className="absolute bottom-5 left-5 text-[#cedae3] text-4xl font-semibold font-editorial-serif tracking-wide">{title}</h3>
       </div>
       
       <div className="p-7 relative">
@@ -51,7 +51,7 @@ export function SubjectCard({ title, description, image, topics, color, mentors,
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0a1b2b'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#94B1C8'}
-                  onMouseOver={(e) => e.currentTarget.style.color = '#E3DFCE'}
+                  onMouseOver={(e) => e.currentTarget.style.color = '#cedae3'}
                   onMouseOut={(e) => e.currentTarget.style.color = '#0a1b2b'}
                 >
                   {mentor}
@@ -82,7 +82,7 @@ export function SubjectCard({ title, description, image, topics, color, mentors,
         <Button 
           onClick={onExplore} 
           className="w-full group/btn transition-all duration-500 rounded-2xl py-5 font-editorial-sans"
-          style={{ backgroundColor: '#0a1b2b', color: '#E3DFCE' }}
+          style={{ backgroundColor: '#0a1b2b', color: '#cedae3' }}
         >
           Explore Subject
           <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -91,4 +91,5 @@ export function SubjectCard({ title, description, image, topics, color, mentors,
     </Card>
   );
 }
+
 

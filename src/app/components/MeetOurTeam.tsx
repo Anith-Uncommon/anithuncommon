@@ -428,10 +428,10 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           <div className="absolute bottom-0 right-0 w-56 h-56 bg-[#626E73] opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
           
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-editorial-serif font-semibold mb-4 text-[#E3DFCE]">
+            <h2 className="text-3xl md:text-4xl font-editorial-serif font-semibold mb-4 text-[#cedae3]">
               Want to Join Our Team?
             </h2>
-            <p className="text-lg mb-8 max-w-2xl mx-auto text-[#E3DFCE]">
+            <p className="text-lg mb-8 max-w-2xl mx-auto text-[#cedae3]">
               We're always looking for passionate students who want to make a difference. 
               If you share our vision, we'd love to hear from you.
             </p>
@@ -461,7 +461,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                 Join our community of student educators and help make education accessible to everyone.
               </p>
               <Button 
-                className="w-full bg-[#0a1b2b] text-[#E3DFCE] hover:bg-[#14314a] border-2 border-[#0a1b2b]"
+                className="w-full bg-[#0a1b2b] text-[#cedae3] hover:bg-[#14314a] border-2 border-[#0a1b2b]"
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1', '_blank')}
               >
                 Apply Now
@@ -514,34 +514,34 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
             <div className="text-left space-y-4">
               <h3
                 className="text-xs font-semibold tracking-[0.14em] uppercase"
-                style={{ color: "#E3DFCE" }}
+                style={{ color: "#cedae3" }}
               >
                 Directory
               </h3>
               <div className="flex flex-col gap-2 text-sm">
-                <button onClick={() => goToHomeSection("about")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <button onClick={() => goToHomeSection("about")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   About Us
                 </button>
-                <button onClick={() => goToHomeSection("subjects")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <button onClick={() => goToHomeSection("subjects")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   Subjects
                 </button>
-                <button onClick={() => goToHomeSection("collaborate")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <button onClick={() => goToHomeSection("collaborate")} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   Collaborate
                 </button>
-                <button className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <button className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   Our Team
                 </button>
-                <button onClick={goToProgress} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <button onClick={goToProgress} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   Student Progress
                 </button>
-                <button onClick={goToFaq} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <button onClick={goToFaq} className="transition-colors text-left sm:text-left text-center" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   FAQ
                 </button>
               </div>
             </div>
 
             <div className="text-left space-y-4">
-              <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+              <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#cedae3" }}>
                 Get In Touch
               </h3>
               <p className="text-sm" style={{ color: "#94B1C8" }}>
@@ -551,7 +551,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                 className="w-full sm:w-auto rounded-full border-2 border-[#94B1C8]"
                 style={{
                   backgroundColor: "#0a1b2b",
-                  color: "#E3DFCE",
+                  color: "#cedae3",
                 }}
                 onClick={() =>
                   (window.location.href =
@@ -563,7 +563,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
             </div>
 
             <div className="text-left space-y-4">
-              <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#E3DFCE" }}>
+              <h3 className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: "#cedae3" }}>
                 Join Our Newsletter
               </h3>
               <form
@@ -598,7 +598,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                   className="w-full rounded-full border-2 border-[#94B1C8]"
                   style={{
                     backgroundColor: "#0a1b2b",
-                    color: "#E3DFCE",
+                    color: "#cedae3",
                   }}
                 >
                   Submit
@@ -608,13 +608,13 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
 
             <div className="text-left lg:text-right space-y-4 lg:justify-self-end">
               <div className="flex items-center justify-start lg:justify-end gap-3 mb-5">
-                <a href="https://instagram.com/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <a href="https://instagram.com/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   <Instagram className="w-5 h-5" />
                 </a>
-                <a href="https://linktr.ee/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <a href="https://linktr.ee/anithuncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   <TreePine className="w-5 h-5" />
                 </a>
-                <a href="https://www.linkedin.com/company/anith-uncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#E3DFCE")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
+                <a href="https://www.linkedin.com/company/anith-uncommon" target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: "#94B1C8" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#cedae3")} onMouseLeave={(e) => (e.currentTarget.style.color = "#94B1C8")}>
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
@@ -622,7 +622,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
               </div>
 
               <div>
-                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase mb-2" style={{ color: "#E3DFCE" }}>
+                <h3 className="text-xs font-semibold tracking-[0.14em] uppercase mb-2" style={{ color: "#cedae3" }}>
                   Colophon
                 </h3>
                 <p className="text-sm" style={{ color: "#94B1C8" }}>
@@ -650,5 +650,6 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
     </div>
   );
 }
+
 
 

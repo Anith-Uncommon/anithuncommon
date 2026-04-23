@@ -36,7 +36,29 @@ export const mentorsData: MentorData[] = [
     role: "Literature Mentor",
     subjects: ["Literature", "English Literature"],
     bio: "I wish to be a bird",
-    resources: []
+    resources: [
+      {
+        title: "Ishraq, Literature, 1.1-1.5 (Poetry)",
+        type: "pdf",
+        description: "Poetry lessons covering chapters 1.1 through 1.5.",
+        file: "/resources/ishraq-literature-1.1-1.5-poetry.pdf",
+        relatedTopics: ["Literature", "English Literature"]
+      },
+      {
+        title: "Ishraq, Literature, 2.1-2.5 (Prose)",
+        type: "pdf",
+        description: "Prose lessons covering chapters 2.1 through 2.5.",
+        file: "/resources/ishraq-literature-2.1-2.5-prose.pdf",
+        relatedTopics: ["Literature", "English Literature"]
+      },
+      {
+        title: "Ishraq, Literature, 3.1-3.3 (Drama)",
+        type: "pdf",
+        description: "Drama lessons covering chapters 3.1 through 3.3.",
+        file: "/resources/ishraq-literature-3.1-3.3-drama.pdf",
+        relatedTopics: ["Literature", "English Literature"]
+      }
+    ]
   },
   {
     id: "kenneth-viorenzo",
@@ -47,21 +69,21 @@ export const mentorsData: MentorData[] = [
     bio: "A connoisseur of the abstract. Be sure to enjoy whatever it is you're doing.",
     resources: [
       {
-        title: "Carbohydrates",
+        title: "1.1 Carbohydrates",
         type: "pdf",
         description: "Comprehensive guide to carbohydrates, their structures, types, and biological functions.",
         file: "/resources/kenneth-carbohydrates-1.1.pdf",
         relatedTopics: ["Biology"]
       },
       {
-        title: "DNA and RNA",
+        title: "2.1 DNA & RNA",
         type: "pdf",
         description: "Detailed exploration of DNA and RNA structures, replication, and protein synthesis.",
         file: "/resources/kenneth-dna-and-rna-2.1.pdf",
         relatedTopics: ["Biology"]
       },
       {
-        title: "Transport in Molecules",
+        title: "3.1 Transport of Molecules",
         type: "pdf",
         description: "In-depth study of molecular transport mechanisms and membrane transport processes.",
         file: "/resources/kenneth-transport-in-molecules-3.1.pdf",
@@ -156,6 +178,13 @@ export const mentorsData: MentorData[] = [
         type: "pdf",
         description: "Political Theory Lesson 2 focused on the concept of freedom and its major interpretations.",
         file: "/resources/akshiti-freedom-2.pdf",
+        relatedTopics: ["Political Theory"]
+      },
+      {
+        title: "Political Theory Lesson 3 (Equality)",
+        type: "pdf",
+        description: "Political Theory Lesson 3 focused on equality and its major interpretations.",
+        file: "/resources/akshiti-equality-3.pdf",
         relatedTopics: ["Political Theory"]
       }
     ]
