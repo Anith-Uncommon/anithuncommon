@@ -205,6 +205,7 @@ export default function App() {
         "Yassmin Mahmoud",
         "Trista",
         "Kenneth Viorenzo",
+        "Azalia Ratu",
       ],
       topicsData: {},
       chapters: [
@@ -317,6 +318,25 @@ export default function App() {
         "Yassmin Mahmoud",
         "Avighnaa Ramesh",
       ],
+      topicsData: {},
+      chapters: [],
+    },
+    {
+      id: "psychology",
+      title: "Psychology",
+      description:
+        "Explore how people think, feel, and behave. Learn core psychological theories, research methods, and real-world applications that help you understand individuals and society.",
+      image:
+        "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+      topics: [
+        "Cognitive Psychology",
+        "Developmental Psychology",
+        "Social Psychology",
+        "Mental Health",
+        "Research Methods",
+      ],
+      color: "bg-[#0B1F26] text-[#D9D7CC]",
+      mentors: ["Sharia Shifa"],
       topicsData: {},
       chapters: [],
     },
@@ -555,6 +575,7 @@ export default function App() {
     "world-history",
     "geology",
     "art-history",
+    "psychology",
     "geography",
     "philosophy",
   ]);
@@ -1888,6 +1909,7 @@ export default function App() {
       <section
         id="about"
         className="py-20 relative transition-colors duration-[1200ms] border-b-2 border-[#0a1b2b]"
+        style={{ backgroundColor: "#fff9fb" }}
       >
         <div className="absolute top-20 left-0 w-64 h-64 bg-[#94B1C8]/25 rounded-full blur-3xl" />
 
@@ -1905,7 +1927,7 @@ export default function App() {
 
             </div>
 
-            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[10px_10px_0px_0px_rgba(10, 27, 43, 0.9)] relative overflow-hidden mb-8">
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[10px_10px_0px_0px_rgba(10, 27, 43, 0.9)] relative overflow-hidden mb-8">
               {/* Decorative corner element */}
               <div
                 className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-5"
@@ -1950,7 +1972,7 @@ export default function App() {
 
             {/* Mission and Vision Cards */}
             <div className="grid md:grid-cols-2 gap-6">
-              <Card className="p-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] hover:translate-y-[-2px] transition-all duration-500">
+              <Card className="p-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] hover:translate-y-[-2px] transition-all duration-500">
                 <h3
                   className="text-3xl font-editorial-serif font-semibold mb-4"
                   style={{ color: "#0a1b2b" }}
@@ -1969,7 +1991,7 @@ export default function App() {
                 </p>
               </Card>
 
-              <Card className="p-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] hover:translate-y-[-2px] transition-all duration-500">
+              <Card className="p-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] hover:translate-y-[-2px] transition-all duration-500">
                 <h3
                   className="text-3xl font-editorial-serif font-semibold mb-4"
                   style={{ color: "#0a1b2b" }}
@@ -2071,7 +2093,7 @@ export default function App() {
                               cx="0"
                               cy="0"
                               r={orbitalLayout.nodeSize / 2}
-                              fill="#f7f4eb"
+                              fill="#ecf6fd"
                               stroke="#0a1b2b"
                               strokeWidth="2"
                               style={{
@@ -2248,7 +2270,7 @@ export default function App() {
                     className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#f7f4eb]">
+                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-transparent">
                       <SubjectCard
                         title={subject.title}
                         description={subject.description}
@@ -2282,7 +2304,7 @@ export default function App() {
                     className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#f7f4eb]">
+                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-transparent">
                       <SubjectCard
                         title={subject.title}
                         description={subject.description}
@@ -2331,7 +2353,7 @@ export default function App() {
               (testimonial, index) => (
                 <Card
                   key={`${testimonial.name}-${index}`}
-                  className="w-[320px] sm:w-[360px] h-full flex flex-col flex-shrink-0 p-6 border-2 border-[#0a1b2b] rounded-[24px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.82)] transition-all duration-500 hover:-translate-y-1"
+                  className="w-[320px] sm:w-[360px] h-full flex flex-col flex-shrink-0 p-6 border-2 border-[#0a1b2b] rounded-[24px] bg-transparent shadow-[8px_8px_0px_rgba(10, 27, 43, 0.82)] transition-all duration-500 hover:-translate-y-1"
                 >
                   <p className="text-base leading-relaxed mb-5 flex-1" style={{ color: "#0a1b2b" }}>
                     "{testimonial.quote}"
@@ -2380,7 +2402,7 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2406,7 +2428,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2431,7 +2453,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2457,7 +2479,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2508,7 +2530,7 @@ export default function App() {
             </div>
 
             {/* Contact Form */}
-            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)]">
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-transparent shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)]">
               <form
                 className="space-y-6"
                 onSubmit={(e) => {
@@ -2697,7 +2719,7 @@ export default function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
             <Card
-              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
+              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
               onClick={() =>
                 window.open(
                   "https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1",
@@ -2741,7 +2763,7 @@ export default function App() {
             </Card>
 
             <Card
-              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
+              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
               onClick={() =>
                 window.open(
                   "https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform",

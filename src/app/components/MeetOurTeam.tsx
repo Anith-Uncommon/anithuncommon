@@ -253,6 +253,20 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           bio: "I wish to be a bird",
           instagram: "ihsrqa",
           colorAccent: "bg-[#0B1F26]"
+        },
+        {
+          name: "Azalia Ratu",
+          role: "Biology Mentor",
+          bio: "",
+          email: "azalia0302@mega.sch.id",
+          colorAccent: "bg-[#0B1F26]"
+        },
+        {
+          name: "Sharia Shifa",
+          role: "Psychology Mentor",
+          bio: "",
+          email: "shariashifa2489@gmail.com",
+          colorAccent: "bg-[#0B1F26]"
         }
       ]
     },

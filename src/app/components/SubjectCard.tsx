@@ -16,7 +16,7 @@ interface SubjectCardProps {
 
 export function SubjectCard({ title, description, image, topics, color, mentors, onExplore, onMentorClick }: SubjectCardProps) {
   return (
-    <Card className="overflow-hidden rounded-3xl border-0 bg-[#f6f3e9] shadow-[0_16px_40px_-28px_rgba(10, 27, 43, 0.45)] hover:shadow-[0_24px_48px_-30px_rgba(10, 27, 43, 0.55)] transition-all duration-700 group relative">
+    <Card className="overflow-hidden rounded-3xl border-0 bg-transparent shadow-[0_16px_40px_-28px_rgba(10, 27, 43, 0.45)] hover:shadow-[0_24px_48px_-30px_rgba(10, 27, 43, 0.55)] transition-all duration-700 group relative">
       <div className="relative h-64 overflow-hidden">
         <img 
           src={image} 

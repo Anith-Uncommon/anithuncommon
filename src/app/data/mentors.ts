@@ -256,6 +256,68 @@ from mortality to immortality."
     resources: []
   },
   {
+    id: "azalia-ratu",
+    name: "Azalia Ratu",
+    email: "azalia0302@mega.sch.id",
+    role: "Biology Mentor",
+    subjects: ["Biology"],
+    bio: "",
+    resources: [
+      {
+        title: "Azalia R, Biology 1.1 - 1.3 (Cell Structure and Function)",
+        type: "pdf",
+        description: "Lessons covering cell structure and function for Biology chapters 1.1 through 1.3.",
+        file: "/resources/azalia-biology-1.1-1.3-cell-structure-and-function.pdf",
+        relatedTopics: ["Biology"]
+      },
+      {
+        title: "Azalia R, Biology 2.1 - 2.5 (Human Anatomy)",
+        type: "pdf",
+        description: "Lessons covering human anatomy for Biology chapters 2.1 through 2.5.",
+        file: "/resources/azalia-biology-2.1-2.5-human-anatomy.pdf",
+        relatedTopics: ["Biology"]
+      },
+      {
+        title: "Azalia R, Biology 3.1 - 3.3 (Organism and Their Environments)",
+        type: "pdf",
+        description: "Lessons covering organisms and their environments for Biology chapters 3.1 through 3.3.",
+        file: "/resources/azalia-biology-3.1-3.3-organisms-and-their-environments.pdf",
+        relatedTopics: ["Biology"]
+      }
+    ]
+  },
+  {
+    id: "sharia-shifa",
+    name: "Sharia Shifa",
+    email: "shariashifa2489@gmail.com",
+    role: "Psychology Mentor",
+    subjects: ["Psychology"],
+    bio: "",
+    resources: [
+      {
+        title: "Chp 1 - Research Methods (Research Methods)",
+        type: "pdf",
+        description: "Introduction to core psychology research methods and study design.",
+        file: "/resources/sharia-psychology-1-research-methods.pdf",
+        relatedTopics: ["Psychology"]
+      },
+      {
+        title: "Chp 2 - The Biological Approach (The Biological Approach)",
+        type: "pdf",
+        description: "An overview of the biological approach in psychology and related concepts.",
+        file: "/resources/sharia-psychology-2-the-biological-approach.pdf",
+        relatedTopics: ["Psychology"]
+      },
+      {
+        title: "Chp 3 - The Cognitive Approach (The Cognitive Approach)",
+        type: "pdf",
+        description: "An introduction to the cognitive approach in psychology and how it explains behavior.",
+        file: "/resources/sharia-psychology-3-the-cognitive-approach.pdf",
+        relatedTopics: ["Psychology"]
+      }
+    ]
+  },
+  {
     id: "savera-sidhu",
     name: "Savera Sidhu",
     email: "",
