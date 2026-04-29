@@ -61,7 +61,7 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
               </p>
             )}
             {bio && (
-              <p className="text-sm mb-5 leading-relaxed flex-1" style={{ color: "#2F3A40" }}>
+              <p className="text-sm mb-5 leading-relaxed flex-1 font-editorial-serif italic" style={{ color: "#626E73" }}>
                 {bio}
               </p>
             )}

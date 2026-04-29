@@ -1268,7 +1268,7 @@ export default function App() {
                           prev === topic.id ? null : topic.id,
                         )
                       }
-                      className="w-full px-5 sm:px-6 py-5 text-left transition-colors hover:bg-[#efe9d8]"
+                      className="w-full px-5 sm:px-6 py-5 text-left transition-all cursor-pointer hover:bg-[#efe9d8]"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
@@ -1604,22 +1604,22 @@ export default function App() {
             </button>
 
             <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">
-              <button onClick={() => scrollToSection("about")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => scrollToSection("about")} className="transition-all cursor-pointer" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b", e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40", e.currentTarget.style.textShadow = "none")}>
                 About Us
               </button>
-              <button onClick={() => scrollToSection("subjects")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => scrollToSection("subjects")} className="transition-all cursor-pointer" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b", e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40", e.currentTarget.style.textShadow = "none")}>
                 Subjects
               </button>
-              <button onClick={() => scrollToSection("collaborate")} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={() => scrollToSection("collaborate")} className="transition-all cursor-pointer" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b", e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40", e.currentTarget.style.textShadow = "none")}>
                 Collaborate
               </button>
-              <button onClick={handleGoToTeam} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToTeam} className="transition-all cursor-pointer" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b", e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40", e.currentTarget.style.textShadow = "none")}>
                 Our Team
               </button>
-              <button onClick={handleGoToProgress} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToProgress} className="transition-all cursor-pointer" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b", e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40", e.currentTarget.style.textShadow = "none")}>
                 Student Progress
               </button>
-              <button onClick={handleGoToFaq} className="transition-colors" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40")}>
+              <button onClick={handleGoToFaq} className="transition-all cursor-pointer" style={{ color: "#2F3A40" }} onMouseEnter={(e) => (e.currentTarget.style.color = "#0a1b2b", e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.color = "#2F3A40", e.currentTarget.style.textShadow = "none")}>
                 FAQ
               </button>
             </nav>
@@ -1696,24 +1696,26 @@ export default function App() {
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
-                  <button onClick={() => scrollToSection("about")} className="text-lg" style={{ color: "#0a1b2b" }}>
+                  <button onClick={() => scrollToSection("about")} className="text-lg cursor-pointer transition-all" style={{ color: "#0a1b2b" }} onMouseEnter={(e) => (e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.textShadow = "none")}>
                     About Us
                   </button>
-                  <button onClick={() => scrollToSection("subjects")} className="text-lg" style={{ color: "#0a1b2b" }}>
+                  <button onClick={() => scrollToSection("subjects")} className="text-lg cursor-pointer transition-all" style={{ color: "#0a1b2b" }} onMouseEnter={(e) => (e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.textShadow = "none")}>
                     Subjects
                   </button>
-                  <button onClick={() => scrollToSection("collaborate")} className="text-lg" style={{ color: "#0a1b2b" }}>
+                  <button onClick={() => scrollToSection("collaborate")} className="text-lg cursor-pointer transition-all" style={{ color: "#0a1b2b" }} onMouseEnter={(e) => (e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.textShadow = "none")}>
                     Collaborate
                   </button>
-                  <button onClick={handleGoToTeam} className="text-lg" style={{ color: "#0a1b2b" }}>
+                  <button onClick={handleGoToTeam} className="text-lg cursor-pointer transition-all" style={{ color: "#0a1b2b" }} onMouseEnter={(e) => (e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")} onMouseLeave={(e) => (e.currentTarget.style.textShadow = "none")}>
                     Our Team
                   </button>
                   <button
                     onClick={() => {
                       handleGoToProgress();
                     }}
-                    className="text-lg"
+                    className="text-lg cursor-pointer transition-all"
                     style={{ color: "#0a1b2b" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.textShadow = "none")}
                   >
                     Student Progress
                   </button>
@@ -1721,8 +1723,10 @@ export default function App() {
                     onClick={() => {
                       handleGoToFaq();
                     }}
-                    className="text-lg"
+                    className="text-lg cursor-pointer transition-all"
                     style={{ color: "#0a1b2b" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.textShadow = "0 4px 12px rgba(10, 27, 43, 0.15)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.textShadow = "none")}
                   >
                     FAQ
                   </button>
@@ -1868,7 +1872,7 @@ export default function App() {
               return (
                 <Card
                   key={stat.label}
-                  className={`group p-6 border-2 border-[#0a1b2b] rounded-[24px] shadow-[7px_7px_0px_rgba(10, 27, 43, 0.72)] transition-all duration-500 hover:-translate-y-1 ${
+                  className={`group p-6 border-2 border-[#0a1b2b] rounded-[24px] shadow-[7px_7px_0px_rgba(10, 27, 43, 0.72)] transition-all duration-500 hover:shadow-[10px_10px_0px_rgba(10, 27, 43, 0.85)] ${
                     index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"
                   }`}
                   style={{ backgroundColor: stat.bgColor }}
@@ -2270,7 +2274,7 @@ export default function App() {
                     className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-transparent">
+                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#FFF9FB]">
                       <SubjectCard
                         title={subject.title}
                         description={subject.description}
@@ -2304,7 +2308,7 @@ export default function App() {
                     className={`relative transition-transform duration-300 ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"}`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-transparent">
+                    <div className="rounded-[30px] border-2 border-[#0a1b2b] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.78)] overflow-hidden bg-[#FFF9FB]">
                       <SubjectCard
                         title={subject.title}
                         description={subject.description}
@@ -2330,20 +2334,9 @@ export default function App() {
       <section className="py-20 border-b-2 border-[#0a1b2b] relative overflow-x-hidden" style={{ backgroundColor: "#FFF9FB" }}>
         <div className="container mx-auto px-4 mb-12">
           <div className="text-center max-w-3xl mx-auto">
-            <div
-              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]"
-              style={{ backgroundColor: "#94B1C8" }}
-            >
-              <span
-                className="text-xs tracking-[0.22em] font-semibold"
-                style={{ color: "#0a1b2b" }}
-              >
-                TESTIMONIALS
-              </span>
-            </div>
-            <p className="text-lg" style={{ color: "#0a1b2b" }}>
-              Real feedback from mentors and learners in our community.
-            </p>
+            <h2 className="text-5xl md:text-6xl font-editorial-serif font-semibold" style={{ color: "#0a1b2b" }}>
+              Here's what our mentors and learners have to say
+            </h2>
           </div>
         </div>
 
@@ -2353,7 +2346,7 @@ export default function App() {
               (testimonial, index) => (
                 <Card
                   key={`${testimonial.name}-${index}`}
-                  className="w-[320px] sm:w-[360px] h-full flex flex-col flex-shrink-0 p-6 border-2 border-[#0a1b2b] rounded-[24px] bg-transparent shadow-[8px_8px_0px_rgba(10, 27, 43, 0.82)] transition-all duration-500 hover:-translate-y-1"
+                  className="w-[320px] sm:w-[360px] h-full flex flex-col flex-shrink-0 p-6 border-2 border-[#0a1b2b] rounded-[24px] bg-[#FFF9FB] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.82)] transition-all duration-500 hover:shadow-[12px_12px_0px_rgba(10, 27, 43, 0.95)]"
                 >
                   <p className="text-base leading-relaxed mb-5 flex-1" style={{ color: "#0a1b2b" }}>
                     "{testimonial.quote}"
@@ -2402,7 +2395,7 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2428,7 +2421,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2453,7 +2446,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2479,7 +2472,7 @@ export default function App() {
               </div>
             </Card>
 
-            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
+            <Card className="p-6 text-center rounded-[26px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_0px_rgba(10, 27, 43, 0.8)] transition-all duration-700 relative group overflow-hidden">
               <div className="absolute inset-0 bg-[#0A1926] opacity-0 group-hover:opacity-5 transition-opacity" />
               <div className="relative z-10">
                 <div
@@ -2530,7 +2523,7 @@ export default function App() {
             </div>
 
             {/* Contact Form */}
-            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-transparent shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)]">
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)]">
               <form
                 className="space-y-6"
                 onSubmit={(e) => {
@@ -2719,13 +2712,7 @@ export default function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
             <Card
-              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
-              onClick={() =>
-                window.open(
-                  "https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1",
-                  "_blank",
-                )
-              }
+              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 group relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-0 group-hover:opacity-5 rounded-full transition-opacity" />
               <div className="relative z-10">
@@ -2752,24 +2739,24 @@ export default function App() {
                   curriculum development, mentorship, and
                   building a global educational community.
                 </p>
-                <div
-                  className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all"
-                  style={{ color: "#0A1926" }}
+                <Button
+                  className="w-full text-lg py-6 group/btn"
+                  style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}
+                  onClick={() =>
+                    window.open(
+                      "https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1",
+                      "_blank",
+                    )
+                  }
                 >
-                  Apply Now
-                  <FileText className="w-4 h-4" />
-                </div>
+                  Apply for Membership
+                  <ExternalLink className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                </Button>
               </div>
             </Card>
 
             <Card
-              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-transparent shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 cursor-pointer group relative overflow-hidden"
-              onClick={() =>
-                window.open(
-                  "https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform",
-                  "_blank",
-                )
-              }
+              className="p-8 rounded-[28px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.76)] hover:shadow-[11px_11px_0px_rgba(10, 27, 43, 0.76)] transition-all duration-700 group relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#626E73] opacity-0 group-hover:opacity-5 rounded-full transition-opacity" />
               <div className="relative z-10">
@@ -2796,13 +2783,19 @@ export default function App() {
                   mentoring, or support our initiatives with
                   flexible volunteer opportunities.
                 </p>
-                <div
-                  className="flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all"
-                  style={{ color: "#0A1926" }}
+                <Button
+                  className="w-full text-lg py-6 group/btn"
+                  style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}
+                  onClick={() =>
+                    window.open(
+                      "https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform",
+                      "_blank",
+                    )
+                  }
                 >
-                  Apply Now
-                  <FileText className="w-4 h-4" />
-                </div>
+                  Apply for Volunteer
+                  <ExternalLink className="w-5 h-5 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                </Button>
               </div>
             </Card>
           </div>
@@ -2850,78 +2843,78 @@ export default function App() {
               <div className="flex flex-col gap-2 text-sm">
                 <button
                   onClick={() => scrollToSection("about")}
-                  className="transition-colors text-left sm:text-left text-center"
+                  className="transition-all cursor-pointer text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#cedae3")
+                    (e.currentTarget.style.color = "#cedae3", e.currentTarget.style.textShadow = "0 4px 12px rgba(205, 218, 227, 0.25)")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#94B1C8")
+                    (e.currentTarget.style.color = "#94B1C8", e.currentTarget.style.textShadow = "none")
                   }
                 >
                   About Us
                 </button>
                 <button
                   onClick={() => scrollToSection("subjects")}
-                  className="transition-colors text-left sm:text-left text-center"
+                  className="transition-all cursor-pointer text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#cedae3")
+                    (e.currentTarget.style.color = "#cedae3", e.currentTarget.style.textShadow = "0 4px 12px rgba(205, 218, 227, 0.25)")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#94B1C8")
+                    (e.currentTarget.style.color = "#94B1C8", e.currentTarget.style.textShadow = "none")
                   }
                 >
                   Subjects
                 </button>
                 <button
                   onClick={() => scrollToSection("collaborate")}
-                  className="transition-colors text-left sm:text-left text-center"
+                  className="transition-all cursor-pointer text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#cedae3")
+                    (e.currentTarget.style.color = "#cedae3", e.currentTarget.style.textShadow = "0 4px 12px rgba(205, 218, 227, 0.25)")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#94B1C8")
+                    (e.currentTarget.style.color = "#94B1C8", e.currentTarget.style.textShadow = "none")
                   }
                 >
                   Collaborate
                 </button>
                 <button
                   onClick={handleGoToTeam}
-                  className="transition-colors text-left sm:text-left text-center"
+                  className="transition-all cursor-pointer text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#cedae3")
+                    (e.currentTarget.style.color = "#cedae3", e.currentTarget.style.textShadow = "0 4px 12px rgba(205, 218, 227, 0.25)")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#94B1C8")
+                    (e.currentTarget.style.color = "#94B1C8", e.currentTarget.style.textShadow = "none")
                   }
                 >
                   Our Team
                 </button>
                 <button
                   onClick={handleGoToProgress}
-                  className="transition-colors text-left sm:text-left text-center"
+                  className="transition-all cursor-pointer text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#cedae3")
+                    (e.currentTarget.style.color = "#cedae3", e.currentTarget.style.textShadow = "0 4px 12px rgba(205, 218, 227, 0.25)")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#94B1C8")
+                    (e.currentTarget.style.color = "#94B1C8", e.currentTarget.style.textShadow = "none")
                   }
                 >
                   Student Progress
                 </button>
                 <button
                   onClick={handleGoToFaq}
-                  className="transition-colors text-left sm:text-left text-center"
+                  className="transition-all cursor-pointer text-left sm:text-left text-center"
                   style={{ color: "#94B1C8" }}
                   onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "#cedae3")
+                    (e.currentTarget.style.color = "#cedae3", e.currentTarget.style.textShadow = "0 4px 12px rgba(205, 218, 227, 0.25)")
                   }
                   onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "#94B1C8")
+                    (e.currentTarget.style.color = "#94B1C8", e.currentTarget.style.textShadow = "none")
                   }
                 >
                   FAQ

@@ -56,7 +56,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Edith Hoeijaya",
           role: "CEO & Co-founder",
           image: "edith.jpeg",
-          bio: "\\\"After all, we are nothing more or less then we choose to reveal.\\\" - Sylvia Plath",
+          bio: '"After all, we are nothing more or less then we choose to reveal." - Sylvia Plath',
           instagram: "edith_hoeijaya",
           colorAccent: "bg-[#0A1926]"
         },
@@ -64,7 +64,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Rey Fernando Hamfry",
           role: "COO",
           image: "rey.jpeg",
-          bio: "\\\"At the beach in every life\\\"",
+          bio: '"At the beach in every life"',
           instagram: "reyfhamfry",
           colorAccent: "bg-[#0B1F26]"
         }
@@ -77,7 +77,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Nadine Leanna Vaehan",
           role: "Chief of Human Resources",
           image: "nadine.jpeg",
-          bio: "\\\"You're gonna find yourself somewhere, somehow\\\"",
+          bio: '"You\'re gonna find yourself somewhere, somehow"',
           instagram: "nleannav",
           colorAccent: "bg-[#626E73]"
         },
@@ -85,7 +85,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Ayaan",
           role: "Co-Chief of Human Resources",
           image: "Ayaan.png",
-          bio: "\\\"1000 may fall at your side 10,000 may fall near your right hand but it will not come near you.\\\" - Psalm 91:7",
+          bio: '"1000 may fall at your side 10,000 may fall near your right hand but it will not come near you." - Psalm 91:7',
           linkedin: "#",
           colorAccent: "bg-[#0A1926]"
         }
@@ -98,7 +98,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Angelina K Caumen",
           role: "Chief of Humanities Subjects",
           image: "angel.jpeg",
-          bio: "\\\"Just because my dreams are different than yours doesn't mean they are important.\\\" - Meg March from the Little Women.",
+          bio: '"Just because my dreams are different than yours doesn\'t mean they are important." - Meg March from the Little Women.',
           instagram: "croissaxx",
           colorAccent: "bg-[#0B1F26]"
         }
@@ -111,7 +111,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Musa Haroon Chaudhary",
           role: "Chief of Public Relations",
           image: "musa.jpeg",
-          bio: "\\\"Above all, do not lie to yourself. The man who lies to himself and listens to his own lie comes to a point that he cannot distinguish the truth within him, or around him, and so loses all respect for himself and for others.\\\" - Fyodor Dostoevsky",
+          bio: '"Above all, do not lie to yourself. The man who lies to himself and listens to his own lie comes to a point that he cannot distinguish the truth within him, or around him, and so loses all respect for himself and for others." - Fyodor Dostoevsky',
           linkedin: "https://www.linkedin.com/in/musa-haroon-21511-lpu",
           colorAccent: "bg-[#0A1926]"
         },
@@ -132,7 +132,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Marianne",
           role: "Co-Head of Social Media Department",
           image: "marianne.jpeg",
-          bio: "\\\"Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world.\\\" - Albert Einstein",
+          bio: '"Imagination is more important than knowledge. Knowledge is limited. Imagination encircles the world." - Albert Einstein',
           linkedin: "#",
           colorAccent: "bg-[#0B1F26]"
         },
@@ -168,6 +168,14 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           bio: "No need to chase the moon! We already hold the stars in our hands",
           instagram: "https://www.instagram.com/miche_llejhope8?igsh=MWVrcHA4bXMydG0=",
           colorAccent: "bg-[#626E73]" 
+        },
+        {
+          name: "Amr",
+          role: "Website Manager",
+          image: "amr.jpeg",
+          bio: "",
+          instagram: "",
+          colorAccent: "bg-[#626E73]" 
         }
       ]
     },
@@ -202,7 +210,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Lakshya Shree",
           role: "Humanities Mentor",
           image: "lakshya.jpeg",
-          bio: "\\\"you are full of life to be somebody's maybe\\\"",
+          bio: '"you are full of life to be somebody\'s maybe"',
           linkedin: "https://www.linkedin.com/in/lakshya-shree-3895a0342/",
           colorAccent: "bg-[#0A1926]"
         },
@@ -210,7 +218,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Akshiti Bhardwaj",
           role: "Humanities Subject Mentor (History and Political Theory)",
           image: "akshiti.jpeg",
-          bio: "\\\"If not us, then who, and if not now, then when\\\" — John F. Kennedy",
+          bio: '"If not us, then who, and if not now, then when" — John F. Kennedy',
           linkedin: "https://www.linkedin.com/in/akshiti-bhardwaj-b053703b6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           colorAccent: "bg-[#0A1926]"
         },
@@ -218,7 +226,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           name: "Ojas Dhaundiyal",
           role: "Humanities Mentor",
           image: "ojas.jpeg",
-          bio: "\\\"The Universe Conspires\\\"",
+          bio: '"The Universe Conspires"',
           linkedin: "https://www.linkedin.com/in/ojas-dhaundiyal-89158a375",
           colorAccent: "bg-[#626E73]"
         },
@@ -257,6 +265,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {
           name: "Azalia Ratu",
           role: "Biology Mentor",
+          image: "azalia.jpeg",
           bio: "",
           email: "azalia0302@mega.sch.id",
           colorAccent: "bg-[#0B1F26]"
@@ -264,6 +273,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {
           name: "Sharia Shifa",
           role: "Psychology Mentor",
+          image: "sharia.jpeg",
           bio: "",
           email: "shariashifa2489@gmail.com",
           colorAccent: "bg-[#0B1F26]"
