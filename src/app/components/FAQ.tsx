@@ -89,7 +89,7 @@ export function FAQ({ onBack }: FAQProps) {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
+    <div className="min-h-screen relative overflow-x-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB", fontFamily: "'Space Grotesk', sans-serif" }}>
       <div
         className="absolute inset-0 pointer-events-none opacity-20"
         style={{
@@ -111,14 +111,21 @@ export function FAQ({ onBack }: FAQProps) {
         <div className="relative flex justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto items-center min-[1440px]:grid min-[1440px]:grid-cols-[1fr_auto_1fr]">
           <button
             onClick={goToHome}
-            className="text-3xl tracking-tight md:justify-self-start md:-ml-1"
+            className="flex items-center gap-2 md:gap-2.5 md:justify-self-start md:-ml-1"
             aria-label="Go to homepage"
             style={{
               color: "#0a1b2b",
               fontFamily: "'Instrument Serif', serif",
             }}
           >
-            AnithUncommon
+            <img
+              src={`${import.meta.env.BASE_URL}au-logo.png`}
+              alt="AnithUncommon logo"
+              className="h-8 w-8 md:h-9 md:w-9 object-contain shrink-0"
+            />
+            <span className="text-[1.9rem] md:text-[2.1rem] leading-[1] tracking-tight translate-y-[1px] md:translate-y-[2px]">
+              AnithUncommon
+            </span>
           </button>
 
           <nav className="hidden min-[1440px]:flex items-center justify-self-center gap-6 text-sm tracking-wide font-medium">

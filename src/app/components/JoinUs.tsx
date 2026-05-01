@@ -66,7 +66,7 @@ export function JoinUs({ onBack }: JoinUsProps) {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
+    <div className="min-h-screen relative overflow-x-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
       <div
         className="absolute inset-0 pointer-events-none opacity-20"
         style={{
