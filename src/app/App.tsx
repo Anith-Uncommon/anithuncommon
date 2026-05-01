@@ -96,7 +96,7 @@ type Page =
 const LANDING_STATS = [
   {
     icon: Eye,
-    target: 90,
+    target: 100,
     suffix: "K+",
     label: "Impressions",
     bgColor: "#cedae3",
@@ -133,8 +133,10 @@ const LANDING_STATS = [
 ] as const;
 
 export default function App() {
+  const SCROLL_POSITION_KEY = "scroll-position";
   const navigate = useNavigate();
   const location = useLocation();
+  const skipInitialScrollResetRef = useRef(false);
   const [currentPage, setCurrentPage] = useState<Page>("home");
   const [selectedSubject, setSelectedSubject] =
     useState<Subject | null>(null);
@@ -150,6 +152,73 @@ export default function App() {
   const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
+    let rafId: number | undefined;
+
+    try {
+      const navEntry = performance.getEntriesByType("navigation")[0] as
+        | PerformanceNavigationTiming
+        | undefined;
+
+      if (navEntry?.type !== "reload") {
+        return;
+      }
+
+      const rawScrollPosition = sessionStorage.getItem(
+        SCROLL_POSITION_KEY,
+      );
+
+      if (!rawScrollPosition) {
+        return;
+      }
+
+      const savedScrollPosition = Number(rawScrollPosition);
+      if (!Number.isFinite(savedScrollPosition) || savedScrollPosition < 0) {
+        return;
+      }
+
+      skipInitialScrollResetRef.current = true;
+      rafId = requestAnimationFrame(() => {
+        window.scrollTo(0, savedScrollPosition);
+      });
+    } catch {
+      // Ignore storage/performance access issues and keep default behavior.
+    }
+
+    return () => {
+      if (rafId !== undefined) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  }, [SCROLL_POSITION_KEY]);
+
+  useEffect(() => {
+    const persistScrollPosition = () => {
+      try {
+        sessionStorage.setItem(
+          SCROLL_POSITION_KEY,
+          String(window.scrollY),
+        );
+      } catch {
+        // Ignore storage write failures.
+      }
+    };
+
+    persistScrollPosition();
+    window.addEventListener("scroll", persistScrollPosition, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", persistScrollPosition);
+    };
+  }, [SCROLL_POSITION_KEY]);
+
+  useEffect(() => {
+    if (skipInitialScrollResetRef.current) {
+      skipInitialScrollResetRef.current = false;
+      return;
+    }
+
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
@@ -778,7 +847,7 @@ export default function App() {
     setSelectedTopic(null);
     setSelectedMentor(null);
     setMobileMenuOpen(false);
-    navigate("/");
+    goToHomeSection("hero");
   };
 
   const handleGoToTeam = () => {
@@ -935,7 +1004,7 @@ export default function App() {
     location.pathname.startsWith("/subject/")
   ) {
     return (
-      <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
+      <div className="min-h-screen relative overflow-x-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
           style={{
@@ -1116,7 +1185,7 @@ export default function App() {
     };
 
     return (
-      <div className="min-h-screen relative overflow-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
+      <div className="min-h-screen relative overflow-x-hidden text-[#0a1b2b]" style={{ backgroundColor: "#FFF9FB" }}>
         <div
           className="absolute inset-0 pointer-events-none opacity-20"
           style={{
@@ -1549,7 +1618,8 @@ export default function App() {
   return (
     <div className="min-h-screen text-[#0a1b2b] transition-colors duration-[1200ms]" style={homeTheme}>
       <section
-        className="relative min-h-screen overflow-hidden"
+        id="hero"
+        className="relative min-h-screen overflow-x-hidden"
         onMouseMove={handleHeroMouseMove}
         onMouseLeave={() =>
           setHeroPointer((prev) => ({
