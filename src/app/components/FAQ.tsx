@@ -227,7 +227,7 @@ export function FAQ({ onBack }: FAQProps) {
         </div>
 
         <div className="max-w-3xl mx-auto mb-12">
-          <Card className="p-8 border-2 border-[#0a1b2b] rounded-[26px] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.65)]">
+          <Card className="p-8 border-2 border-[#0a1b2b] rounded-[26px] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.65)]">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
                 <AccordionItem key={index} value={`faq-${index}`}>
@@ -245,7 +245,7 @@ export function FAQ({ onBack }: FAQProps) {
 
         {/* Contact Section */}
         <div className="max-w-3xl mx-auto">
-          <Card className="p-8 text-center bg-[#f7f4eb] border-2 border-[#0a1b2b] rounded-[26px] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.55)]">
+          <Card className="p-8 text-center bg-[#fff9fb] border-2 border-[#0a1b2b] rounded-[26px] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.55)]">
             <h2 className="text-2xl font-editorial-serif font-semibold mb-4 text-[#0a1b2b]">
               Still have questions?
             </h2>

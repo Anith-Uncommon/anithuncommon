@@ -222,7 +222,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
               )}
             </div>
 
-            <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
+            <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
               <div className="flex items-center gap-2 mb-4">
                 <BookOpen className="w-5 h-5" style={{ color: "#0a1b2b" }} />
                 <h2 className="text-2xl font-editorial-serif font-semibold" style={{ color: "#0a1b2b" }}>
@@ -243,7 +243,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
             </Card>
 
             {mentor.bio && (
-              <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
+              <Card className="p-7 mb-6 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
                 <h2 className="text-2xl font-editorial-serif font-semibold mb-3" style={{ color: "#0a1b2b" }}>
                   About
                 </h2>
@@ -253,7 +253,7 @@ export function MentorProfile({ mentor, onBack }: MentorProfileProps) {
               </Card>
             )}
 
-            <Card className="p-7 rounded-[26px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
+            <Card className="p-7 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)]">
               <div className="flex items-center gap-2 mb-4">
                 <FileText className="w-5 h-5" style={{ color: "#0a1b2b" }} />
                 <h2 className="text-2xl font-editorial-serif font-semibold" style={{ color: "#0a1b2b" }}>

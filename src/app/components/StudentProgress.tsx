@@ -212,7 +212,7 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
             </div>
           ) : (
             // Empty State for Photos
-            <Card className="p-12 text-center border-2 border-dashed border-[#0a1b2b] rounded-[26px] bg-[#f7f4eb]">
+            <Card className="p-12 text-center border-2 border-dashed border-[#0a1b2b] rounded-[26px] bg-[#fff9fb]">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#F9F9F7] mb-6">
                 <Camera className="w-10 h-10 text-[#0a1b2b]" />
               </div>
@@ -278,7 +278,7 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
           </div>
 
           {/* Tab Content - Empty State with Stats */}
-          <Card className="p-12 text-center border-2 border-dashed border-[#0a1b2b] rounded-[26px] bg-[#f7f4eb]">
+          <Card className="p-12 text-center border-2 border-dashed border-[#0a1b2b] rounded-[26px] bg-[#fff9fb]">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#F9F9F7] mb-6">
               <FileText className="w-10 h-10 text-[#0a1b2b]" />
             </div>

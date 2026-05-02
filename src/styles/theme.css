@@ -203,35 +203,33 @@
     will-change: transform;
   }
 
+  .animate-marquee-scroll {
+    width: max-content;
+    animation: testimonial-scroll 30s linear infinite;
+    will-change: transform;
+  }
+
   .hero-dots-base {
-    background-image: radial-gradient(
-      circle,
-      rgba(10, 27, 43, 0.14) 1px,
-      transparent 1.6px
-    );
+    background-image: radial-gradient(circle,
+        rgba(10, 27, 43, 0.14) 1px,
+        transparent 1.6px);
     background-size: 22px 22px;
   }
 
   .hero-dots-reveal {
     opacity: 0;
-    background-image: radial-gradient(
-      circle,
-      rgba(10, 27, 43, 0.84) 1px,
-      transparent 1.6px
-    );
+    background-image: radial-gradient(circle,
+        rgba(10, 27, 43, 0.84) 1px,
+        transparent 1.6px);
     background-size: 22px 22px;
-    mask-image: radial-gradient(
-      180px circle at var(--mouse-x) var(--mouse-y),
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.78) 45%,
-      transparent 100%
-    );
-    -webkit-mask-image: radial-gradient(
-      180px circle at var(--mouse-x) var(--mouse-y),
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.78) 45%,
-      transparent 100%
-    );
+    mask-image: radial-gradient(180px circle at var(--mouse-x) var(--mouse-y),
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.78) 45%,
+        transparent 100%);
+    -webkit-mask-image: radial-gradient(180px circle at var(--mouse-x) var(--mouse-y),
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 0.78) 45%,
+        transparent 100%);
     transition: opacity 160ms ease;
   }
 
@@ -241,14 +239,12 @@
 
   .hero-prism-text {
     color: transparent;
-    background-image: linear-gradient(
-      110deg,
-      #0a1b2b 5%,
-      #0a1b2b 30%,
-      #94b1c8 52%,
-      #0a1b2b 74%,
-      #0a1b2b 96%
-    );
+    background-image: linear-gradient(110deg,
+        #0a1b2b 5%,
+        #0a1b2b 30%,
+        #94b1c8 52%,
+        #0a1b2b 74%,
+        #0a1b2b 96%);
     background-size: 260% 260%;
     background-clip: text;
     -webkit-background-clip: text;
@@ -289,7 +285,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .animate-testimonial-scroll {
+
+    .animate-testimonial-scroll,
+    .animate-marquee-scroll {
       animation: none;
     }
   }

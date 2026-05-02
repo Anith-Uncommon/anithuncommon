@@ -1,5 +1,5 @@
 import { Card } from "@/app/components/ui/card";
-import { Mail, Linkedin, Instagram } from "lucide-react";
+import { Mail, Linkedin, Instagram, Twitter } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 
 interface TeamMemberProps {
@@ -10,11 +10,12 @@ interface TeamMemberProps {
   country?: string;
   linkedin?: string;
   instagram?: string;
+  twitter?: string;
   email?: string;
   colorAccent: string;
 }
 
-export function TeamMember({ name, role, image, bio, country, linkedin, instagram, email, colorAccent: _colorAccent }: TeamMemberProps) {
+export function TeamMember({ name, role, image, bio, country, linkedin, instagram, twitter, email, colorAccent: _colorAccent }: TeamMemberProps) {
   const resolveImagePath = (imagePath: string): string => {
     if (/^https?:\/\//i.test(imagePath)) {
       return imagePath;
@@ -32,7 +33,7 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
 
   return (
     <div className="group h-full">
-      <Card className="relative h-full overflow-hidden rounded-[24px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] transition-all duration-500 hover:-translate-y-1">
+      <Card className="relative h-full overflow-hidden rounded-[24px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] transition-all duration-500 hover:-translate-y-1">
         <div className="p-6 h-full flex flex-col">
           {image && (
             <div className="mb-5">
@@ -87,6 +88,17 @@ export function TeamMember({ name, role, image, bio, country, linkedin, instagra
                   style={{ backgroundColor: "#FFF9FB", border: "2px solid #0a1b2b" }}
                 >
                   <Instagram className="w-4 h-4" style={{ color: "#0a1b2b" }} />
+                </a>
+              )}
+              {twitter && (
+                <a 
+                  href={twitter.startsWith('http') ? twitter : `https://twitter.com/${twitter.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
+                  style={{ backgroundColor: "#FFF9FB", border: "2px solid #0a1b2b" }}
+                >
+                  <Twitter className="w-4 h-4" style={{ color: "#0a1b2b" }} />
                 </a>
               )}
               {email && (

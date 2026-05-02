@@ -167,15 +167,15 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           image: "joanna.jpeg",
           bio: "No need to chase the moon! We already hold the stars in our hands",
           instagram: "https://www.instagram.com/miche_llejhope8?igsh=MWVrcHA4bXMydG0=",
-          colorAccent: "bg-[#626E73]" 
+          colorAccent: "bg-[#626E73]"
         },
         {
           name: "Amr",
           role: "Website Manager",
           image: "amr.jpeg",
-          bio: "",
-          instagram: "",
-          colorAccent: "bg-[#626E73]" 
+          bio: "The best way to predict the future is to create it",
+          twitter: "amrxshk",
+          colorAccent: "bg-[#626E73]"
         }
       ]
     },
@@ -440,10 +440,10 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
               <h2 className="text-3xl font-editorial-serif font-semibold text-[#0a1b2b]">{dept.title}</h2>
               <div className="grow h-px bg-[#94B1C8]" />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {dept.members.map((member, mIdx) => (
-                <TeamMember 
+                <TeamMember
                   key={mIdx}
                   {...member}
                 />
@@ -457,17 +457,17 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           {/* Decorative shapes */}
           <div className="absolute top-0 left-0 w-40 h-40 bg-[#D9D7CC] opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2" />
           <div className="absolute bottom-0 right-0 w-56 h-56 bg-[#626E73] opacity-10 rounded-full translate-x-1/3 translate-y-1/3" />
-          
+
           <div className="relative z-10">
             <h2 className="text-3xl md:text-4xl font-editorial-serif font-semibold mb-4 text-[#cedae3]">
               Want to Join Our Team?
             </h2>
             <p className="text-lg mb-8 max-w-2xl mx-auto text-[#cedae3]">
-              We're always looking for passionate students who want to make a difference. 
+              We're always looking for passionate students who want to make a difference.
               If you share our vision, we'd love to hear from you.
             </p>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="text-lg bg-[#FFF9FB] text-[#0a1b2b] hover:bg-white transition-colors border-2 border-[#94B1C8]"
               onClick={() => window.location.href = 'mailto:anithuncommon@gmail.com'}
             >
@@ -479,7 +479,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
         {/* Application Forms Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Member Application */}
-          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(10, 27, 43, 0.6)]">
+          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(10, 27, 43, 0.6)]">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[#0A1926]">
@@ -491,7 +491,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
               <p className="mb-6 leading-relaxed text-[#626E73]">
                 Join our community of student educators and help make education accessible to everyone.
               </p>
-              <Button 
+              <Button
                 className="w-full bg-[#0a1b2b] text-[#cedae3] hover:bg-[#14314a] border-2 border-[#0a1b2b]"
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdR1Hxmx7tRA4PcqC0q6HKLW8yjMR6AIEwXHrogZCkwGgy1Hg/viewform?pli=1', '_blank')}
               >
@@ -502,7 +502,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           </div>
 
           {/* Speaker/Volunteer Application */}
-          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(10, 27, 43, 0.6)]">
+          <div className="relative overflow-hidden rounded-[26px] p-8 border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.6)] transition-all hover:shadow-[9px_9px_0px_rgba(10, 27, 43, 0.6)]">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#626E73] opacity-5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[#626E73]">
@@ -514,7 +514,7 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
               <p className="mb-6 leading-relaxed text-[#626E73]">
                 Share your expertise as a speaker or support our initiatives as a volunteer.
               </p>
-              <Button 
+              <Button
                 className="w-full bg-[#94B1C8] text-[#0a1b2b] hover:bg-[#7ea3bf] border-2 border-[#0a1b2b]"
                 onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSehxqBfkhZjxUkXtYzg4JRYpWJguRFgEjdeP3UeV9PTCgJr-Q/viewform', '_blank')}
               >
@@ -585,8 +585,8 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
                   color: "#cedae3",
                 }}
                 onClick={() =>
-                  (window.location.href =
-                    "mailto:anithuncommon@gmail.com")
+                (window.location.href =
+                  "mailto:anithuncommon@gmail.com")
                 }
               >
                 Contact

@@ -44,7 +44,7 @@ export function TopicDetail({ subject, topic, onBack }: TopicDetailProps) {
         Volver a {subject}
       </Button>
 
-      <Card className="p-8 mb-6">
+      <Card className="p-8 mb-6 bg-[#fff9fb]">
         <div className="flex items-start justify-between mb-4">
           <div>
             <h1 className="text-3xl font-bold mb-2">{topic.title}</h1>
@@ -81,7 +81,7 @@ export function TopicDetail({ subject, topic, onBack }: TopicDetailProps) {
         </div>
       </Card>
 
-      <Card className="p-6">
+      <Card className="p-6 bg-[#fff9fb]">
         <div className="flex items-center gap-2 mb-4">
           <FileText className="w-5 h-5" />
           <h2 className="text-xl font-semibold">Recursos adicionales</h2>

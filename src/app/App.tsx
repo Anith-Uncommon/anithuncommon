@@ -938,16 +938,16 @@ export default function App() {
     : null;
   const activeSubject = routeSubjectId
     ? subjects.find((subject) => subject.id === routeSubjectId) ??
-      selectedSubject
+    selectedSubject
     : null;
 
   const subjectResources = activeSubject
     ? getMentorsBySubject(activeSubject.title).flatMap((mentor) =>
-        mentor.resources.map((resource) => ({
-          ...resource,
-          mentorName: mentor.name,
-        })),
-      )
+      mentor.resources.map((resource) => ({
+        ...resource,
+        mentorName: mentor.name,
+      })),
+    )
     : [];
 
   const resolvePublicAssetPath = (assetPath: string): string => {
@@ -1146,28 +1146,28 @@ export default function App() {
         topics:
           activeSubject.chapters && activeSubject.chapters.length > 0
             ? activeSubject.chapters.map((chapter) => ({
-                id: chapter.id,
-                title: chapter.title,
-                chapters:
-                  chapter.subchapters.length > 0
-                    ? chapter.subchapters.map(
-                        (subchapter, index) =>
-                          subchapter.locked
-                            ? `${chapter.chapterNumber}.${index + 1} ${subchapter.title} (Locked - Log in to gain access)`
-                            : `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
-                      )
-                    : [
-                        `${chapter.chapterNumber}.1 ${chapter.title} Overview`,
-                      ],
-              }))
+              id: chapter.id,
+              title: chapter.title,
+              chapters:
+                chapter.subchapters.length > 0
+                  ? chapter.subchapters.map(
+                    (subchapter, index) =>
+                      subchapter.locked
+                        ? `${chapter.chapterNumber}.${index + 1} ${subchapter.title} (Locked - Log in to gain access)`
+                        : `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
+                  )
+                  : [
+                    `${chapter.chapterNumber}.1 ${chapter.title} Overview`,
+                  ],
+            }))
             : activeSubject.topics.map((topic, index) => ({
-                id: `topic-${index + 1}`,
-                title: topic,
-                chapters: [
-                  `${index + 1}.1 Introduction to ${topic}`,
-                  `${index + 1}.2 Core Concepts in ${topic}`,
-                ],
-              })),
+              id: `topic-${index + 1}`,
+              title: topic,
+              chapters: [
+                `${index + 1}.1 Introduction to ${topic}`,
+                `${index + 1}.2 Core Concepts in ${topic}`,
+              ],
+            })),
       },
     ];
 
@@ -1328,7 +1328,7 @@ export default function App() {
                 return (
                   <Card
                     key={topic.id}
-                    className="rounded-[24px] border-2 border-[#0a1b2b] bg-[#f7f4eb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] overflow-hidden h-fit"
+                    className="rounded-[24px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] overflow-hidden h-fit"
                   >
                     <button
                       type="button"
@@ -1356,11 +1356,10 @@ export default function App() {
                     </button>
 
                     <div
-                      className={`grid transition-all duration-300 ease-in-out ${
-                        isOpen
+                      className={`grid transition-all duration-300 ease-in-out ${isOpen
                           ? "grid-rows-[1fr] opacity-100"
                           : "grid-rows-[0fr] opacity-0"
-                      }`}
+                        }`}
                     >
                       <div className="overflow-hidden">
                         <div className="px-5 sm:px-6 pb-5 pl-9 sm:pl-11 space-y-2 border-t border-[#d5cebd]">
@@ -1382,32 +1381,32 @@ export default function App() {
                               const isAvailable = chapterHref !== "#";
 
                               return (
-                            <a
-                              key={`${topic.id}-${index}`}
-                              href={chapterHref}
-                              onClick={(e) => {
-                                if (chapterHref === "#") {
-                                  e.preventDefault();
-                                }
-                              }}
-                              target={
-                                chapterHref === "#" ? undefined : "_blank"
-                              }
-                              rel={
-                                chapterHref === "#"
-                                  ? undefined
-                                  : "noopener noreferrer"
-                              }
-                              className="flex items-center justify-between text-sm sm:text-[0.95rem] py-1.5 transition-colors hover:text-[#0a1b2b]"
-                              style={{
-                                color: isAvailable ? "#0a1b2b" : "#626E73",
-                              }}
-                            >
-                              <span>{chapter}</span>
-                              {isAvailable && (
-                                <ExternalLink className="w-3.5 h-3.5 shrink-0" />
-                              )}
-                            </a>
+                                <a
+                                  key={`${topic.id}-${index}`}
+                                  href={chapterHref}
+                                  onClick={(e) => {
+                                    if (chapterHref === "#") {
+                                      e.preventDefault();
+                                    }
+                                  }}
+                                  target={
+                                    chapterHref === "#" ? undefined : "_blank"
+                                  }
+                                  rel={
+                                    chapterHref === "#"
+                                      ? undefined
+                                      : "noopener noreferrer"
+                                  }
+                                  className="flex items-center justify-between text-sm sm:text-[0.95rem] py-1.5 transition-colors hover:text-[#0a1b2b]"
+                                  style={{
+                                    color: isAvailable ? "#0a1b2b" : "#626E73",
+                                  }}
+                                >
+                                  <span>{chapter}</span>
+                                  {isAvailable && (
+                                    <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                                  )}
+                                </a>
                               );
                             })()
                           ))}
@@ -1890,11 +1889,10 @@ export default function App() {
         {/* Marquee Banner */}
         <section className="-mt-8 border-y-2 border-[#0a1b2b] bg-[#94B1C8] overflow-hidden relative z-10">
           <div
-            className="py-3 text-sm font-semibold tracking-[0.12em] whitespace-nowrap animate-testimonial-scroll"
+            className="py-3 text-sm font-semibold tracking-[0.12em] whitespace-nowrap animate-marquee-scroll"
             style={{ color: "#0a1b2b" }}
           >
-            STUDENT-LED • GLOBAL • NON-PROFIT • STUDENT-LED • GLOBAL •
-            NON-PROFIT • STUDENT-LED • GLOBAL • NON-PROFIT
+            STUDENT-LED INITIATIVE &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ACCESSIBLE EDUCATION &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; GLOBAL COMMUNITY &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; STUDENT-LED INITIATIVE &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ACCESSIBLE EDUCATION &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; GLOBAL COMMUNITY &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; STUDENT-LED INITIATIVE &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ACCESSIBLE EDUCATION &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; GLOBAL COMMUNITY &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; STUDENT-LED INITIATIVE &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ACCESSIBLE EDUCATION &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; GLOBAL COMMUNITY
           </div>
         </section>
       </section>
@@ -1942,9 +1940,8 @@ export default function App() {
               return (
                 <Card
                   key={stat.label}
-                  className={`group p-6 border-2 border-[#0a1b2b] rounded-[24px] shadow-[7px_7px_0px_rgba(10, 27, 43, 0.72)] transition-all duration-500 hover:shadow-[10px_10px_0px_rgba(10, 27, 43, 0.85)] ${
-                    index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"
-                  }`}
+                  className={`group p-6 border-2 border-[#0a1b2b] rounded-[24px] shadow-[7px_7px_0px_rgba(10, 27, 43, 0.72)] transition-all duration-500 hover:shadow-[10px_10px_0px_rgba(10, 27, 43, 0.85)] ${index % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1"
+                    }`}
                   style={{ backgroundColor: stat.bgColor }}
                 >
                   <div className="flex items-start gap-3 mb-5">
@@ -2128,9 +2125,8 @@ export default function App() {
               >
                 <div className="absolute inset-0 z-10">
                   <svg
-                    viewBox={`-10 -10 ${
-                      orbitalLayout.radius * 2 + orbitalLayout.nodeSize + 20
-                    } ${orbitalLayout.radius * 2 + orbitalLayout.nodeSize + 20}`}
+                    viewBox={`-10 -10 ${orbitalLayout.radius * 2 + orbitalLayout.nodeSize + 20
+                      } ${orbitalLayout.radius * 2 + orbitalLayout.nodeSize + 20}`}
                     className="absolute inset-0 w-full h-full"
                     style={{ overflow: "visible" }}
                   >
@@ -2194,8 +2190,8 @@ export default function App() {
                                     orbitalLayout.nodeSize >= 120
                                       ? "11px"
                                       : orbitalLayout.nodeSize >= 100
-                                      ? "10px"
-                                      : "9px",
+                                        ? "10px"
+                                        : "9px",
                                   fontWeight: 600,
                                   letterSpacing: "0.06em",
                                   textTransform: "uppercase",
@@ -2218,8 +2214,8 @@ export default function App() {
                                     orbitalLayout.nodeSize >= 120
                                       ? "9px"
                                       : orbitalLayout.nodeSize >= 100
-                                      ? "8px"
-                                      : "7.5px",
+                                        ? "8px"
+                                        : "7.5px",
                                   lineHeight: "1.2",
                                 }}
                               >
@@ -2721,8 +2717,8 @@ export default function App() {
                       color: "#0a1b2b",
                     }}
                     onClick={() =>
-                      (window.location.href =
-                        "mailto:anithuncommon@gmail.com")
+                    (window.location.href =
+                      "mailto:anithuncommon@gmail.com")
                     }
                   >
                     <Mail className="w-4 h-4 mr-2" />
@@ -3009,8 +3005,8 @@ export default function App() {
                   color: "#cedae3",
                 }}
                 onClick={() =>
-                  (window.location.href =
-                    "mailto:anithuncommon@gmail.com")
+                (window.location.href =
+                  "mailto:anithuncommon@gmail.com")
                 }
               >
                 Contact
