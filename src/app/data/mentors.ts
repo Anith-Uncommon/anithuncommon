@@ -20,15 +20,7 @@ export interface MentorData {
 }
 
 export const mentorsData: MentorData[] = [
-  {
-    id: "martina-marques",
-    name: "Martina Marqués",
-    email: "martinavmz25@gmail.com",
-    role: "Humanities Mentor and Public Relation Operator",
-    subjects: ["Philosophy", "Economics", "Political Theory"],
-    bio: "Passionate about humanities and helping students explore philosophical and economic concepts.",
-    resources: []
-  },
+
   {
     id: "ishraq",
     name: "Ishraq",

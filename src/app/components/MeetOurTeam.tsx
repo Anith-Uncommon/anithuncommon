@@ -114,14 +114,6 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           bio: '"Above all, do not lie to yourself. The man who lies to himself and listens to his own lie comes to a point that he cannot distinguish the truth within him, or around him, and so loses all respect for himself and for others." - Fyodor Dostoevsky',
           linkedin: "https://www.linkedin.com/in/musa-haroon-21511-lpu",
           colorAccent: "bg-[#0A1926]"
-        },
-        {
-          name: "Martina Marqués",
-          role: "Public Relations & Humanities Mentor",
-          image: "martu.jpeg",
-          bio: "Estudiante de Ciencias Politicas y Analisis de Datos",
-          linkedin: "https://www.linkedin.com/in/martina-marques-61b226352",
-          colorAccent: "bg-[#0B1F26]"
         }
       ]
     },
