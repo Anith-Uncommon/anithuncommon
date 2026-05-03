@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  // GitHub Pages project site base path
-  base: '/anithuncommon/',
+  // GitHub Pages project site base path (only for production builds)
+  base: process.env.NODE_ENV === 'production' ? '/anithuncommon/' : '/',
   plugins: [
     react(),
     tailwindcss(),
