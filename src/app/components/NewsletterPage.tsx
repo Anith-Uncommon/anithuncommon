@@ -20,6 +20,7 @@ const archives = [
 export function NewsletterPage({ onBack }: NewsletterPageProps) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const newsletterPdfUrl = `${import.meta.env.BASE_URL}resources/newsletter/may-2026-edition.pdf`;
 
   const goToHome = () => {
     setMobileMenuOpen(false);
@@ -331,7 +332,7 @@ export function NewsletterPage({ onBack }: NewsletterPageProps) {
               <Card
                 key={archive.title}
                 className="p-6 rounded-[24px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.65)] transition-all duration-500 hover:shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)]"
-                onClick={() => window.open('/resources/newsletter/may-2026-edition.pdf', '_blank')}
+                onClick={() => window.open(newsletterPdfUrl, '_blank')}
                 style={{ cursor: "pointer" }}
               >
                 <div className="flex items-start justify-between gap-4 mb-6">
