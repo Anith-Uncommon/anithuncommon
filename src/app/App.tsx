@@ -13,6 +13,7 @@ import { JoinUs } from "@/app/components/JoinUs";
 import { MentorProfile } from "@/app/components/MentorProfile";
 import { LoginModal } from "@/app/components/LoginModal";
 import { FAQ } from "@/app/components/FAQ";
+import { NewsletterPage } from "./components/NewsletterPage";
 import { StudentProgress } from "@/app/components/StudentProgress";
 import { Card } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
@@ -859,6 +860,11 @@ export default function App() {
     setMobileMenuOpen(false);
   };
 
+  const handleGoToNewsletter = () => {
+    navigate("/newsletter");
+    setMobileMenuOpen(false);
+  };
+
   const handleGoToProgress = () => {
     navigate("/progress");
     setMobileMenuOpen(false);
@@ -980,6 +986,10 @@ export default function App() {
 
   if (location.pathname === "/faq") {
     return <FAQ onBack={handleBackToHome} />;
+  }
+
+  if (location.pathname === "/newsletter") {
+    return <NewsletterPage onBack={handleBackToHome} />;
   }
 
   if (location.pathname === "/progress") {
@@ -1693,28 +1703,14 @@ export default function App() {
             </nav>
 
             <div className="hidden min-[1440px]:flex items-center justify-self-end gap-3 md:mr-1">
-              {isLoggedIn ? (
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    setIsLoggedIn(false);
-                    localStorage.removeItem("anithuncommon_user");
-                  }}
-                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#0a1b2b] shadow-none"
-                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
-                >
-                  Sign Out
-                </Button>
-              ) : (
-                <Button
-                  size="sm"
-                  onClick={() => setShowLoginModal(true)}
-                  className="rounded-full px-6 py-2.5 text-sm border-2 border-[#0a1b2b] shadow-none"
-                  style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
-                >
-                  Sign In
-                </Button>
-              )}
+              <Button
+                size="sm"
+                onClick={handleGoToNewsletter}
+                className="rounded-full px-6 py-2.5 text-sm border-2 border-[#0a1b2b] shadow-none"
+                style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
+              >
+                Newsletter
+              </Button>
 
               <Button
                 size="sm"
@@ -1801,32 +1797,14 @@ export default function App() {
                 </div>
 
                 <div className="space-y-3 pt-6">
-                  {isLoggedIn ? (
-                    <Button
-                      size="sm"
-                      onClick={() => {
-                        setIsLoggedIn(false);
-                        localStorage.removeItem("anithuncommon_user");
-                        setMobileMenuOpen(false);
-                      }}
-                      className="w-full rounded-full border-2 border-[#0a1b2b] shadow-none"
-                      style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
-                    >
-                      Sign Out
-                    </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      onClick={() => {
-                        setShowLoginModal(true);
-                        setMobileMenuOpen(false);
-                      }}
-                      className="w-full rounded-full border-2 border-[#0a1b2b] shadow-none"
-                      style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
-                    >
-                      Sign In
-                    </Button>
-                  )}
+                  <Button
+                    size="sm"
+                    onClick={handleGoToNewsletter}
+                    className="w-full rounded-full border-2 border-[#0a1b2b] shadow-none"
+                    style={{ backgroundColor: "#FFF9FB", color: "#0a1b2b" }}
+                  >
+                    Newsletter
+                  </Button>
 
                   <Button
                     size="sm"
@@ -2560,6 +2538,115 @@ export default function App() {
                   hours, and strengthen your academic and
                   personal profile.
                 </p>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter CTA Section */}
+      <section
+        id="newsletter"
+        className="py-20 relative overflow-hidden transition-colors duration-[1200ms] border-b-2 border-[#0a1b2b]"
+        style={{ backgroundColor: "#FFF9FB" }}
+      >
+        <div className="absolute top-0 left-0 w-44 h-44 bg-[#94B1C8] opacity-15 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-56 h-56 bg-[#0a1b2b] opacity-5 rounded-full blur-3xl" />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2
+                className="text-5xl md:text-6xl font-editorial-serif font-semibold mb-4"
+                style={{ color: "#0a1b2b" }}
+              >
+                Subscribe to our monthly newsletter
+              </h2>
+              <p
+                className="text-lg max-w-3xl mx-auto"
+                style={{ color: "#0a1b2b" }}
+              >
+                Get monthly release notes, community highlights, and stories delivered to your inbox.
+              </p>
+            </div>
+
+            <Card className="p-8 md:p-12 rounded-[30px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)] relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#0A1926] opacity-5 rounded-full" />
+              <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center relative z-10">
+                <div className="space-y-4">
+                  <h3
+                    className="text-3xl font-editorial-serif font-semibold"
+                    style={{ color: "#0a1b2b" }}
+                  >
+                    Sign up for monthly releases
+                  </h3>
+                  <p className="leading-relaxed" style={{ color: "#0a1b2b" }}>
+                    We’ll send a concise newsletter with monthly releases,
+                    community notes, and the latest updates from AnithUncommon.
+                  </p>
+                  <ul className="space-y-2 text-sm md:text-base" style={{ color: "#626E73" }}>
+                    <li>• Monthly release roundup</li>
+                    <li>• Community highlights and announcements</li>
+                    <li>• Direct access to past editions</li>
+                  </ul>
+                </div>
+
+                <form
+                  className="space-y-4"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.currentTarget);
+                    const email = formData.get("newsletterEmail");
+                    const mailtoLink = `mailto:anithuncommon@gmail.com?subject=Newsletter Signup&body=${encodeURIComponent(`Email: ${email}`)}`;
+                    window.location.href = mailtoLink;
+                  }}
+                >
+                  <div>
+                    <label
+                      htmlFor="newsletterEmail"
+                      className="block text-sm font-medium mb-2"
+                      style={{ color: "#0A1926" }}
+                    >
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="newsletterEmail"
+                      name="newsletterEmail"
+                      required
+                      className="w-full px-4 py-3 rounded-2xl border-2 border-[#0a1b2b] focus:outline-none transition-colors"
+                      style={{ backgroundColor: "#FFF9FB" }}
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full text-lg rounded-full border-2 border-[#0a1b2b]"
+                    style={{
+                      backgroundColor: "#0a1b2b",
+                      color: "#cedae3",
+                    }}
+                  >
+                    <Mail className="w-5 h-5 mr-2" />
+                    Subscribe
+                  </Button>
+                </form>
+              </div>
+
+              <div
+                className="mt-8 pt-8 border-t"
+                style={{ borderColor: "#D9D7CC" }}
+              >
+                <button
+                  type="button"
+                  onClick={handleGoToNewsletter}
+                  className="text-sm font-semibold tracking-wide transition-colors cursor-pointer"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  View past editions →
+                </button>
               </div>
             </Card>
           </div>
