@@ -10,17 +10,16 @@ interface NewsletterPageProps {
 
 const archives = [
   {
-    title: "May 2026 Edition",
+    title: "Coming Soon",
     summary:
-      "First monthly issue highlighting academic tips, lifestyle hacks, and our team's journey.",
-    status: "Latest",
+      "The May 2026 issue will be published soon with academic tips, lifestyle hacks, and team updates.",
+    status: "Upcoming",
   },
 ] as const;
 
 export function NewsletterPage({ onBack }: NewsletterPageProps) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const newsletterPdfUrl = `${import.meta.env.BASE_URL}resources/newsletter/may-2026-edition.pdf`;
 
   const goToHome = () => {
     setMobileMenuOpen(false);
@@ -332,14 +331,12 @@ export function NewsletterPage({ onBack }: NewsletterPageProps) {
               <Card
                 key={archive.title}
                 className="p-6 rounded-[24px] border-2 border-[#0a1b2b] bg-[#FFF9FB] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.65)] transition-all duration-500 hover:shadow-[10px_10px_0px_rgba(10, 27, 43, 0.78)]"
-                onClick={() => window.open(newsletterPdfUrl, '_blank')}
-                style={{ cursor: "pointer" }}
               >
                 <div className="flex items-start justify-between gap-4 mb-6">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center border-2 border-[#0a1b2b]" style={{ backgroundColor: "#94B1C8" }}>
                     <FileText className="w-5 h-5" style={{ color: "#0a1b2b" }} />
                   </div>
-                  <span className="text-[0.7rem] tracking-[0.18em] font-semibold uppercase px-3 py-1 rounded-full border-2 border-[#0a1b2b]" style={{ backgroundColor: archive.status === "Latest" ? "#0a1b2b" : "#FFF9FB", color: archive.status === "Latest" ? "#cedae3" : "#0a1b2b" }}>
+                  <span className="text-[0.7rem] tracking-[0.18em] font-semibold uppercase px-3 py-1 rounded-full border-2 border-[#0a1b2b]" style={{ backgroundColor: archive.status === "Upcoming" ? "#0a1b2b" : "#FFF9FB", color: archive.status === "Upcoming" ? "#cedae3" : "#0a1b2b" }}>
                     {archive.status}
                   </span>
                 </div>
