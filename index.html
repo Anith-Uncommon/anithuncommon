@@ -8,22 +8,31 @@
       <title>Anith Uncommon</title>
       <script>
         // Restores routes redirected by GitHub Pages 404 fallback.
+        // Handles both: `/?/some/path` and `?some/path` encodings.
         (function (location) {
-          if (location.search[1] === "/") {
-            const decoded = location.search
-              .slice(1)
-              .split("&")
-              .map(function (segment) {
-                return segment.replace(/~and~/g, "&");
-              })
-              .join("?");
+          if (!location.search) return;
 
-            window.history.replaceState(
-              null,
-              "",
-              location.pathname.slice(0, -1) + decoded + location.hash,
-            );
+          // raw after the leading '?'
+          var raw = location.search.slice(1);
+          if (!raw) return;
+
+          // decode segments where GH Pages may use ~and~ to represent '&'
+          var decoded = raw
+            .split("&")
+            .map(function (segment) {
+              return segment.replace(/~and~/g, "&");
+            })
+            .join("?");
+
+          // If decoded already starts with '/', it's an absolute path fragment
+          // Otherwise, treat it as a relative path and prepend a '/'.
+          if (decoded[0] !== "/") {
+            decoded = "/" + decoded;
           }
+
+          // Remove trailing slash from current pathname then append decoded path
+          var base = location.pathname.replace(/\/$/, "");
+          window.history.replaceState(null, "", base + decoded + location.hash);
         })(window.location);
       </script>
       <script type="module" crossorigin src="/anithuncommon/assets/index-BOf4QoNA.js"></script>
