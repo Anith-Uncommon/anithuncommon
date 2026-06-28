@@ -180,8 +180,8 @@ export function StudentProgress({ onBack }: StudentProgressProps) {
       <div className="max-w-7xl mx-auto px-4 md:px-6 pt-32 pb-14 relative z-10">
 
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]" style={{ backgroundColor: "#94B1C8" }}>
-            <span className="text-xs tracking-[0.22em] font-semibold" style={{ color: "#0a1b2b" }}>
+          <div className="inline-block px-6 py-3 rounded-full mb-4 border-2 border-[#0a1b2b]" style={{ backgroundColor: "#94B1C8" }}>
+            <span className="text-sm tracking-[0.22em] font-semibold" style={{ color: "#0a1b2b" }}>
               STUDENT PROGRESS
             </span>
           </div>

@@ -1891,11 +1891,11 @@ export default function App() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <div
-              className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b]"
+              className="inline-block px-6 py-3 rounded-full mb-4 border-2 border-[#0a1b2b]"
               style={{ backgroundColor: "#94B1C8" }}
             >
               <span
-                className="text-xs tracking-[0.22em] font-semibold"
+                className="text-sm tracking-[0.22em] font-semibold"
                 style={{ color: "#0a1b2b" }}
               >
                 OUR IMPACT
@@ -1964,9 +1964,9 @@ export default function App() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
+              <div className="inline-block px-6 py-3 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
                 <span
-                  className="text-xs tracking-[0.22em] font-semibold"
+                  className="text-sm tracking-[0.22em] font-semibold"
                   style={{ color: "#0a1b2b" }}
                 >
                   ABOUT US
@@ -2055,6 +2055,75 @@ export default function App() {
                   curriculum. Interests that are not widely or
                   generally taught in classrooms will be taught
                   here, expanding access to these topics.
+                </p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Placeholder Stats Section */}
+      <section
+        className="py-20 border-b-2 border-[#0a1b2b] relative overflow-hidden"
+        style={{ backgroundColor: "#FFF9FB" }}
+      >
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-block px-6 py-3 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
+                <span
+                  className="text-sm tracking-[0.22em] font-semibold"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  BY THE NUMBERS
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <Card className="h-full p-8 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] transition-all duration-500">
+                <h3
+                  className="text-3xl font-editorial-serif font-semibold mb-4"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  64%
+                </h3>
+                <p
+                  className="text-lg leading-relaxed text-left"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  Standard classrooms are failing to engage modern teenagers. Recent tracking data shows that 64% of students report being actively bored in school, highlighting a massive disconnect between standard memory tests and real-world student interest.
+                </p>
+              </Card>
+
+              <Card className="h-full p-8 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] transition-all duration-500">
+                <h3
+                  className="text-3xl font-editorial-serif font-semibold mb-4"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  7h 22m daily
+                </h3>
+                <p
+                  className="text-lg leading-relaxed text-left"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  Digital environments are rapidly replacing organic peer connection. On average, teenagers now spend 7 hours and 22 minutes on screens daily, leaving them with virtually no time to build authentic, real-world community spaces.
+
+                </p>
+              </Card>
+
+              <Card className="h-full p-8 rounded-[26px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[6px_6px_0px_rgba(10, 27, 43, 0.65)] transition-all duration-500">
+                <h3
+                  className="text-3xl font-editorial-serif font-semibold mb-4"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  273 million
+                </h3>
+                <p
+                  className="text-lg leading-relaxed text-left"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  The right to basic education is a distant dream for millions. New UNESCO data reveals that 273 million children globally are completely out of school, meaning 1 out of every 6 youth is entirely locked out of the system
                 </p>
               </Card>
             </div>
@@ -2236,11 +2305,11 @@ export default function App() {
 
             <div className="max-w-2xl mx-auto xl:mx-0 text-center xl:text-left">
               <div
-                className="inline-block px-4 py-2 rounded-full mb-5 border-2 border-[#0a1b2b] mx-auto xl:mx-0"
+                className="inline-block px-6 py-3 rounded-full mb-5 border-2 border-[#0a1b2b] mx-auto xl:mx-0"
                 style={{ backgroundColor: "#94B1C8" }}
               >
                 <span
-                  className="text-xs tracking-[0.22em] font-semibold"
+                  className="text-sm tracking-[0.22em] font-semibold"
                   style={{ color: "#0a1b2b" }}
                 >
                   THE ACCESS GAP
@@ -2284,9 +2353,9 @@ export default function App() {
         />
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
+            <div className="inline-block px-6 py-3 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
               <span
-                className="text-xs tracking-[0.22em] font-semibold"
+                className="text-sm tracking-[0.22em] font-semibold"
                 style={{ color: "#0a1b2b" }}
               >
                 OUR SUBJECTS
@@ -2845,9 +2914,9 @@ export default function App() {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <div className="inline-block px-4 py-2 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
+            <div className="inline-block px-6 py-3 rounded-full mb-4 border-2 border-[#0a1b2b] shadow-[3px_3px_0px_rgba(10, 27, 43, 0.28)]" style={{ backgroundColor: "#94B1C8" }}>
               <span
-                className="text-xs tracking-[0.22em] font-semibold"
+                className="text-sm tracking-[0.22em] font-semibold"
                 style={{ color: "#0a1b2b" }}
               >
                 JOIN OUR COMMUNITY
