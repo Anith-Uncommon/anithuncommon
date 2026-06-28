@@ -97,7 +97,7 @@ type Page =
 const LANDING_STATS = [
   {
     icon: Eye,
-    target: 100,
+    target: 120,
     suffix: "K+",
     label: "Impressions",
     bgColor: "#cedae3",
