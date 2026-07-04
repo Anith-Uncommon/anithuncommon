@@ -138,14 +138,6 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           colorAccent: "bg-[#0B1F26]"
         },
         {
-          name: "Yognya Gunti",
-          role: "Graphic Designer & Humanities Mentor",
-          image: "yognya.jpeg",
-          bio: "Relying on others doesn't weaken you — it makes you stronger. Learn from everyone around you, because growth never ends.",
-          linkedin: "https://sites.google.com/view/memyselfandiyognyagunti/home",
-          colorAccent: "bg-[#0A1926]"
-        },
-        {
           name: "Ruth Angelia Joy Purba",
           role: "Discord Moderator",
           image: "ruth.jpeg",
@@ -229,14 +221,6 @@ export function MeetOurTeam({ onBack }: MeetOurTeamProps) {
           bio: "unforgettable by french montana",
           linkedin: "#",
           colorAccent: "bg-[#626E73]"
-        },
-        {
-          name: "Avighnaa Ramesh",
-          role: "STEM Mentor",
-          image: "avighnaa.jpeg",
-          bio: "Avighnaa is a STEM enthusiast and innovation-driven student from Malaysia who is passionate about using science and technology to solve real-world problems.",
-          linkedin: "https://www.linkedin.com/in/avighnaa-ramesh",
-          colorAccent: "bg-[#0B1F26]"
         },
         {
           name: "Trista",

@@ -142,15 +142,6 @@ export const mentorsData: MentorData[] = [
     resources: []
   },
   {
-    id: "yognya-gunti",
-    name: "Yognya Gunti",
-    email: "yognyagunti@gmail.com",
-    role: "Graphic Designer and Humanities Mentor",
-    subjects: ["Geology", "Political Theory", "World History", "Art History"],
-    bio: "Relying on others doesn't weaken you — it makes you stronger. Learn from everyone around you, because growth never ends.",
-    resources: []
-  },
-  {
     id: "akshiti-bhardwaj",
     name: "Akshiti Bhardwaj",
     email: "akshitibhrj@gmail.com",
@@ -211,15 +202,6 @@ export const mentorsData: MentorData[] = [
         relatedTopics: ["Biology"]
       }
     ]
-  },
-  {
-    id: "avighnaa-ramesh",
-    name: "Avighnaa Ramesh",
-    email: "", 
-    role: "Bio, Physics, Chem (combined) Mentor",
-    subjects: ["Biology", "Physics", "Chemistry"],
-    bio: "Comprehensive science mentor covering biology, physics, and chemistry.",
-    resources: []
   },
   {
     id: "ojas-dhaundiyal",
