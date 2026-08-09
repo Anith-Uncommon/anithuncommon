@@ -34,6 +34,7 @@ import {
   Eye,
   Award,
   ExternalLink,
+  Play,
 } from "lucide-react";
 import {
   getMentorById,
@@ -48,12 +49,22 @@ interface Subchapter {
   locked: boolean;
 }
 
+interface Video {
+  id: string;
+  title: string;
+  duration: string;
+  locked: boolean;
+  url: string;
+}
+
 interface Chapter {
   id: string;
   title: string;
+  videoTitle?: string;
   chapterNumber: number;
   mentor?: string; // Mentor name for this chapter
   subchapters: Subchapter[];
+  videos?: Video[];
 }
 
 interface Topic {
@@ -147,9 +158,11 @@ export default function App() {
     useState<MentorData | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openTopicId, setOpenTopicId] = useState<string | null>(null);
+  const [openVideoTopicId, setOpenVideoTopicId] = useState<string | null>(null);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<{ title: string; url: string } | null>(null);
   const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
@@ -233,6 +246,17 @@ export default function App() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (activeVideo) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeVideo]);
+
   const subjects: Subject[] = [
     {
       id: "economics",
@@ -282,6 +306,7 @@ export default function App() {
         {
           id: "bio-ch-1",
           title: "Chapter 1: Biological Molecules",
+          videoTitle: "Chapter 1: Cells",
           chapterNumber: 1,
           subchapters: [
             { id: "bio-1-1", title: "Carbohydrates", locked: false },
@@ -289,6 +314,11 @@ export default function App() {
             { id: "bio-1-3", title: "Proteins", locked: true },
             { id: "bio-1-4", title: "Enzymes", locked: true },
             { id: "bio-1-5", title: "Cells", locked: true },
+          ],
+          videos: [
+            { id: "bio-v-1-1", title: "Cell Structure", duration: "8:45", locked: false, url: "https://www.youtube.com/embed/JZJcUNUvPIo" },
+            { id: "bio-v-1-2", title: "Lipids Structure & Function", duration: "6:20", locked: true, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+            { id: "bio-v-1-3", title: "Proteins & Polypeptides", duration: "12:15", locked: true, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
           ],
         },
         {
@@ -304,6 +334,10 @@ export default function App() {
               locked: true,
             },
             { id: "bio-2-4", title: "Mitosis", locked: true },
+          ],
+          videos: [
+            { id: "bio-v-2-1", title: "DNA vs RNA Structure", duration: "10:10", locked: false, url: "https://www.youtube.com/embed/GDqy1GD7GQA" },
+            { id: "bio-v-2-2", title: "Chromosomes & Karyotypes", duration: "7:30", locked: true, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
           ],
         },
         {
@@ -327,6 +361,10 @@ export default function App() {
               locked: true,
             },
           ],
+          videos: [
+            { id: "bio-v-3-1", title: "Diffusion & Osmosis", duration: "9:15", locked: false, url: "https://www.youtube.com/embed/IaZ8MtF3C64" },
+            { id: "bio-v-3-2", title: "Active Transport Mechanisms", duration: "11:05", locked: true, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+          ],
         },
         {
           id: "bio-ch-4",
@@ -344,6 +382,10 @@ export default function App() {
               title: "Immune System",
               locked: true,
             },
+          ],
+          videos: [
+            { id: "bio-v-4-1", title: "Innate vs Adaptive Immunity", duration: "14:20", locked: true, url: "https://www.youtube.com/embed/GIJK3dwCWCw" },
+            { id: "bio-v-4-2", title: "How Vaccines Work", duration: "8:50", locked: true, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
           ],
         },
       ],
@@ -1146,25 +1188,29 @@ export default function App() {
             ? activeSubject.chapters.map((chapter) => ({
               id: chapter.id,
               title: chapter.title,
+              videoTitle: chapter.videoTitle || chapter.title,
               chapters:
                 chapter.subchapters.length > 0
                   ? chapter.subchapters.map(
                     (subchapter, index) =>
-                      subchapter.locked
+                      (subchapter.locked && !isLoggedIn)
                         ? `${chapter.chapterNumber}.${index + 1} ${subchapter.title} (Locked - Log in to gain access)`
                         : `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
                   )
                   : [
                     `${chapter.chapterNumber}.1 ${chapter.title} Overview`,
                   ],
+              videos: chapter.videos || [],
             }))
             : activeSubject.topics.map((topic, index) => ({
               id: `topic-${index + 1}`,
               title: topic,
+              videoTitle: topic,
               chapters: [
                 `${index + 1}.1 Introduction to ${topic}`,
                 `${index + 1}.2 Core Concepts in ${topic}`,
               ],
+              videos: [],
             })),
       },
     ];
@@ -1319,50 +1365,59 @@ export default function App() {
             </p>
           </div>
 
-          <div className="w-full space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
-              {learningHierarchyData[0].topics.map((topic) => {
-                const isOpen = openTopicId === topic.id;
-                return (
-                  <Card
-                    key={topic.id}
-                    className="rounded-[24px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] overflow-hidden h-fit"
-                  >
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setOpenTopicId((prev) =>
-                          prev === topic.id ? null : topic.id,
-                        )
-                      }
-                      className="w-full px-5 sm:px-6 py-5 text-left transition-all cursor-pointer hover:bg-[#efe9d8]"
+          <div className="w-full space-y-12">
+            
+            {/* Section 1: Notes & Chapters */}
+            <div>
+              <h2
+                className="text-2xl sm:text-3xl font-editorial-serif font-semibold mb-6 flex items-center gap-2"
+                style={{ color: "#0a1b2b" }}
+              >
+                <FileText className="w-6 h-6 text-[#626E73]" />
+                Notes & Chapters
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+                {learningHierarchyData[0].topics.map((topic) => {
+                  const isOpen = openTopicId === topic.id;
+                  return (
+                    <Card
+                      key={`notes-${topic.id}`}
+                      className="rounded-[24px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] overflow-hidden h-fit"
                     >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <h3
-                            className="text-lg sm:text-xl font-semibold"
-                            style={{ color: "#0a1b2b" }}
-                          >
-                            {topic.title}
-                          </h3>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setOpenTopicId((prev) =>
+                            prev === topic.id ? null : topic.id,
+                          )
+                        }
+                        className="w-full px-5 sm:px-6 py-5 text-left transition-all cursor-pointer hover:bg-[#efe9d8]"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1">
+                            <h3
+                              className="text-lg sm:text-xl font-semibold"
+                              style={{ color: "#0a1b2b" }}
+                            >
+                              {topic.title}
+                            </h3>
+                          </div>
+                          <ChevronDown
+                            className={`w-5 h-5 mt-1 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                            style={{ color: "#626E73" }}
+                          />
                         </div>
-                        <ChevronDown
-                          className={`w-5 h-5 mt-1 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                          style={{ color: "#626E73" }}
-                        />
-                      </div>
-                    </button>
+                      </button>
 
-                    <div
-                      className={`grid transition-all duration-300 ease-in-out ${isOpen
-                          ? "grid-rows-[1fr] opacity-100"
-                          : "grid-rows-[0fr] opacity-0"
-                        }`}
-                    >
-                      <div className="overflow-hidden">
-                        <div className="px-5 sm:px-6 pb-5 pl-9 sm:pl-11 space-y-2 border-t border-[#d5cebd]">
-                          {topic.chapters.map((chapter, index) => (
-                            (() => {
+                      <div
+                        className={`grid transition-all duration-300 ease-in-out ${isOpen
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[0fr] opacity-0"
+                          }`}
+                      >
+                        <div className="overflow-hidden">
+                          <div className="px-5 sm:px-6 pb-5 pl-9 sm:pl-11 space-y-2 border-t border-[#d5cebd] pt-4">
+                            {topic.chapters.map((chapter, index) => {
                               const unitCode =
                                 chapter.match(/^(\d+\.\d+)/)?.[1];
                               const isLockedChapter = chapter.includes(
@@ -1380,11 +1435,14 @@ export default function App() {
 
                               return (
                                 <a
-                                  key={`${topic.id}-${index}`}
+                                  key={`${topic.id}-note-${index}`}
                                   href={chapterHref}
                                   onClick={(e) => {
                                     if (chapterHref === "#") {
                                       e.preventDefault();
+                                      if (isLockedChapter) {
+                                        setShowLoginModal(true);
+                                      }
                                     }
                                   }}
                                   target={
@@ -1395,25 +1453,138 @@ export default function App() {
                                       ? undefined
                                       : "noopener noreferrer"
                                   }
-                                  className="flex items-center justify-between text-sm sm:text-[0.95rem] py-1.5 transition-colors hover:text-[#0a1b2b]"
+                                  className="flex items-center justify-between text-sm sm:text-[0.95rem] py-1.5 transition-colors hover:text-[#0a1b2b] border-b border-[#d5cebd]/40 last:border-0"
                                   style={{
                                     color: isAvailable ? "#0a1b2b" : "#626E73",
                                   }}
                                 >
-                                  <span>{chapter}</span>
+                                  <span className="flex items-center gap-2">
+                                    {isLockedChapter && <Lock className="w-3.5 h-3.5 text-[#626E73]/70 shrink-0" />}
+                                    {chapter}
+                                  </span>
                                   {isAvailable && (
                                     <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                                   )}
                                 </a>
                               );
-                            })()
-                          ))}
+                            })}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Card>
-                );
-              })}
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Section 2: Video Lectures */}
+            <div>
+              <h2
+                className="text-2xl sm:text-3xl font-editorial-serif font-semibold mb-6 flex items-center gap-2"
+                style={{ color: "#0a1b2b" }}
+              >
+                <Play className="w-6 h-6 text-[#626E73]" />
+                Video Lectures
+              </h2>
+              {activeSubject.id === "biology" || (learningHierarchyData[0].topics.some(t => t.videos && t.videos.length > 0)) ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+                  {learningHierarchyData[0].topics.map((topic) => {
+                    const isOpen = openVideoTopicId === topic.id;
+                    const hasVideos = topic.videos && topic.videos.length > 0;
+                    return (
+                      <Card
+                        key={`videos-${topic.id}`}
+                        className="rounded-[24px] border-2 border-[#0a1b2b] bg-[#fff9fb] shadow-[8px_8px_0px_rgba(10, 27, 43, 0.52)] overflow-hidden h-fit"
+                      >
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setOpenVideoTopicId((prev) =>
+                              prev === topic.id ? null : topic.id,
+                            )
+                          }
+                          className="w-full px-5 sm:px-6 py-5 text-left transition-all cursor-pointer hover:bg-[#efe9d8]"
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <h3
+                                className="text-lg sm:text-xl font-semibold"
+                                style={{ color: "#0a1b2b" }}
+                              >
+                                {topic.videoTitle || topic.title}
+                              </h3>
+                            </div>
+                            <ChevronDown
+                              className={`w-5 h-5 mt-1 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                              style={{ color: "#626E73" }}
+                            />
+                          </div>
+                        </button>
+
+                        <div
+                          className={`grid transition-all duration-300 ease-in-out ${isOpen
+                              ? "grid-rows-[1fr] opacity-100"
+                              : "grid-rows-[0fr] opacity-0"
+                            }`}
+                        >
+                          <div className="overflow-hidden">
+                            <div className="px-5 sm:px-6 pb-5 pl-9 sm:pl-11 space-y-2 border-t border-[#d5cebd] pt-4">
+                              {hasVideos ? (
+                                topic.videos.map((video: any) => {
+                                  const isLockedVideo = video.locked && !isLoggedIn;
+                                  return (
+                                    <button
+                                      key={video.id}
+                                      onClick={() => {
+                                        if (isLockedVideo) {
+                                          setShowLoginModal(true);
+                                        } else {
+                                          setActiveVideo({ title: video.title, url: video.url });
+                                        }
+                                      }}
+                                      className="w-full flex items-center justify-between text-sm sm:text-[0.95rem] py-1.5 text-left transition-colors hover:text-[#0a1b2b] border-b border-[#d5cebd]/40 last:border-0 cursor-pointer"
+                                      style={{
+                                        color: isLockedVideo ? "#626E73" : "#0a1b2b",
+                                      }}
+                                    >
+                                      <span className="flex items-center gap-2">
+                                        {isLockedVideo ? (
+                                          <Lock className="w-3.5 h-3.5 text-[#626E73]/70 shrink-0" />
+                                        ) : (
+                                          <Play className="w-3.5 h-3.5 text-[#0a1b2b]/70 shrink-0" />
+                                        )}
+                                        {video.title}
+                                        {isLockedVideo && (
+                                          <span className="text-xs text-[#626E73]/70 italic ml-1">
+                                            (Locked - Log in)
+                                          </span>
+                                        )}
+                                      </span>
+                                      <span className="text-xs text-[#626E73]/80 font-mono bg-[#efe9d8]/50 px-2 py-0.5 rounded">
+                                        {video.duration}
+                                      </span>
+                                    </button>
+                                  );
+                                })
+                              ) : (
+                                <p className="text-xs italic text-[#626E73]/85 py-1">
+                                  Video lectures for this chapter will be uploaded soon.
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    );
+                  })}
+                </div>
+              ) : (
+                <Card className="rounded-[24px] border-2 border-[#0a1b2b] bg-[#fff9fb]/60 shadow-[8px_8px_0px_rgba(10, 27, 43, 0.3)] p-8 text-center">
+                  <p className="text-sm italic text-[#626E73]">
+                    Video lectures for this subject are coming soon! We are actively recording and editing new materials.
+                  </p>
+                </Card>
+              )}
             </div>
           </div>
         </main>
@@ -1608,6 +1779,48 @@ export default function App() {
           onClose={() => setShowLoginModal(false)}
           onLogin={handleLogin}
         />
+
+        {/* Video Player Modal */}
+        {activeVideo && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 isolate">
+            <div 
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300"
+            />
+            <div className="relative bg-[#fff9fb] w-full max-w-4xl rounded-3xl border-2 border-[#0a1b2b] shadow-[12px_12px_0px_rgba(10, 27, 43, 0.9)] overflow-hidden z-10 transform scale-100 transition-all duration-300">
+              <div className="flex items-center justify-between p-5 border-b border-[#d5cebd]">
+                <h3 className="text-xl font-bold font-editorial-serif text-[#0a1b2b]">
+                  {activeVideo.title}
+                </h3>
+                <button
+                  onClick={() => setActiveVideo(null)}
+                  className="rounded-full p-1.5 hover:bg-[#efe9d8] transition-colors border border-[#0a1b2b]/20 cursor-pointer"
+                  style={{ color: "#0a1b2b" }}
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="aspect-video w-full bg-black">
+                <iframe
+                  src={activeVideo.url}
+                  title={activeVideo.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="p-4 bg-[#efe9d8]/30 flex justify-end">
+                <Button
+                  onClick={() => setActiveVideo(null)}
+                  className="rounded-xl px-6 cursor-pointer"
+                  style={{ backgroundColor: "#0a1b2b", color: "#cedae3" }}
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
