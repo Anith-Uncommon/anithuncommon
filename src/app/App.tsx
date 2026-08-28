@@ -93,6 +93,7 @@ interface Subject {
   mentors: string[];
   topicsData: { [key: string]: Topic };
   chapters?: Chapter[];
+  videoChapters?: Chapter[];
 }
 
 type Page =
@@ -316,9 +317,8 @@ export default function App() {
             { id: "bio-1-5", title: "Cells", locked: true },
           ],
           videos: [
-            { id: "bio-v-1-1", title: "Cell Structure", duration: "8:45", locked: false, url: "https://www.youtube.com/embed/JZJcUNUvPIo" },
-            { id: "bio-v-1-2", title: "Lipids Structure & Function", duration: "6:20", locked: true, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-            { id: "bio-v-1-3", title: "Proteins & Polypeptides", duration: "12:15", locked: true, url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+            { id: "bio-v-1-1", title: "Cell Structure", duration: "9:37", locked: false, url: "https://www.youtube.com/embed/JZJcUNUvPIo" },
+            { id: "bio-v-1-2", title: "The Bacterial Cell", duration: "7:07", locked: false, url: "https://www.youtube.com/embed/ohgauzoO-B8" },
           ],
         },
         {
@@ -368,20 +368,10 @@ export default function App() {
         },
         {
           id: "bio-ch-4",
-          title: "Chapter 4: Immuninity in the Body",
+          title: "Chapter 4: Biological Molecules",
           chapterNumber: 4,
           subchapters: [
-            { id: "bio-4-1", title: "Diseases", locked: true },
-            {
-              id: "bio-4-2",
-              title: "Antibiotics & Vaccines",
-              locked: true,
-            },
-            {
-              id: "bio-4-3",
-              title: "Immune System",
-              locked: true,
-            },
+            { id: "bio-4-1", title: "Biological Molecules", locked: false },
           ],
           videos: [
             { id: "bio-v-4-1", title: "Innate vs Adaptive Immunity", duration: "14:20", locked: true, url: "https://www.youtube.com/embed/GIJK3dwCWCw" },
@@ -427,6 +417,24 @@ export default function App() {
       mentors: ["Vihaan Amin", "Trista", "Yassmin Mahmoud"],
       topicsData: {},
       chapters: [],
+      videoChapters: [
+        {
+          id: "chem-ch-1",
+          title: "Chemical Formulas",
+          videoTitle: "Chemical Formulas",
+          chapterNumber: 1,
+          subchapters: [],
+          videos: [
+            {
+              id: "chem-v-1-1",
+              title: "Balancing Chemical Formulas",
+              duration: "7:24",
+              locked: false,
+              url: "https://www.youtube.com/embed/lhbJF6NuvKU",
+            },
+          ],
+        },
+      ],
     },
     {
       id: "psychology",
@@ -503,6 +511,24 @@ export default function App() {
       mentors: ["Vihaan Amin"],
       topicsData: {},
       chapters: [],
+      videoChapters: [
+        {
+          id: "maths-ch-1",
+          title: "Numbers",
+          videoTitle: "Numbers",
+          chapterNumber: 1,
+          subchapters: [],
+          videos: [
+            {
+              id: "maths-v-1-1",
+              title: "Numbers",
+              duration: "15:12",
+              locked: false,
+              url: "https://www.youtube.com/embed/egDkzLB4AfY",
+            },
+          ],
+        },
+      ],
     },
     {
       id: "history",
@@ -1005,6 +1031,7 @@ export default function App() {
     "1.1": "/resources/kenneth-carbohydrates-1.1.pdf",
     "2.1": "/resources/kenneth-dna-and-rna-2.1.pdf",
     "3.1": "/resources/kenneth-transport-in-molecules-3.1.pdf",
+    "4.1": "/resources/yassmin-biological-molecules-4.pdf",
   };
 
   if (location.pathname === "/team") {
@@ -1180,38 +1207,47 @@ export default function App() {
   }
 
   if (activeSubject && location.pathname.startsWith("/subject/")) {
+    const mapChapterToTopic = (chapter: Chapter) => ({
+      id: chapter.id,
+      title: chapter.title,
+      videoTitle: chapter.videoTitle || chapter.title,
+      chapters:
+        chapter.subchapters.length > 0
+          ? chapter.subchapters.map(
+            (subchapter, index) =>
+              (subchapter.locked && !isLoggedIn)
+                ? `${chapter.chapterNumber}.${index + 1} ${subchapter.title} (Locked - Log in to gain access)`
+                : `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
+          )
+          : [
+            `${chapter.chapterNumber}.1 ${chapter.title} Overview`,
+          ],
+      videos: chapter.videos || [],
+    });
+
+    const noteTopics =
+      activeSubject.chapters && activeSubject.chapters.length > 0
+        ? activeSubject.chapters.map(mapChapterToTopic)
+        : activeSubject.topics.map((topic, index) => ({
+          id: `topic-${index + 1}`,
+          title: topic,
+          videoTitle: topic,
+          chapters: [
+            `${index + 1}.1 Introduction to ${topic}`,
+            `${index + 1}.2 Core Concepts in ${topic}`,
+          ],
+          videos: [],
+        }));
+
+    const videoTopics = (activeSubject.videoChapters ?? activeSubject.chapters ?? [])
+      .map(mapChapterToTopic)
+      .filter((topic) => topic.videos.length > 0);
+
     const learningHierarchyData = [
       {
         subject: activeSubject.title,
-        topics:
-          activeSubject.chapters && activeSubject.chapters.length > 0
-            ? activeSubject.chapters.map((chapter) => ({
-              id: chapter.id,
-              title: chapter.title,
-              videoTitle: chapter.videoTitle || chapter.title,
-              chapters:
-                chapter.subchapters.length > 0
-                  ? chapter.subchapters.map(
-                    (subchapter, index) =>
-                      (subchapter.locked && !isLoggedIn)
-                        ? `${chapter.chapterNumber}.${index + 1} ${subchapter.title} (Locked - Log in to gain access)`
-                        : `${chapter.chapterNumber}.${index + 1} ${subchapter.title}`,
-                  )
-                  : [
-                    `${chapter.chapterNumber}.1 ${chapter.title} Overview`,
-                  ],
-              videos: chapter.videos || [],
-            }))
-            : activeSubject.topics.map((topic, index) => ({
-              id: `topic-${index + 1}`,
-              title: topic,
-              videoTitle: topic,
-              chapters: [
-                `${index + 1}.1 Introduction to ${topic}`,
-                `${index + 1}.2 Core Concepts in ${topic}`,
-              ],
-              videos: [],
-            })),
+        topics: noteTopics,
+        videoTopics,
       },
     ];
 
@@ -1486,9 +1522,9 @@ export default function App() {
                 <Play className="w-6 h-6 text-[#626E73]" />
                 Video Lectures
               </h2>
-              {activeSubject.id === "biology" || (learningHierarchyData[0].topics.some(t => t.videos && t.videos.length > 0)) ? (
+              {learningHierarchyData[0].videoTopics.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
-                  {learningHierarchyData[0].topics.map((topic) => {
+                  {learningHierarchyData[0].videoTopics.map((topic) => {
                     const isOpen = openVideoTopicId === topic.id;
                     const hasVideos = topic.videos && topic.videos.length > 0;
                     return (
