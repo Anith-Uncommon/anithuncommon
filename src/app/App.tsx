@@ -434,6 +434,22 @@ export default function App() {
             },
           ],
         },
+        {
+          id: "chem-ch-2",
+          title: "States of Matter",
+          videoTitle: "States of Matter",
+          chapterNumber: 2,
+          subchapters: [],
+          videos: [
+            {
+              id: "chem-v-2-1",
+              title: "States of Matter and Diffusion",
+              duration: "7:05",
+              locked: false,
+              url: "https://www.youtube.com/embed/YxG86nhEvUs",
+            },
+          ],
+        },
       ],
     },
     {
@@ -454,6 +470,38 @@ export default function App() {
       mentors: ["Sharia Shifa"],
       topicsData: {},
       chapters: [],
+      videoChapters: [
+        {
+          id: "psych-ch-1",
+          title: "Research Methods",
+          videoTitle: "Research Methods",
+          chapterNumber: 1,
+          subchapters: [],
+          videos: [
+            {
+              id: "psych-v-1-1",
+              title: "Research Methods: Experimental Settings",
+              duration: "4:22",
+              locked: false,
+              url: "https://www.youtube.com/embed/bEVqHVHB6ZE",
+            },
+            {
+              id: "psych-v-1-2",
+              title: "Research Methods: Self Reports -- Questions & Interviews",
+              duration: "1:39",
+              locked: false,
+              url: "https://www.youtube.com/embed/7G2Y90JvETY",
+            },
+            {
+              id: "psych-v-1-3",
+              title: "Research Methods: The Core Elements: IV, DV & EV",
+              duration: "2:10",
+              locked: false,
+              url: "https://www.youtube.com/embed/cvLlXZc1Lcs",
+            },
+          ],
+        },
+      ],
     },
     {
       id: "english",
@@ -473,6 +521,24 @@ export default function App() {
       mentors: ["Ishraq", "Lakshya Shree"],
       topicsData: {},
       chapters: [],
+      videoChapters: [
+        {
+          id: "english-ch-1",
+          title: "Text Analysis",
+          videoTitle: "Text Analysis",
+          chapterNumber: 1,
+          subchapters: [],
+          videos: [
+            {
+              id: "english-v-1-1",
+              title: "Text Analyzing the Form: Guide to the Format",
+              duration: "9:52",
+              locked: false,
+              url: "https://www.youtube.com/embed/Fv10KGz647s",
+            },
+          ],
+        },
+      ],
     },
     {
       id: "english-literature",
