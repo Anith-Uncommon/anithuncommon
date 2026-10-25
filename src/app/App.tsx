@@ -499,6 +499,13 @@ export default function App() {
               locked: false,
               url: "https://www.youtube.com/embed/cvLlXZc1Lcs",
             },
+            {
+              id: "psych-v-1-4",
+              title: "Research Methods: Case Studies",
+              duration: "5:05",
+              locked: false,
+              url: "https://www.youtube.com/embed/dlH0icuk9Pc",
+            },
           ],
         },
       ],
